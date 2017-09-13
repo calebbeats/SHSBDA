@@ -16,55 +16,27 @@ public class GameData {
     public final List<GameFigure> friendFigures;
     public static Shooter shooter;
     ReentrantLock lock = new ReentrantLock();
-
+    
+    
     public GameData() {
         enemyFigures = new CopyOnWriteArrayList<>();
         friendFigures = new CopyOnWriteArrayList<>();
-
+        PowerUp  p = new PowerUp(400, 480);
         // GamePanel.width, height are known when rendered. 
         // Thus, at this moment,
         // we cannot use GamePanel.width and height.
         shooter = new Shooter(Main.WIN_WIDTH / 2, Main.WIN_HEIGHT - 130);
 
         friendFigures.add(shooter);
-
-        enemyFigures.add(new BlinkMage(50, 60));
-        enemyFigures.add(new BlinkMage(400, 20));
+        friendFigures.add(p);
+        
+        enemyFigures.add(new BlinkMage((int)(Math.random() * 500), (int)Math.random()*200));
+        enemyFigures.add(new BlinkMage((int)(Math.random() * 500), (int)Math.random()*200));
+         
+        enemyFigures.add(new SuicideEnemy((int)(Math.random() * 500), (int)Math.random()*200));
     }
-    public void addUFO () {
-        enemyFigures.add(new FlyingSaucer(
-                        (float) (Math.random() * GamePanel.width),
-                        (float) (Math.random() * GamePanel.height)));
-    }
-    public void addBomb(int n) {
-        lock.lock();
-        try
-        {
-            for (int i = 0; i < n; i++) {
-                float red = (float) Math.random();
-                float green = (float) Math.random();
-                float blue = (float) Math.random();
-                // adjust if too dark since the background is black
-                if (red < 0.5) {
-                    red += 0.2;
-                }
-                if (green < 0.5) {
-                    green += 0.2;
-                }
-                if (blue < 0.5) {
-                    blue += 0.2;
-                }
-                enemyFigures.add(new Bomb(
-                        (float) (Math.random() * GamePanel.width),
-                        (float) (Math.random() * GamePanel.height),
-                        RADIUS,
-                        new Color(red, green, blue)));
-            }
-        } finally
-        {
-            lock.unlock();
-        }
-    }
+    
+  
 
     public void update() {
 
