@@ -30,8 +30,8 @@ public class Main {
         game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         game.setVisible(true);
 
-        // start animation
-        new Thread(animator).start();
+        // start animation after start button
+        //new Thread(animator).start();
 
     }
 }

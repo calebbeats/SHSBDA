@@ -8,7 +8,18 @@ public class ButtonListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (e.getSource() == MainWindow.startGame){
+            MainWindow.startGame.setEnabled(false);
+            new Thread(Main.animator).start();
+        }
+        else if (e.getSource() == MainWindow.quitButton) {
+            if (Main.animator.running) {
+                Main.animator.running = false;
+                System.exit(0);
+            } else {
+                System.exit(0);
+            }
+        }
     }
 
    

@@ -32,6 +32,7 @@ public class MainWindow extends JFrame {
         ButtonListener buttonListener = new ButtonListener();
         
         quitButton.addActionListener(buttonListener);
+        startGame.addActionListener(buttonListener);
 
         MouseController mouseController = new MouseController();
         Main.gamePanel.addMouseListener(mouseController);
