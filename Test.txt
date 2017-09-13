@@ -1,6 +1,6 @@
 TEST MY BOI
 <<<<<<< HEAD
-ASDASD
+
 =======
 ASDASD
 Corey Test
