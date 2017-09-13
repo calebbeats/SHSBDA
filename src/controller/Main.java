@@ -5,6 +5,8 @@ import model.GameData;
 import view.GamePanel;
 import view.MainWindow;
 
+//comment
+
 public class Main {
 
     public static GamePanel gamePanel;
