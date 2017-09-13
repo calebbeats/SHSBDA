@@ -6,20 +6,27 @@ import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
+import static model.GameFigure.STATE_ALIVE;
+import static model.GameFigure.STATE_DYING;
 
 public class Shooter extends GameFigure {
 
     private Image launcherImage;
-    private final int size = 30;
-
+    private Image shooterLeft;
+    private Image shooterRight;
+    public WeaponComponent weapon;
+    int deadTimer= 0;
+    
     public Shooter(int x, int y) {
         super(x, y);
-        super.state = GameFigureState.SHOOTER_STATE_HEALTH_LEVEL_5;
+        super.state = STATE_ALIVE;
+        weapon = new BasicWeapon();
+        
         
         launcherImage = null;
         
         try {
-            launcherImage = ImageIO.read(getClass().getResource("shooter.png"));
+            launcherImage = ImageIO.read(getClass().getResource("shooterRight.png"));
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");
             System.exit(-1);
@@ -34,9 +41,37 @@ public class Shooter extends GameFigure {
 
     @Override
     public void update() {
-        // no periodic update is required (not animated)
-        // if health level is implemented, update level
-        // update is done via 'translate' when a key is pressed
+        if(state == STATE_DYING)
+        {
+            if(deadTimer < 10)
+            {
+                deadTimer++;
+            }
+            else
+            {
+                this.goNextState();
+            }
+        }
+    }
+    
+    public void moveLeft()
+    {
+        try {
+            launcherImage = ImageIO.read(getClass().getResource("shooterLeft.png"));
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");
+            System.exit(-1);
+        }
+    }
+    
+    public void moveRight()
+    {
+        try {
+            launcherImage = ImageIO.read(getClass().getResource("shooterRight.png"));
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");
+            System.exit(-1);
+        }
     }
 
     public void translate(int dx, int dy) {
@@ -46,31 +81,21 @@ public class Shooter extends GameFigure {
     
     // Missile shoot location: adjut x and y to the image
     public float getXofMissileShoot() {
-        return super.x+15;
+        return super.x;
     }
     
     public float getYofMissileShoot() {
         return super.y;
     }
 
-    /**
-     *
-     * @return collision box
-     */
     @Override
-    public Rectangle2D getCollisionBox()
-    {
-        return new Rectangle2D.Float(super.x, super.y, size, size);
+    public Rectangle2D getCollisionBox() {
+        return new Rectangle2D.Double(this.x, this.y, 40, 40);
     }
-
-    //only implemented on enemies
-    
-    public void setStateDamaged()
-    {}
 
     @Override
     public void shoot() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("Shooter Shoots");
     }
 
 }

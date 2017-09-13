@@ -7,19 +7,10 @@ import view.MainWindow;
 public class ButtonListener implements ActionListener {
 
     @Override
-    public void actionPerformed(ActionEvent ae) {
-        if (ae.getSource() == MainWindow.addBombButton) {
-            Main.gameData.addBomb(10);
-        } else if( ae.getSource() == MainWindow.addUFOButton)
-            {
-                Main.gameData.addUFO();
-            } else if (ae.getSource() == MainWindow.quitButton) {
-            if (Main.animator.running) {
-                Main.animator.running = false;
-            } else{
-                System.exit(0);
-            }
-        }
+    public void actionPerformed(ActionEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+   
 
 }

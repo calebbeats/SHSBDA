@@ -21,8 +21,8 @@ public class MouseController extends MouseAdapter {
         Missile m = new Missile(
                 shooter.getXofMissileShoot(),
                 shooter.getYofMissileShoot(),
-                px, py, // target location where the missile explodes
-                Color.RED);
+                px, py // target location where the missile explodes
+                );
 
         Main.gameData.friendFigures.add(m);
 

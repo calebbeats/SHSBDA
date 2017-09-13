@@ -11,16 +11,16 @@ public class KeyController implements KeyListener {
         Shooter shooter = (Shooter) Main.gameData.friendFigures.get(0);
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT:
-                shooter.translate(-5, 0);
+                shooter.translate(-10, 0);
                 break;
             case KeyEvent.VK_RIGHT:
-                shooter.translate(5, 0);
+                shooter.translate(10, 0);
                 break;
             case KeyEvent.VK_UP:
-                shooter.translate(0, -5);
+                shooter.translate(0, -10);
                 break;
             case KeyEvent.VK_DOWN:
-                shooter.translate(0, 5);
+                shooter.translate(0, 10);
                 break;
         }
     }
