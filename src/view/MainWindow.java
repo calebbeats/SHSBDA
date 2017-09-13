@@ -13,6 +13,7 @@ public class MainWindow extends JFrame {
 
    
     public static JButton quitButton;
+    public static JButton startGame;
 
     public MainWindow() {
 
@@ -22,7 +23,8 @@ public class MainWindow extends JFrame {
 
         JPanel southPanel = new JPanel();
         
-       
+        startGame = new JButton("Start Game"); //adds a start button to bottom frame
+        southPanel.add(startGame);
         quitButton = new JButton("Quit");
         southPanel.add(quitButton);
         c.add(southPanel, "South");
