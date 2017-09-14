@@ -13,7 +13,7 @@ public class Main {
     public static GameData gameData;
     public static Animator animator;
 
-    public static int WIN_WIDTH = 500;
+    public static int WIN_WIDTH = 550;
     public static int WIN_HEIGHT = 600;
 
     public static void main(String[] args) {
