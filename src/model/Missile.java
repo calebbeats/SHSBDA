@@ -70,9 +70,9 @@ public class Missile extends GameFigure {
            
             launcherImage = ImageIO.read(getClass().getResource("fireball.gif"));
             launcherImage2 = ImageIO.read(getClass().getResource("fireball2.png"));
-            explosion1 = ImageIO.read(getClass().getResource("explosion0.png"));
-            explosion2 = ImageIO.read(getClass().getResource("explosion1.png"));
-            explosion3 = ImageIO.read(getClass().getResource("explosion2.png"));
+            //explosion1 = ImageIO.read(getClass().getResource("explosion0.png"));
+            //explosion2 = ImageIO.read(getClass().getResource("explosion1.png"));
+            //explosion3 = ImageIO.read(getClass().getResource("explosion2.png"));
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");
            System.exit(-1);

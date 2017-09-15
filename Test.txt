@@ -1,17 +1,2 @@
 TEST MY BOI
-<<<<<<< HEAD
 ASDASD
-Corey Test
-=======
-<<<<<<< HEAD
-
-=======
-ASDASD
-Corey Test
-Haseeb Amin
-Lam Nguyen
-Chase Marley
-Hung Trang
->>>>>>> origin/Dev
-fsffdsfds
->>>>>>> Dev
