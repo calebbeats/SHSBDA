@@ -36,8 +36,7 @@ public class MeleeEnemy extends GameFigure {
 
     private static final int UNIT_TRAVEL_DISTANCE = 1; // per frame move
 
-    private int explosionCounter = 0;
-    
+   
     private Image launcherImage;
     private Image launcherImage2;
     
@@ -133,7 +132,6 @@ public class MeleeEnemy extends GameFigure {
     }
 
     public void updateSize() {
-        explosionCounter++;
          
     }
 
@@ -170,11 +168,7 @@ public class MeleeEnemy extends GameFigure {
                 System.out.println("Dx Dy" + dx + " " + dy);
             }
         } else if (state == STATE_DYING) {
-                       
-            //add death image
-            if (explosionCounter >= MAX_EXPLOSION_SIZE) {
                 this.goNextState();
-            }
         }
     }
 
