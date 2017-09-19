@@ -1,0 +1,93 @@
+
+package model;
+
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.geom.Rectangle2D;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
+import model.GameFigure;
+import static model.GameFigure.STATE_ALIVE;
+
+
+public class SlowMage extends GameFigure {
+    
+    private int timer = 0;
+    private int deadTimer = 0;
+    private Image slowMage;
+    private Image slowMageFlip;
+    public FigureState eState;
+    
+    private int direction = 1; // +1: to the right; -1 to the left
+    
+    public SlowMage(float x, float y) {
+        super(x, y);
+        super.state = STATE_ALIVE;
+        try {
+            slowMage = ImageIO.read(getClass().getResource("slowMageTester.png"));
+            slowMageFlip = ImageIO.read(getClass().getResource("slowMageTesterFlip.png"));
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");
+           System.exit(-1);
+        }
+        shootTimer=0;
+        timer=0;
+    }
+
+    @Override
+    public void render(Graphics2D g) {
+        if(state == STATE_ALIVE)
+        {
+            if(timer < 10)
+            {
+                g.drawImage(slowMage, (int)super.x, (int)super.y, 
+                30, 30, null);
+            }
+            if(timer >= 10 && timer <20)
+            {
+                g.drawImage(slowMageFlip, (int)super.x, (int)super.y, 
+                30, 30, null);
+            }
+        }
+        if(state == STATE_DYING)
+        {
+            
+        }
+    }
+
+    @Override
+    public void update() {
+        if(state == STATE_ALIVE)
+        {
+            if(shootTimer < 20)
+            {
+                shootTimer++;
+            }
+            else
+            {
+                shootTimer = 0;
+            }
+        }
+        
+        if(state == STATE_DYING)
+        {
+            deadTimer++;
+            if(deadTimer >15)
+            {
+                this.goNextState();
+            }
+        }   
+    }
+
+    @Override
+    public Rectangle2D getCollisionBox() {
+        return new Rectangle2D.Double(this.x, this.y, 20, 25);
+    }
+
+    @Override
+    public void shoot() {
+        System.out.println("Blink Mage Shoots");
+    }
+}
+
