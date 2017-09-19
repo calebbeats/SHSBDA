@@ -132,10 +132,11 @@ public class Missile extends GameFigure {
         
     }
 
-    public void updateLocation() {
-        
+    public void updateLocation() {    
+        //when button clicked this happens
         super.x += dx;
         super.y += dy;
+        
     }
 
     public void updateSize() {
