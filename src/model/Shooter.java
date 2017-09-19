@@ -74,9 +74,15 @@ public class Shooter extends GameFigure {
         }
     }
 
-    public void translate(int dx, int dy) {
-        super.x += dx;
+    public void translate(int dx, int dy) {        
+        super.x += dx;        
         super.y += dy;
+        if(dx < 0){
+            this.moveLeft();
+        }
+        else if(dx > 0){
+            this.moveRight();
+        }
     }
     
     // Missile shoot location: adjut x and y to the image
