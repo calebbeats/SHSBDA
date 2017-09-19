@@ -16,7 +16,6 @@ public class Shooter extends GameFigure {
     //private Image shooterRight;
     public WeaponComponent weapon;
     int deadTimer= 0;
-    int health = 5;//starting health
     
     public Shooter(int x, int y) {
         super(x, y);
