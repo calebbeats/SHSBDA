@@ -1,6 +1,5 @@
 package controller;
 
-import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import model.Missile;
@@ -17,14 +16,22 @@ public class MouseController extends MouseAdapter {
         py = me.getY();
 
         Shooter shooter = (Shooter) Main.gameData.friendFigures.get(0);
-
-        Missile m = new Missile(
+        
+        if (me.getButton() == MouseEvent.BUTTON1) {//Left click detected, initiate melee attack
+            //melee attack in the direction the mouse is facing in regards to the player
+            
+            
+        }
+        
+        if(me.getButton() == MouseEvent.BUTTON3){ //Right click detected, initiate ranged attack
+            //shoot a missle at the mouse press location
+            Missile m = new Missile( 
                 shooter.getXofMissileShoot(),
                 shooter.getYofMissileShoot(),
                 px, py // target location where the missile explodes
                 );
-
-        Main.gameData.friendFigures.add(m);
+            Main.gameData.friendFigures.add(m);
+        }
 
     }
 
