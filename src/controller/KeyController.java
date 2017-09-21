@@ -10,6 +10,7 @@ public class KeyController implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         Shooter shooter = (Shooter) Main.gameData.friendFigures.get(0);
+        //used to see if shooter will colide with terrain before moving
         Shooter shooterIntededPosition = new Shooter((int)shooter.x,(int)shooter.y);
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT:
