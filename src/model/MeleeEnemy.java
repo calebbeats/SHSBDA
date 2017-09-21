@@ -18,7 +18,7 @@ import static model.GameFigure.STATE_ALIVE;
 import static model.GameFigure.STATE_DONE;
 import static model.GameFigure.STATE_DYING;
 
-public class SuicideEnemy extends GameFigure {
+public class MeleeEnemy extends GameFigure {
 
     // missile size
     private static final int SIZE = 10;
@@ -34,16 +34,16 @@ public class SuicideEnemy extends GameFigure {
     // public properties for quick access
     public Point2D.Float target;
 
-    private static final int UNIT_TRAVEL_DISTANCE = 2; // per frame move
+    private static final int UNIT_TRAVEL_DISTANCE = 1; // per frame move
 
-    private int explosionCounter = 0;
-    
+   
     private Image launcherImage;
     private Image launcherImage2;
-    private Image explosion1;
-    private Image explosion2;
-    private Image explosion3;
     
+    //image attack
+    //image death
+    
+    private Image death;
 
     /**
      *
@@ -53,14 +53,13 @@ public class SuicideEnemy extends GameFigure {
      * @param ty target y of the missile
      * @param color color of the missile
      */
-    public SuicideEnemy(float sx, float sy) {
+    public MeleeEnemy(float sx, float sy) {
         super(sx, sy);
         
         tx = Main.gameData.shooter.x + 10;
         ty = Main.gameData.shooter.y + 10;
         this.target = new Point2D.Float(tx, ty);
-        
-        
+               
         double angle = Math.atan2(Math.abs(ty - sy), Math.abs(tx - sx));
         dx = (float) (UNIT_TRAVEL_DISTANCE * Math.cos(angle));
         dy = (float) (UNIT_TRAVEL_DISTANCE * Math.sin(angle));
@@ -79,12 +78,10 @@ public class SuicideEnemy extends GameFigure {
         launcherImage = null;
         
         try {
-           
-            launcherImage = ImageIO.read(getClass().getResource("suicide1.png"));
-            launcherImage2 = ImageIO.read(getClass().getResource("suicide2.png"));
-            explosion1 = ImageIO.read(getClass().getResource("explosion0.png"));
-            explosion2 = ImageIO.read(getClass().getResource("explosion1.png"));
-            explosion3 = ImageIO.read(getClass().getResource("explosion2.png"));
+            //add enemy place holder.
+            launcherImage = ImageIO.read(getClass().getResource("melee1.png"));
+            death = ImageIO.read(getClass().getResource("meleeDead.png"));
+      
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");
            System.exit(-1);
@@ -104,28 +101,15 @@ public class SuicideEnemy extends GameFigure {
                 animationCheck = 1;
             }
             else{
-                g.drawImage(launcherImage2, (int)super.x, (int)super.y, 
+                g.drawImage(launcherImage, (int)super.x, (int)super.y, 
                 30, 30, null);
                 animationCheck = 0;
             }
         }
         if(state == STATE_DYING){
-            if(explosionCounter ==0)
-            {
-                 g.drawImage(explosion1, (int)super.x, (int)super.y, 
-                30, 30, null);
-            }
-            if(explosionCounter ==1)
-            {
-                g.drawImage(explosion2, (int)super.x, (int)super.y, 
-                30, 30, null);
-            }
-            if(explosionCounter ==2)
-            {
-                g.drawImage(explosion3, (int)super.x, (int)super.y, 
-                30, 30, null);
-            }
-         
+                        
+            g.drawImage(death, (int)super.x, (int)super.y, 
+                30, 30, null); 
         }
     }
 
@@ -146,7 +130,6 @@ public class SuicideEnemy extends GameFigure {
     }
 
     public void updateSize() {
-        explosionCounter++;
          
     }
 
@@ -155,6 +138,9 @@ public class SuicideEnemy extends GameFigure {
             double distance = target.distance(super.x, super.y);
             boolean targetReached = distance <= 10.0;
             if (targetReached) {
+                           
+                //add melee attack image and code
+                           
                 ox = tx;
                 oy = ty;
                
@@ -180,9 +166,7 @@ public class SuicideEnemy extends GameFigure {
                 System.out.println("Dx Dy" + dx + " " + dy);
             }
         } else if (state == STATE_DYING) {
-            if (explosionCounter >= MAX_EXPLOSION_SIZE) {
                 this.goNextState();
-            }
         }
     }
 
