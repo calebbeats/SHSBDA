@@ -63,7 +63,7 @@ public class Shooter extends GameFigure {
         launcherImage = null;
         
         try {
-            launcherImage = ImageIO.read(getClass().getResource("shooterRight.png"));
+            launcherImage = ImageIO.read(getClass().getResource("shooterRight1.png"));
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");
             System.exit(-1);
@@ -94,7 +94,7 @@ public class Shooter extends GameFigure {
     public void moveLeft()
     {
         try {
-            launcherImage = ImageIO.read(getClass().getResource("shooterLeft.png"));
+            launcherImage = ImageIO.read(getClass().getResource("shooterLeft1.png"));
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");
             System.exit(-1);
@@ -104,7 +104,17 @@ public class Shooter extends GameFigure {
     public void moveRight()
     {
         try {
-            launcherImage = ImageIO.read(getClass().getResource("shooterRight.png"));
+            launcherImage = ImageIO.read(getClass().getResource("shooterRight1.png"));
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");
+            System.exit(-1);
+        }
+    }
+    
+    public void moveBack()
+    {
+        try {
+            launcherImage = ImageIO.read(getClass().getResource("shooterBack.png"));
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");
             System.exit(-1);
@@ -114,6 +124,8 @@ public class Shooter extends GameFigure {
     public void translate(int dx, int dy) {        
         super.x += dx;        
         super.y += dy;
+        System.out.println("DX: "+ dx);
+        System.out.println("DY: " + dy);
         //for now this is how the character moves left and right
         //can remove this once we get the mouse direction working
         if(dx < 0){
@@ -121,6 +133,12 @@ public class Shooter extends GameFigure {
         }
         else if(dx > 0){
             this.moveRight();
+        }
+        else if(dx == 0 && dy < 0){
+            this.moveBack();
+        }
+        else{
+            this.moveRight(); //no front facing sprite
         }
     }
     
