@@ -14,6 +14,7 @@ public class GameData {
     private final int RADIUS = 6;
     public final List<GameFigure> enemyFigures;
     public final List<GameFigure> friendFigures;
+    public final List<GameFigure> terrainFigures;
     public static Shooter shooter;
     ReentrantLock lock = new ReentrantLock();
     
@@ -21,6 +22,7 @@ public class GameData {
     public GameData() {
         enemyFigures = new CopyOnWriteArrayList<>();
         friendFigures = new CopyOnWriteArrayList<>();
+        terrainFigures = new CopyOnWriteArrayList<>();
         PowerUp  p = new PowerUp(400, 480);
         // GamePanel.width, height are known when rendered. 
         // Thus, at this moment,
@@ -34,6 +36,8 @@ public class GameData {
         enemyFigures.add(new BlinkMage((int)(Math.random() * 500), (int)Math.random()*200));
          
         enemyFigures.add(new SuicideEnemy((int)(Math.random() * 500), (int)Math.random()*200));
+        
+        terrainFigures.add(new BlockTerrain(53, 145));
     }
     
   
