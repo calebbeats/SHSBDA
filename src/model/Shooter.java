@@ -114,6 +114,8 @@ public class Shooter extends GameFigure {
     public void translate(int dx, int dy) {        
         super.x += dx;        
         super.y += dy;
+        //for now this is how the character moves left and right
+        //can remove this once we get the mouse direction working
         if(dx < 0){
             this.moveLeft();
         }
