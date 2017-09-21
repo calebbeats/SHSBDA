@@ -33,6 +33,7 @@ public class Shooter extends GameFigure {
     public WeakPotion p1;
     public MediumPotion p2;
     public StrongPotion p3;
+    public GemOfMana e1;
     //-------------------
     
     public Shooter(int x, int y) {
@@ -40,7 +41,11 @@ public class Shooter extends GameFigure {
         super.state = STATE_ALIVE;
         weapon = new BasicWeapon();
         health = 100;
+        mana = 100;
         
+        
+        //Tests for items and equipment
+        //---------------------------------------------------------------------
         System.out.print("Testing WeakPotion" + "\n");
         p1 = new WeakPotion(1);
         System.out.print("Health before : " + health + "\n");
@@ -59,7 +64,15 @@ public class Shooter extends GameFigure {
         p3.consumeItem(this);
         System.out.print("Health after : " + health + "\n");
         
+        System.out.print("Testing GemOfMana" + "\n");
+        e1 = new GemOfMana(4);
+        System.out.print("Mana before : " + mana + "\n");
+        e1.attachAugment(this);
+        System.out.print("Mana after : " + mana + "\n");
+        e1.removeAugment(this);
+        System.out.print("Mana after removal : " + mana + "\n");
         
+        //---------------------------------------------------------------------
         launcherImage = null;
         
         try {
