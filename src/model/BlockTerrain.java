@@ -52,7 +52,7 @@ public class BlockTerrain extends GameFigure{
 
     @Override
     public Rectangle2D getCollisionBox() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new Rectangle2D.Double(this.x, this.y, 65, 65);
     }
     
 }
