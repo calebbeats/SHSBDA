@@ -127,7 +127,7 @@ public class Shooter extends GameFigure {
 
     @Override
     public Rectangle2D getCollisionBox() {
-        return new Rectangle2D.Double(this.x, this.y, 40, 40);
+        return new Rectangle2D.Double(this.x, this.y, 30, 30);
     }
 
     @Override
