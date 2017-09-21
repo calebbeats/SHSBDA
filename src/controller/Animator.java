@@ -2,13 +2,16 @@ package controller;
 
 import java.util.concurrent.TimeUnit;
 import model.GameFigure;
+import model.Shooter;
+import model.BlinkMage;
+import model.SuicideEnemy;
 import model.GameFigureState;
 
 public class Animator implements Runnable {
 
     public boolean running = true;
     private final int FRAMES_PER_SECOND = 50;
-
+    
     @Override
     public void run() {
 
@@ -55,6 +58,20 @@ public class Animator implements Runnable {
                 {
                     f.goNextState();
                     s.goNextState();
+                }
+            }
+            //detection for enemy attacks hitting terrain
+            for(GameFigure t : Main.gameData.terrainFigures){
+                if(s.getCollisionBox().intersects(t.getCollisionBox()) && !((s instanceof BlinkMage) || (s instanceof SuicideEnemy))){
+                    s.goNextState();
+                }
+            }
+        }
+        //detection for freindly attacks hitting terrain
+        for (GameFigure m : Main.gameData.friendFigures){
+            for(GameFigure t : Main.gameData.terrainFigures){
+                if(m.getCollisionBox().intersects(t.getCollisionBox()) && !(m instanceof Shooter)){
+                    m.goNextState();
                 }
             }
         }
