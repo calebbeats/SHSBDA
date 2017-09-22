@@ -1,6 +1,11 @@
 package controller;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import model.GameFigure;
 import model.GameFigureState;
 
@@ -18,7 +23,17 @@ public class Animator implements Runnable {
             processCollisions();
 
             Main.gameData.update();
-            Main.gamePanel.gameRender();
+            try {
+                Main.gamePanel.gameRender();
+            } catch (IOException ex) {
+                Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnsupportedAudioFileException ex) {
+                Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (LineUnavailableException ex) {
+                Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
+            }
             Main.gamePanel.printScreen();
 
             long endTime = System.currentTimeMillis();

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/model/FigureDone.java</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/model/enemyMissile0.png</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/model/enemyMissile1.png</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/model/CollisionBox.java</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/model/EnemyMissile.java</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/model/BlinkMage1.png</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/model/Shooter.java</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/controller/MouseController.java</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/view/GamePanel.java</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/model/blinkmagedeath1.png</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/view/MainWindow.java</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/model/blinkmagedeath0.png</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/model/BlinkMage0.png</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/controller/Animator.java</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/controller/ButtonListener.java</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/model/Bomb.java</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/model/blinkmagedeath2.png</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/model/explosion2_1.png</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/model/FlyingSaucer.java</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/controller/startScreen.png</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/model/BasicWeapon.java</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/model/GameFigure.java</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/model/BlinkMage3.png</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/model/BlinkMage2.png</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/model/SuicidalEnemy2.png</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/controller/Main.java</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/model/BlinkMage.java</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/model/WeaponComponent.java</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/model/Missile.java</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/model/FireballPower.java</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/model/FigureAlive.java</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/model/explosion1_1.png</file>
+            <file>file:/C:/Users/dinhn/Documents/GitHub/SHSBDA/src/model/SuicidalEnemy1.png</file>
+        </group>
+    </open-files>
+</project-private>

@@ -15,6 +15,7 @@ public class Missile extends GameFigure {
 
     // missile size
     private static final int SIZE = 10;
+    private int size = SIZE;
     private static final int MAX_EXPLOSION_SIZE = 3;
     private float dx; // displacement at each frame
     private float dy; // displacement at each frame
@@ -43,7 +44,7 @@ public class Missile extends GameFigure {
      * @param ty target y of the missile
      * @param color color of the missile
      */
-    public Missile(float sx, float sy, float tx, float ty) {
+    public Missile(float sx, float sy, float tx, float ty, Color color) {
         super(sx, sy);
         
         this.target = new Point2D.Float(tx, ty);
@@ -106,11 +107,16 @@ public class Missile extends GameFigure {
             {
                 g.drawImage(explosion2, (int)super.x, (int)super.y, 
                 30, 30, null);
+
+                
             }
             if(explosionCounter ==2)
             {
-                g.drawImage(explosion3, (int)super.x, (int)super.y, 
-                30, 30, null);
+                //g.drawImage(explosion3, (int)super.x, (int)super.y, 
+                //30, 30, null);
+                g.fillOval((int) (super.x - size / 2),
+                (int) (super.y - size / 2),
+                size, size);
             }
          
         }

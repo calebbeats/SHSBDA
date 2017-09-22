@@ -14,6 +14,7 @@ public class MainWindow extends JFrame {
    
     public static JButton quitButton;
     public static JButton startGame;
+    JFrame frame = new JFrame();
 
     public MainWindow() {
 
@@ -33,6 +34,7 @@ public class MainWindow extends JFrame {
         
         quitButton.addActionListener(buttonListener);
         startGame.addActionListener(buttonListener);
+        
 
         MouseController mouseController = new MouseController();
         Main.gamePanel.addMouseListener(mouseController);
@@ -43,6 +45,7 @@ public class MainWindow extends JFrame {
         // just have one Component "true", the rest must be "false"
        
         quitButton.setFocusable(false);
+        
     }
 
 }
