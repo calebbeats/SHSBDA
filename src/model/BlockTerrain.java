@@ -36,7 +36,7 @@ public class BlockTerrain extends GameFigure{
     public void render(Graphics2D g) {
         if(state==STATE_ALIVE){
             g.drawImage(blockImage,(int)super.x, (int)super.y, 
-                50, 50, null);
+                70, 70, null);
         }
     }
 
@@ -52,7 +52,7 @@ public class BlockTerrain extends GameFigure{
 
     @Override
     public Rectangle2D getCollisionBox() {
-        return new Rectangle2D.Double(this.x, this.y, 50, 50);
+        return new Rectangle2D.Double(this.x, this.y, 65, 65);
     }
     
 }
