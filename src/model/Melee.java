@@ -28,11 +28,6 @@ public class Melee extends GameFigure {
 
     private int explosionCounter = 0;
     public int distanceTraveled;
-    // private Image launcherImage;
-    //private Image launcherImage2;
-    //private Image explosion1;
-    // private Image explosion2;
-    // private Image explosion3;
     private Image swordUp;
     private Image swordDown;
     private Image swordRight;
@@ -52,8 +47,6 @@ public class Melee extends GameFigure {
         this.target = new Point2D.Float(tx, ty);
         this.color = color;
         
-        //dx = tx;
-        //dy = ty;
         
         double angle = Math.atan2(Math.abs(ty - sy), Math.abs(tx - sx));
         dx = (float) (UNIT_TRAVEL_DISTANCE * Math.cos(angle));
@@ -74,12 +67,6 @@ public class Melee extends GameFigure {
         //launcherImage = null;
 
         try {
-
-            //launcherImage = ImageIO.read(getClass().getResource("fireball.gif"));
-            //launcherImage2 = ImageIO.read(getClass().getResource("fireball2.png"));
-            //explosion1 = ImageIO.read(getClass().getResource("explosion0.png"));
-            //explosion2 = ImageIO.read(getClass().getResource("explosion1.png"));
-            //explosion3 = ImageIO.read(getClass().getResource("explosion2.png"));
             swordUp = ImageIO.read(getClass().getResource("swordUp.png"));
             swordDown = ImageIO.read(getClass().getResource("swordDown.png"));
             swordRight = ImageIO.read(getClass().getResource("swordRight.png"));
@@ -93,6 +80,7 @@ public class Melee extends GameFigure {
 
     @Override
     public void render(Graphics2D g) {
+        //hold sword up waiting to attack
         if (state == STATE_ALIVE) {
             //if (animationCheck == 0) {
                 //g.drawImage(launcherImage, (int) super.x, (int) super.y,
@@ -108,6 +96,8 @@ public class Melee extends GameFigure {
              //   animationCheck = 0;
            // }
         }
+        //draw animation based on left attack or right attack.
+        // WORK IN PROGRESS
         if (state == STATE_DYING) {
             if (explosionCounter == 0) {
                 g.drawImage(swordRight, (int) super.x, (int) super.y,
@@ -149,7 +139,6 @@ public class Melee extends GameFigure {
         } else if (state == STATE_DYING) {
             updateSize();
         }
-
     }
 
     public void updateLocation() {
@@ -166,11 +155,11 @@ public class Melee extends GameFigure {
 
     public void updateState() {
         if (state == STATE_ALIVE) {
-            double distance = target.distance(super.x, super.y);
-            boolean targetReached = distance <= 2.0;
-            if (targetReached) {
-                this.goNextState();
-            }
+            //double distance = target.distance(super.x, super.y);
+            //boolean targetReached = distance <= 2.0;
+            //if (targetReached) {
+                this.goNextState(); // WORK IN PROGRESS
+           // }
         } else if (state == STATE_DYING) {
             if (explosionCounter >= MAX_EXPLOSION_SIZE) {
                 this.goNextState();
