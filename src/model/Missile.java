@@ -45,7 +45,7 @@ public class Missile extends GameFigure {
      */
     public Missile(float sx, float sy, float tx, float ty) {
         super(sx, sy);
-        
+        super.state = STATE_ALIVE;
         this.target = new Point2D.Float(tx, ty);
         this.color = color;
         
