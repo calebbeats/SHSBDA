@@ -3,7 +3,6 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
             <file>file:/C:/Users/Chase/Documents/GitHub/SHSBDA/src/model/WeaponComponent.java</file>
             <file>file:/C:/Users/Chase/Documents/GitHub/SHSBDA/src/controller/Animator.java</file>
             <file>file:/C:/Users/Chase/Documents/GitHub/SHSBDA/src/model/GameFigureState.java</file>
@@ -17,11 +16,6 @@
             <file>file:/C:/Users/Chase/Documents/GitHub/SHSBDA/src/model/GameFigure.java</file>
             <file>file:/C:/Users/Chase/Documents/GitHub/SHSBDA/src/controller/ButtonListener.java</file>
             <file>file:/C:/Users/Chase/Documents/GitHub/SHSBDA/src/controller/MouseController.java</file>
-=======
-            <file>file:/C:/Git/SHSBDA/src/model/WeakPotion.java</file>
-            <file>file:/C:/Git/SHSBDA/src/model/GameFigure.java</file>
-            <file>file:/C:/Git/SHSBDA/src/model/Shooter.java</file>
->>>>>>> Dev
         </group>
     </open-files>
 </project-private>
