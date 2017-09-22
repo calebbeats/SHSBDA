@@ -1,8 +1,6 @@
 package model;
 
 import controller.Main;
-import view.GamePanel;
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -27,7 +25,7 @@ public class GameData {
         // GamePanel.width, height are known when rendered. 
         // Thus, at this moment,
         // we cannot use GamePanel.width and height.
-        shooter = new Shooter(Main.WIN_WIDTH / 2, Main.WIN_HEIGHT - 130);
+        shooter = new Shooter(Main.WIN_WIDTH / 2, Main.WIN_HEIGHT / 2);
 
         friendFigures.add(shooter);
         friendFigures.add(p);
@@ -39,7 +37,7 @@ public class GameData {
  
         enemyFigures.add(new SuicideEnemy((int)(Math.random() * 500), (int)Math.random()*200));
         
-        terrainFigures.add(new BlockTerrain(53, 145));
+        terrainFigures.add(new BlockTerrain(100, 100));
     }
     
   
