@@ -12,6 +12,7 @@ import model.Shooter;
  * @author caleb
  */
 public interface WeaponComponent {
-    void shoot(Shooter shooter, int x, int y); 
+    void shoot(Shooter shooter, int x, int y);
+    void melee(Shooter shooter, int x, int y);
 }
 

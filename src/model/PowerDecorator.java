@@ -21,5 +21,10 @@ public class PowerDecorator implements WeaponComponent {
     public void shoot(Shooter shooter, int px, int py) {
         weapon.shoot(shooter, px,  py);
     }
+
+    @Override
+    public void melee(Shooter shooter, int px, int py) {
+        weapon.melee(shooter, px, py);
+    }
   
 }

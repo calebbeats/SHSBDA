@@ -2,6 +2,7 @@ package controller;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import model.Melee;
 import model.Missile;
 import model.Shooter;
 
@@ -18,8 +19,13 @@ public class MouseController extends MouseAdapter {
         Shooter shooter = (Shooter) Main.gameData.friendFigures.get(0);
         
         if (me.getButton() == MouseEvent.BUTTON1) {//Left click detected, initiate melee attack
-            //melee attack in the direction the mouse is facing in regards to the player
-            
+            //melee attack in the direction the mouse is in regards to the player
+            Melee m = new Melee(
+                shooter.getXofMissileShoot(),
+                shooter.getYofMissileShoot(),
+                px, py // direction in which to melee attack
+            );
+            Main.gameData.friendFigures.add(m);
         }
         
         if(me.getButton() == MouseEvent.BUTTON3){ //Right click detected, initiate ranged attack
