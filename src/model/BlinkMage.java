@@ -1,6 +1,7 @@
 
 package model;
 
+import controller.Main;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.Rectangle2D;
@@ -101,8 +102,24 @@ public class BlinkMage extends GameFigure {
             }
             else
             {
-                super.x = (float) Math.random()*450;
-                super.y = (float) Math.random()*520;
+                float intendedX = (float) Math.random()*450;
+                float intendedY = (float) Math.random()*520;
+                GameFigure mageToMove = new BlinkMage(intendedX, intendedY);
+                
+                for(GameFigure t : Main.gameData.terrainFigures){
+                    if(!(mageToMove.getCollisionBox().intersects(t.getCollisionBox()))){
+                        super.x = intendedX;
+                        super.y = intendedY;
+                    }
+                    else{
+                        intendedX = (float) Math.random()*450;
+                        intendedY = (float) Math.random()*520;
+                        super.x = intendedX;
+                        super.y = intendedY;
+                    }
+                }
+                //super.x = (float) Math.random()*450;
+                //super.y = (float) Math.random()*520;
                 timer = 0;
             }
             if(shootTimer < 20)
