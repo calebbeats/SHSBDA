@@ -20,7 +20,6 @@ public class MouseController extends MouseAdapter {
         if (me.getButton() == MouseEvent.BUTTON1) {//Left click detected, initiate melee attack
             //melee attack in the direction the mouse is facing in regards to the player
             
-            
         }
         
         if(me.getButton() == MouseEvent.BUTTON3){ //Right click detected, initiate ranged attack
