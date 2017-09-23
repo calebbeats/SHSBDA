@@ -8,6 +8,8 @@ import model.SuicideEnemy;
 import model.MeleeEnemy;
 import model.SlowMage;
 import model.GameFigureState;
+import model.GameData;
+import view.MainWindow;
 
 public class Animator implements Runnable {
 
@@ -49,7 +51,7 @@ public class Animator implements Runnable {
             if(Main.gameData.shooter.getCollisionBox().intersects(s.getCollisionBox()) && s.state != s.STATE_DYING )
             {
               s.goNextState();
-              
+              GameData.multiplier = 0;
             
             }
        
@@ -60,6 +62,8 @@ public class Animator implements Runnable {
                 {
                     f.goNextState();
                     s.goNextState();
+                    MainWindow.score += 5;
+                    MainWindow.scoreText.setText("Score: " + MainWindow.score + " || Coins: " + MainWindow.coins);
                 }
             }
             //detection for enemy attacks hitting terrain
