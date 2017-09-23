@@ -51,6 +51,7 @@ public class GamePanel extends JPanel {
         }
 
         g2.clearRect(0, 0, width, height);
+        g2.setBackground(Color.BLACK);
         if(ButtonListener.choosedButton == true){
            backGround = ImageIO.read(getClass().getResource("startScreen.png"));
            g2.drawImage(backGround, 0, 0, width, height, null);
