@@ -1,6 +1,7 @@
 package model;
 
 import controller.Main;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.Rectangle2D;
@@ -12,14 +13,7 @@ import static model.GameFigure.STATE_DYING;
 
 public class Shooter extends GameFigure {
 
-    //Images for animations go below
-    //----------------------------------
-    private Image launcherImage;
-    //private Image shooterLeft;
-    //private Image shooterRight;
-    public WeaponComponent weapon;
-    int deadTimer = 0;
-    // ----------------------------------
+    private static final int PLAYER_WIDTH = 30, PLAYER_HEIGHT = 30;
 
     //Player Stats
     //-------------------
@@ -36,6 +30,15 @@ public class Shooter extends GameFigure {
     public StrongPotion p3;
     public GemOfMana e1;
     //-------------------
+
+    //Images for animations go below
+    //----------------------------------
+    private Image launcherImage;
+    //private Image shooterLeft;
+    //private Image shooterRight;
+    public WeaponComponent weapon;
+    int deadTimer = 0;
+    // ----------------------------------
 
     //Player Movement
     //-------------------
@@ -90,41 +93,11 @@ public class Shooter extends GameFigure {
     @Override
     public void render(Graphics2D g) {
         g.drawImage(launcherImage, (int) super.x, (int) super.y,
-                30, 30, null);
+                PLAYER_WIDTH, PLAYER_HEIGHT, null);
     }
 
     @Override
     public void update() {
-
-        // used to see if shooter will colide with terrain or will hit window boundary before moving
-        Shooter shooterIntededPosition = new Shooter((int) this.x + velocityX, (int) this.y + velocityY);
-
-        Main.gameData.terrainFigures.forEach(terrain -> {
-            if (shooterIntededPosition.getCollisionBox().intersects(terrain.getCollisionBox())) {
-                if (velocityX < 0 || velocityX > 0) {
-                    velocityX = 0;
-                } else {
-                    velocityY = 0;
-                }
-            } else if (this.x + velocityX < 0 || this.x + velocityX > Main.WIN_WIDTH - 30) {
-                velocityX = 0;
-            } else if (this.y + velocityY < 0 || this.y + velocityY > Main.WIN_HEIGHT - 100) {
-                velocityY = 0;
-            }
-        });
-
-        this.x += velocityX;
-        this.y += velocityY;
-
-        //for now this is how the character moves left and right and back
-        //can remove this once we get the mouse direction working
-        if (velocityX < 0) {
-            this.moveLeft();
-        } else if (velocityX > 0 || velocityX == 0 && velocityY > 0) {
-            this.moveRight();
-        } else if (velocityX == 0 && velocityY < 0) {
-            this.moveBack();
-        }
 
         if (state == STATE_DYING) {
             if (deadTimer < 10) {
@@ -132,10 +105,75 @@ public class Shooter extends GameFigure {
             } else {
                 this.goNextState();
             }
+        } else {
+            //for now this is how the character moves left and right and back
+            //can remove this once we get the mouse direction working
+            if (velocityX < 0) {
+                this.moveLeft();
+            } else if (velocityX > 0 || velocityX == 0 && velocityY > 0) {
+                this.moveRight();
+            } else if (velocityX == 0 && velocityY < 0) {
+                this.moveBack();
+            }
+
+            moveX();
+            moveY();
+
+            // Window boundary
+            if (super.x <= 0) {
+                super.x = 0;
+            }
+            if (super.x >= Main.WIN_WIDTH - PLAYER_WIDTH) {
+                super.x = Main.WIN_WIDTH - PLAYER_WIDTH;
+            }
+            if (super.y <= 0) {
+                super.y = 0;
+            }
+            if (super.y >= Main.WIN_HEIGHT - PLAYER_HEIGHT - 70) {
+                super.y = Main.WIN_HEIGHT - PLAYER_HEIGHT - 70;
+            }
         }
     }
 
-    public void moveLeft() {
+    private void moveX() {
+
+        Main.gameData.terrainFigures.forEach(terrain -> {
+            if (velocityX > 0) {
+                Shooter shooterIntendedPossition = new Shooter((int) super.x + velocityX, (int) super.y);
+
+                if (!shooterIntendedPossition.getCollisionBox().intersects(terrain.getCollisionBox())) {
+                    super.x += velocityX;
+                }
+            } else if (velocityX < 0) {
+                Shooter shooterIntendedPossition = new Shooter((int) super.x + velocityX, (int) super.y);
+
+                if (!shooterIntendedPossition.getCollisionBox().intersects(terrain.getCollisionBox())) {
+                    super.x += velocityX;
+                }
+            }
+        });
+    }
+
+    private void moveY() {
+
+        Main.gameData.terrainFigures.forEach(terrain -> {
+            if (velocityY > 0) {
+                Shooter shooterIntendedPossition = new Shooter((int) super.x, (int) super.y + velocityY);
+
+                if (!shooterIntendedPossition.getCollisionBox().intersects(terrain.getCollisionBox())) {
+                    super.y += velocityY;
+                }
+            } else if (velocityY < 0) {
+                Shooter shooterIntendedPossition = new Shooter((int) super.x, (int) super.y + velocityY);
+
+                if (!shooterIntendedPossition.getCollisionBox().intersects(terrain.getCollisionBox())) {
+                    super.y += velocityY;
+                }
+            }
+        });
+    }
+
+    private void moveLeft() {
         try {
             launcherImage = ImageIO.read(getClass().getResource("shooterLeft1.png"));
         } catch (IOException ex) {
@@ -144,7 +182,7 @@ public class Shooter extends GameFigure {
         }
     }
 
-    public void moveRight() {
+    private void moveRight() {
         try {
             launcherImage = ImageIO.read(getClass().getResource("shooterRight1.png"));
         } catch (IOException ex) {
@@ -153,7 +191,7 @@ public class Shooter extends GameFigure {
         }
     }
 
-    public void moveBack() {
+    private void moveBack() {
         try {
             launcherImage = ImageIO.read(getClass().getResource("shooterBack.png"));
         } catch (IOException ex) {
@@ -173,7 +211,7 @@ public class Shooter extends GameFigure {
 
     @Override
     public Rectangle2D getCollisionBox() {
-        return new Rectangle2D.Double(this.x, this.y, 30, 30);
+        return new Rectangle2D.Double(this.x, this.y, PLAYER_HEIGHT, PLAYER_WIDTH);
     }
 
     @Override
