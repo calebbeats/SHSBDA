@@ -1,6 +1,8 @@
 package model;
 
 import controller.Main;
+import view.MainWindow;
+import view.GamePanel;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -15,6 +17,7 @@ public class GameData {
     public final List<GameFigure> terrainFigures;
     public static Shooter shooter;
     ReentrantLock lock = new ReentrantLock();
+    public static int multiplier = 0;
     
     
     public GameData() {
@@ -55,6 +58,12 @@ public class GameData {
             if (f.state == GameFigureState.STATE_DONE) {
                 removeEnemies.add(f);
             }
+            else{
+                    removeEnemies.add(f);
+                    multiplier += 1;
+                    MainWindow.coins += multiplier;
+                    MainWindow.scoreText.setText("Score: " + MainWindow.score + " || Coins: " + MainWindow.coins);
+                }
         }
         enemyFigures.removeAll(removeEnemies);
 
