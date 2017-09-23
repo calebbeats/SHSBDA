@@ -5,6 +5,8 @@ import model.GameFigure;
 import model.Shooter;
 import model.BlinkMage;
 import model.SuicideEnemy;
+import model.MeleeEnemy;
+import model.SlowMage;
 import model.GameFigureState;
 
 public class Animator implements Runnable {
@@ -62,7 +64,7 @@ public class Animator implements Runnable {
             }
             //detection for enemy attacks hitting terrain
             for(GameFigure t : Main.gameData.terrainFigures){
-                if(s.getCollisionBox().intersects(t.getCollisionBox()) && !((s instanceof BlinkMage) || (s instanceof SuicideEnemy))){
+                if(s.getCollisionBox().intersects(t.getCollisionBox()) && !((s instanceof BlinkMage) || (s instanceof SuicideEnemy) || (s instanceof MeleeEnemy) || (s instanceof SlowMage))){
                     s.goNextState();
                 }
             }
