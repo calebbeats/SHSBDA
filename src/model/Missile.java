@@ -15,11 +15,12 @@ public class Missile extends GameFigure {
 
     // missile size
     private static final int SIZE = 10;
-    private int size = SIZE;
     private static final int MAX_EXPLOSION_SIZE = 3;
+    private static final int WINDOW_WIDTH = controller.Main.WIN_WIDTH;
+    private static final int WINDOW_HEIGHT = controller.Main.WIN_HEIGHT;
     private float dx; // displacement at each frame
     private float dy; // displacement at each frame
-    private int animationCheck=0;
+    private int animationCheck = 0;
 
     // public properties for quick access
     public Color color;
@@ -44,11 +45,11 @@ public class Missile extends GameFigure {
      * @param ty target y of the missile
      * @param color color of the missile
      */
-    public Missile(float sx, float sy, float tx, float ty, Color color) {
+    public Missile(float sx, float sy, float tx, float ty) {
         super(sx, sy);
-        
+        super.state = STATE_ALIVE;
         this.target = new Point2D.Float(tx, ty);
-        this.color = color;
+        //this.color = color;
         
         double angle = Math.atan2(Math.abs(ty - sy), Math.abs(tx - sx));
         dx = (float) (UNIT_TRAVEL_DISTANCE * Math.cos(angle));
@@ -107,16 +108,11 @@ public class Missile extends GameFigure {
             {
                 g.drawImage(explosion2, (int)super.x, (int)super.y, 
                 30, 30, null);
-
-                
             }
             if(explosionCounter ==2)
             {
-                //g.drawImage(explosion3, (int)super.x, (int)super.y, 
-                //30, 30, null);
-                g.fillOval((int) (super.x - size / 2),
-                (int) (super.y - size / 2),
-                size, size);
+                g.drawImage(explosion3, (int)super.x, (int)super.y, 
+                30, 30, null);
             }
          
         }
@@ -125,9 +121,9 @@ public class Missile extends GameFigure {
     @Override
     public void update() {
         updateState();
-        if(this.x > 470 || this.x < 20 || this.y >540 || this.y < 20)
+        if(this.x > WINDOW_WIDTH || this.x < 0 || this.y > WINDOW_HEIGHT || this.y < 0)
         {
-            this.goNextState();
+           this.goNextState();
         }
         if (state == STATE_ALIVE) {
             updateLocation();
@@ -138,10 +134,11 @@ public class Missile extends GameFigure {
         
     }
 
-    public void updateLocation() {
-        
+    public void updateLocation() {    
+        //when button clicked this happens
         super.x += dx;
         super.y += dy;
+        
     }
 
     public void updateSize() {
@@ -170,7 +167,7 @@ public class Missile extends GameFigure {
 
     @Override
     public void shoot() {
-        System.out.println(" Missiles Shoots");
+        System.out.println("Missile Shoots");
     }
 
 }

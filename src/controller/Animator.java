@@ -7,13 +7,20 @@ import java.util.logging.Logger;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import model.GameFigure;
+import model.Shooter;
+import model.BlinkMage;
+import model.SuicideEnemy;
+import model.MeleeEnemy;
+import model.SlowMage;
 import model.GameFigureState;
+import model.GameData;
+import view.MainWindow;
 
 public class Animator implements Runnable {
 
     public boolean running = true;
     private final int FRAMES_PER_SECOND = 50;
-
+    
     @Override
     public void run() {
 
@@ -59,7 +66,7 @@ public class Animator implements Runnable {
             if(Main.gameData.shooter.getCollisionBox().intersects(s.getCollisionBox()) && s.state != s.STATE_DYING )
             {
               s.goNextState();
-              
+              GameData.multiplier = 0;
             
             }
        
@@ -70,6 +77,22 @@ public class Animator implements Runnable {
                 {
                     f.goNextState();
                     s.goNextState();
+                    MainWindow.score += 5;
+                    MainWindow.scoreText.setText("Score: " + MainWindow.score + " || Coins: " + MainWindow.coins);
+                }
+            }
+            //detection for enemy attacks hitting terrain
+            for(GameFigure t : Main.gameData.terrainFigures){
+                if(s.getCollisionBox().intersects(t.getCollisionBox()) && !((s instanceof BlinkMage) || (s instanceof SuicideEnemy) || (s instanceof MeleeEnemy) || (s instanceof SlowMage))){
+                    s.goNextState();
+                }
+            }
+        }
+        //detection for freindly attacks hitting terrain
+        for (GameFigure m : Main.gameData.friendFigures){
+            for(GameFigure t : Main.gameData.terrainFigures){
+                if(m.getCollisionBox().intersects(t.getCollisionBox()) && !(m instanceof Shooter)){
+                    m.goNextState();
                 }
             }
         }

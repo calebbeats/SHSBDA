@@ -26,5 +26,17 @@ public class BasicWeapon implements WeaponComponent {
             Main.gameData.friendFigures.add(m);   
         }
     }
+    
+    @Override
+    public void melee(Shooter shooter, int px, int py) {
+        Melee m = new Melee(
+                shooter.getXofMissileShoot(),
+                shooter.getYofMissileShoot(),
+                px, py // direction in which to melee attack
+            );
+        synchronized (Main.gameData.friendFigures) {
+            Main.gameData.friendFigures.add(m);
+    }
+}
 }
 

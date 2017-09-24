@@ -1,6 +1,7 @@
 
 package model;
 
+import controller.Main;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.Rectangle2D;
@@ -30,10 +31,10 @@ public class BlinkMage extends GameFigure {
         super(x, y);
         super.state = STATE_ALIVE;
         try {
-            blinkMage0 = ImageIO.read(getClass().getResource("blinkmage0.png"));
-            blinkMage1 = ImageIO.read(getClass().getResource("blinkmage1.png"));
-            blinkMage2 = ImageIO.read(getClass().getResource("blinkmage2.png"));
-            blinkMage3 = ImageIO.read(getClass().getResource("blinkmage3.png"));
+            blinkMage0 = ImageIO.read(getClass().getResource("mage1.png"));
+            blinkMage1 = ImageIO.read(getClass().getResource("mage2.png"));
+            blinkMage2 = ImageIO.read(getClass().getResource("mage1.png"));
+            blinkMage3 = ImageIO.read(getClass().getResource("mage2.png"));
             deadMage0 = ImageIO.read(getClass().getResource("blinkmagedeath0.png"));
             deadMage1 = ImageIO.read(getClass().getResource("blinkmagedeath1.png"));
             deadMage2 = ImageIO.read(getClass().getResource("blinkmagedeath2.png"));
@@ -101,8 +102,24 @@ public class BlinkMage extends GameFigure {
             }
             else
             {
-                super.x = (float) Math.random()*450;
-                super.y = (float) Math.random()*520;
+                float intendedX = (float) Math.random()*450;
+                float intendedY = (float) Math.random()*520;
+                GameFigure mageToMove = new BlinkMage(intendedX, intendedY);
+                
+                for(GameFigure t : Main.gameData.terrainFigures){
+                    if(!(mageToMove.getCollisionBox().intersects(t.getCollisionBox()))){
+                        super.x = intendedX;
+                        super.y = intendedY;
+                    }
+                    else{
+                        intendedX = (float) Math.random()*450;
+                        intendedY = (float) Math.random()*520;
+                        super.x = intendedX;
+                        super.y = intendedY;
+                    }
+                }
+                //super.x = (float) Math.random()*450;
+                //super.y = (float) Math.random()*520;
                 timer = 0;
             }
             if(shootTimer < 20)

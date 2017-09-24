@@ -1,8 +1,8 @@
 package model;
 
 import controller.Main;
+import view.MainWindow;
 import view.GamePanel;
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -14,26 +14,33 @@ public class GameData {
     private final int RADIUS = 6;
     public final List<GameFigure> enemyFigures;
     public final List<GameFigure> friendFigures;
+    public final List<GameFigure> terrainFigures;
     public static Shooter shooter;
     ReentrantLock lock = new ReentrantLock();
+    public static int multiplier = 0;
     
     
     public GameData() {
         enemyFigures = new CopyOnWriteArrayList<>();
         friendFigures = new CopyOnWriteArrayList<>();
+        terrainFigures = new CopyOnWriteArrayList<>();
         PowerUp  p = new PowerUp(400, 480);
         // GamePanel.width, height are known when rendered. 
         // Thus, at this moment,
         // we cannot use GamePanel.width and height.
-        shooter = new Shooter(Main.WIN_WIDTH / 2, Main.WIN_HEIGHT - 130);
+        shooter = new Shooter(Main.WIN_WIDTH / 2, Main.WIN_HEIGHT / 2);
 
         friendFigures.add(shooter);
         friendFigures.add(p);
         
+        //enemyFigures.add(new BlinkMage((int)(Math.random() * 500), (int)Math.random()*200));
         enemyFigures.add(new BlinkMage((int)(Math.random() * 500), (int)Math.random()*200));
-        enemyFigures.add(new BlinkMage((int)(Math.random() * 500), (int)Math.random()*200));
-         
+        enemyFigures.add(new MeleeEnemy((int)(Math.random() * 500), (int)Math.random()*200));
+        enemyFigures.add(new SlowMage((int)(Math.random() * 500), (int)Math.random()*200));
+ 
         enemyFigures.add(new SuicideEnemy((int)(Math.random() * 500), (int)Math.random()*200));
+        
+        terrainFigures.add(new BlockTerrain(100, 100));
     }
     
   
@@ -51,6 +58,12 @@ public class GameData {
             if (f.state == GameFigureState.STATE_DONE) {
                 removeEnemies.add(f);
             }
+            else{
+                    removeEnemies.add(f);
+                    multiplier += 1;
+                    MainWindow.coins += multiplier;
+                    MainWindow.scoreText.setText("Score: " + MainWindow.score + " || Coins: " + MainWindow.coins);
+                }
         }
         enemyFigures.removeAll(removeEnemies);
 

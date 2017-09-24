@@ -34,7 +34,7 @@ public class SuicideEnemy extends GameFigure {
     // public properties for quick access
     public Point2D.Float target;
 
-    private static final int UNIT_TRAVEL_DISTANCE = 4; // per frame move
+    private static final int UNIT_TRAVEL_DISTANCE = 2; // per frame move
 
     private int explosionCounter = 0;
     
@@ -80,8 +80,8 @@ public class SuicideEnemy extends GameFigure {
         
         try {
            
-            launcherImage = ImageIO.read(getClass().getResource("SuicidalEnemy1.png"));
-            launcherImage2 = ImageIO.read(getClass().getResource("SuicidalEnemy2.png"));
+            launcherImage = ImageIO.read(getClass().getResource("suicide1.png"));
+            launcherImage2 = ImageIO.read(getClass().getResource("suicide2.png"));
             explosion1 = ImageIO.read(getClass().getResource("explosion0.png"));
             explosion2 = ImageIO.read(getClass().getResource("explosion1.png"));
             explosion3 = ImageIO.read(getClass().getResource("explosion2.png"));
