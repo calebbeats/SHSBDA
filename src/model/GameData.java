@@ -56,14 +56,11 @@ public class GameData {
         for (int i = 0; i < enemyFigures.size(); i++) {
             f = enemyFigures.get(i);
             if (f.state == GameFigureState.STATE_DONE) {
+                multiplier += 1;
+                MainWindow.coins += multiplier;
+                MainWindow.scoreText.setText("Score: " + MainWindow.score + " || Coins: " + MainWindow.coins);
                 removeEnemies.add(f);
-            }
-            else{
-                    removeEnemies.add(f);
-                    multiplier += 1;
-                    MainWindow.coins += multiplier;
-                    MainWindow.scoreText.setText("Score: " + MainWindow.score + " || Coins: " + MainWindow.coins);
-                }
+            }            
         }
         enemyFigures.removeAll(removeEnemies);
 

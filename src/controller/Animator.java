@@ -65,7 +65,7 @@ public class Animator implements Runnable {
         for (GameFigure s : Main.gameData.enemyFigures) {
             if(Main.gameData.shooter.getCollisionBox().intersects(s.getCollisionBox()) && s.state != s.STATE_DYING )
             {
-              s.goNextState();
+              s.goNextState();              
               GameData.multiplier = 0;
             
             }
