@@ -33,8 +33,7 @@ public class GamePanel extends JPanel {
     // off screen rendering
     public Graphics2D g2;
     private Image dbImage = null; // double buffer image
-    public Image backGround; 
-
+    public Image backGround;
 
     public void gameRender() throws IOException, UnsupportedAudioFileException, LineUnavailableException, InterruptedException {
         width = getSize().width;
@@ -51,15 +50,16 @@ public class GamePanel extends JPanel {
         }
 
         g2.clearRect(0, 0, width, height);
-        g2.setBackground(Color.BLACK);
-        if(ButtonListener.choosedButton == true){
-           backGround = ImageIO.read(getClass().getResource("startScreen.png"));
-           g2.drawImage(backGround, 0, 0, width, height, null);
-           //audio();
-        }else{
-            
+
+        if (ButtonListener.choosedButton == true) {
+//           backGround = ImageIO.read(getClass().getResource("startScreen.png"));
+//           g2.drawImage(backGround, 0, 0, width, height, null);
+            //audio();
+            g2.setBackground(Color.BLACK);
+        } else {
+
             backGround = ImageIO.read(getClass().getResource("gameFinish.png"));
-           g2.drawImage(backGround, 0, 0, width, height, null);
+            g2.drawImage(backGround, 0, 0, width, height, null);
         }
         //backGround = ImageIO.read(getClass().getResource("startScreen.png"));
         //g2.drawImage(backGround, 0, 0, width, height, null);
@@ -76,7 +76,7 @@ public class GamePanel extends JPanel {
             }
         }
     }
-    
+
     // use active rendering to put the buffered image on-screen
     public void printScreen() {
         Graphics g;
@@ -93,6 +93,5 @@ public class GamePanel extends JPanel {
             System.out.println("Graphics error: " + e);
         }
     }
-    
 
 }

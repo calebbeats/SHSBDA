@@ -27,20 +27,21 @@ import java.io.File;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 
-
-
 public class ButtonListener implements ActionListener {
 
     public Image backGround;
     private Graphics2D g2;
     public static Boolean choosedButton = false;
+    //public static int choosedButton = 0;
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == MainWindow.startGame){
+        if (e.getSource() == MainWindow.startGame) {
             try {
                 //MainWindow.get
                 MainWindow.startGame.setEnabled(false);
                 new Thread(Main.animator).start();
+                //choosedButton = 1;
                 choosedButton = true;
                 audio();
             } catch (UnsupportedAudioFileException ex) {
@@ -52,13 +53,13 @@ public class ButtonListener implements ActionListener {
             } catch (InterruptedException ex) {
                 Logger.getLogger(ButtonListener.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        else if (e.getSource() == MainWindow.quitButton) {
+        } else if (e.getSource() == MainWindow.quitButton) {
+            //choosedButton = 2;
             choosedButton = false;
             if (Main.animator.running) {
-                
+
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(1500);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(ButtonListener.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -69,25 +70,25 @@ public class ButtonListener implements ActionListener {
             }
         }
     }
-    
+
     public void render(Graphics2D g) {
-        g.drawImage(backGround, 0, 0, 
+        g.drawImage(backGround, 0, 0,
                 550, 600, null);
     }
-       
-    public void audio() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException{
-              
+
+    public void audio() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
+
         AudioInputStream stream = null;
         try {
-             //File file = new File("C:/Users/dinhn/Documents/GitHub/SHSBDA/PatakasWorld.wav");
-             stream = AudioSystem.getAudioInputStream(getClass().getResource("PatakasWorld.wav"));
-             Clip clip = AudioSystem.getClip();
-             clip.open(stream);
-             clip.start();
-             stream.close();
-          }catch(Exception ex){
-              System.out.println(ex.getMessage());
-          }
-          
-      }
+            //File file = new File("C:/Users/dinhn/Documents/GitHub/SHSBDA/PatakasWorld.wav");
+            stream = AudioSystem.getAudioInputStream(getClass().getResource("PatakasWorld.wav"));
+            Clip clip = AudioSystem.getClip();
+            clip.open(stream);
+            clip.start();
+            stream.close();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+
+    }
 }
