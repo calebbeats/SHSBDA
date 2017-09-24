@@ -20,7 +20,7 @@ public class BasicWeapon implements WeaponComponent {
         Missile m = new Missile(
                 shooter.getXofMissileShoot(),
                 shooter.getYofMissileShoot(),
-                px, py, Color.RED // target location where the missile explodes
+                px, py // target location where the missile explodes
                 );
         synchronized (Main.gameData.friendFigures) {
             Main.gameData.friendFigures.add(m);   

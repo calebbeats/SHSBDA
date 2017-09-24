@@ -28,7 +28,7 @@ public class FireballPower extends PowerDecorator {
         Missile m = new Missile(
                 shooter.getXofMissileShoot()-10,
                 shooter.getYofMissileShoot(),
-                px-10, py, Color.RED // target location where the missile explodes
+                px-10, py // target location where the missile explodes
                 );
         synchronized (Main.gameData.friendFigures) {
             Main.gameData.friendFigures.add(m);   
@@ -36,7 +36,7 @@ public class FireballPower extends PowerDecorator {
         Missile n = new Missile(
                 shooter.getXofMissileShoot()+10,
                 shooter.getYofMissileShoot(),
-                px+10, py, Color.RED // target location where the missile explodes
+                px+10, py // target location where the missile explodes
                 );
         synchronized (Main.gameData.friendFigures) {
             Main.gameData.friendFigures.add(n);   
