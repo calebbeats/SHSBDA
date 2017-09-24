@@ -15,6 +15,7 @@ public class MainWindow extends JFrame {
    
     public static JButton quitButton;
     public static JButton startGame;
+    JFrame frame = new JFrame();
     public static JTextField scoreText;
     public static int score = 0;
     public static JTextField coinText;
@@ -38,6 +39,7 @@ public class MainWindow extends JFrame {
         
         quitButton.addActionListener(buttonListener);
         startGame.addActionListener(buttonListener);
+        
 
         MouseController mouseController = new MouseController();
         Main.gamePanel.addMouseListener(mouseController);
@@ -53,6 +55,7 @@ public class MainWindow extends JFrame {
         scoreText.setEditable(false);
        
         quitButton.setFocusable(false);
+        
     }
 
 }

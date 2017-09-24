@@ -17,7 +17,6 @@ public class MouseController extends MouseAdapter {
         py = me.getY();
 
         Shooter shooter = (Shooter) Main.gameData.friendFigures.get(0);
-
         if (me.getButton() == MouseEvent.BUTTON1) {//Left click detected, initiate melee attack
             //melee attack in the direction the mouse is in regards to the player
             Melee m = new Melee(

@@ -6,8 +6,23 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import model.GameFigure;
+import sun.audio.AudioData;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
+import sun.audio.ContinuousAudioDataStream;
+import controller.ButtonListener;
+import java.io.File;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class GamePanel extends JPanel {
 
@@ -16,10 +31,11 @@ public class GamePanel extends JPanel {
     public static int height;
 
     // off screen rendering
-    private Graphics2D g2;
+    public Graphics2D g2;
     private Image dbImage = null; // double buffer image
+    public Image backGround;
 
-    public void gameRender() {
+    public void gameRender() throws IOException, UnsupportedAudioFileException, LineUnavailableException, InterruptedException {
         width = getSize().width;
         height = getSize().height;
         if (dbImage == null) {
@@ -34,7 +50,20 @@ public class GamePanel extends JPanel {
         }
 
         g2.clearRect(0, 0, width, height);
-        g2.setBackground(Color.BLACK);
+
+        if (ButtonListener.choosedButton == true) {
+//           backGround = ImageIO.read(getClass().getResource("startScreen.png"));
+//           g2.drawImage(backGround, 0, 0, width, height, null);
+            //audio();
+            g2.setBackground(Color.BLACK);
+        } else {
+
+            backGround = ImageIO.read(getClass().getResource("gameFinish.png"));
+            g2.drawImage(backGround, 0, 0, width, height, null);
+        }
+        //backGround = ImageIO.read(getClass().getResource("startScreen.png"));
+        //g2.drawImage(backGround, 0, 0, width, height, null);
+        //g2.setBackground(Color.BLACK);
 
         if (Main.animator.running) {
 
@@ -45,7 +74,6 @@ public class GamePanel extends JPanel {
             for (GameFigure f : Main.gameData.friendFigures) {
                 f.render(g2);
             }
-            
             for (GameFigure f : Main.gameData.terrainFigures) {
                 f.render(g2);
             }
@@ -69,4 +97,5 @@ public class GamePanel extends JPanel {
             System.out.println("Graphics error: " + e);
         }
     }
+
 }
