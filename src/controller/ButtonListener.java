@@ -4,26 +4,13 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import sun.audio.*;
-import java.io.*;
 import view.MainWindow;
-import view.GamePanel;
-import model.GameFigure;
-import static view.GamePanel.height;
-import static view.GamePanel.width;
-import java.awt.event.*;
-import static view.GamePanel.height;
-import static view.GamePanel.width;
-import java.awt.*;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import java.io.File;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 
@@ -68,6 +55,8 @@ public class ButtonListener implements ActionListener {
             } else {
                 System.exit(0);
             }
+        } else if (e.getSource() == MainWindow.resumeGame) {
+            Main.isPaused = false;
         }
     }
 

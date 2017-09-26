@@ -2,7 +2,10 @@ package controller;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Shooter;
+import view.MainWindow;
 
 public class KeyController implements KeyListener {
 
@@ -30,6 +33,12 @@ public class KeyController implements KeyListener {
             case KeyEvent.VK_D:
                 shooter.setVelocityX(VELOCITY_X);
                 keyDown[3] = true;
+                break;
+            case KeyEvent.VK_ESCAPE: //pause the game when escape key is pressed
+                if(Main.isPaused)
+                    Main.isPaused = false;                
+                else
+                    Main.isPaused = true;
                 break;
         }
     }

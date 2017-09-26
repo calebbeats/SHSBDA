@@ -25,35 +25,42 @@ public class Animator implements Runnable {
     public void run() {
 
         while (running) {
-            long startTime = System.currentTimeMillis();
+            if(!Main.isPaused){//as long as game is not paused, update everything
+                long startTime = System.currentTimeMillis();
             
-            processCollisions();
+                processCollisions();
 
-            Main.gameData.update();
-            try {
-                Main.gamePanel.gameRender();
-            } catch (IOException ex) {
-                Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (UnsupportedAudioFileException ex) {
-                Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (LineUnavailableException ex) {
-                Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            Main.gamePanel.printScreen();
-
-            long endTime = System.currentTimeMillis();
-            int sleepTime = (int) (1.0 / FRAMES_PER_SECOND * 1000)
-                    - (int) (endTime - startTime);
-
-            if (sleepTime > 0) {
+                Main.gameData.update();
                 try {
-                    TimeUnit.MILLISECONDS.sleep(sleepTime);
-                } catch (InterruptedException e) {
-
+                    Main.gamePanel.gameRender();
+                } catch (IOException ex) {
+                    Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (UnsupportedAudioFileException ex) {
+                    Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (LineUnavailableException ex) {
+                    Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                Main.gamePanel.printScreen();
+
+                long endTime = System.currentTimeMillis();
+                int sleepTime = (int) (1.0 / FRAMES_PER_SECOND * 1000)
+                        - (int) (endTime - startTime);
+
+                if (sleepTime > 0) {
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(sleepTime);
+                    } catch (InterruptedException e) {
+
+                    }
+                }
+            }else{
+                MainWindow.resumeGame.setEnabled(true);
+                //bring up pause menu here
+                //Main.gameData.update();
             }
+            
         }
         System.exit(0);
     }
