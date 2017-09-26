@@ -57,6 +57,18 @@ public class Animator implements Runnable {
                 }
             }else{
                 MainWindow.resumeGame.setEnabled(true);
+                long startTime = System.currentTimeMillis();
+                long endTime = System.currentTimeMillis();
+                int sleepTime = (int) (1.0 / FRAMES_PER_SECOND * 1000)
+                        - (int) (endTime - startTime);
+
+                if (sleepTime > 0) {
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(sleepTime);
+                    } catch (InterruptedException e) {
+
+                    }
+                }
                 //bring up pause menu here
                 //Main.gameData.update();
             }
