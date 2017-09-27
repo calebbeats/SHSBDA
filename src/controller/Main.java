@@ -12,6 +12,7 @@ public class Main {
     public static GamePanel gamePanel;
     public static GameData gameData;
     public static Animator animator;
+    public static boolean isPaused;//use this to check if we can pause the game
 
     public static int WIN_WIDTH = 600;
     public static int WIN_HEIGHT = 600;
@@ -22,6 +23,8 @@ public class Main {
         gameData = new GameData();
         gamePanel = new GamePanel();
 
+        isPaused = false; //game doesn't start out paused
+        
         JFrame game = new MainWindow();
         game.setTitle("Term Project Caleb Mills");
         game.setSize(WIN_WIDTH, WIN_HEIGHT);
