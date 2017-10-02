@@ -38,8 +38,9 @@ public class SuicideEnemy extends GameFigure {
 
     private int explosionCounter = 0;
     
-    private Image launcherImage;
-    private Image launcherImage2;
+    private Image right;
+    private Image left;
+    private Image back;
     private Image explosion1;
     private Image explosion2;
     private Image explosion3;
@@ -76,38 +77,43 @@ public class SuicideEnemy extends GameFigure {
             // dx > 0 , dy > 0
         }
         
-        launcherImage = null;
-        
+        right = null;
+        left = null;
+        back = null;
+                       
         try {
            
-            launcherImage = ImageIO.read(getClass().getResource("suicide1.png"));
-            launcherImage2 = ImageIO.read(getClass().getResource("suicide2.png"));
-            explosion1 = ImageIO.read(getClass().getResource("explosion0.png"));
-            explosion2 = ImageIO.read(getClass().getResource("explosion1.png"));
-            explosion3 = ImageIO.read(getClass().getResource("explosion2.png"));
+            right = ImageIO.read(getClass().getResource("suicideRight.png"));
+            left = ImageIO.read(getClass().getResource("suicideLeft.png"));
+            back = ImageIO.read(getClass().getResource("suicideBack.png"));
+            explosion1 = ImageIO.read(getClass().getResource("nuke1.png"));
+            explosion2 = ImageIO.read(getClass().getResource("nuke2.png"));
+            explosion3 = ImageIO.read(getClass().getResource("nuke3.png"));
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");
            System.exit(-1);
-        }
-        
+        }      
     }
-
-    
 
     @Override
     public void render(Graphics2D g) {
-        if(state == STATE_ALIVE)
-        {
+        if(state == STATE_ALIVE) {
+            
+            g.drawImage(left, (int)super.x, (int)super.y, 
+            30, 30, null);
+            /************************************************
             if(animationCheck == 0){
-                g.drawImage(launcherImage, (int)super.x, (int)super.y, 
+                g.drawImage(right, (int)super.x, (int)super.y, 
                 30, 30, null);
                 animationCheck = 1;
             }
+           
             else{
-                g.drawImage(launcherImage2, (int)super.x, (int)super.y, 
+                g.drawImage(left, (int)super.x, (int)super.y, 
                 30, 30, null);
                 animationCheck = 0;
             }
+            ************************************************/
         }
         if(state == STATE_DYING){
             if(explosionCounter ==0)
@@ -117,15 +123,34 @@ public class SuicideEnemy extends GameFigure {
             }
             if(explosionCounter ==1)
             {
-                g.drawImage(explosion2, (int)super.x, (int)super.y, 
+                g.drawImage(explosion1, (int)super.x, (int)super.y, 
                 30, 30, null);
             }
             if(explosionCounter ==2)
             {
+                g.drawImage(explosion2, (int)super.x, (int)super.y, 
+                30, 30, null);
+            }
+            if(explosionCounter ==3)
+            {
+                g.drawImage(explosion2, (int)super.x, (int)super.y, 
+                30, 30, null);
+            }
+            if(explosionCounter ==4)
+            {
                 g.drawImage(explosion3, (int)super.x, (int)super.y, 
                 30, 30, null);
             }
-         
+            if(explosionCounter ==5)
+            {
+                g.drawImage(explosion3, (int)super.x, (int)super.y, 
+                30, 30, null);
+            }
+            if(explosionCounter ==6)
+            {
+                g.drawImage(explosion3, (int)super.x, (int)super.y, 
+                30, 30, null);
+            }   
         }
     }
 
