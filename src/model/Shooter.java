@@ -17,10 +17,14 @@ public class Shooter extends GameFigure {
 
     //Player Stats
     //-------------------
-    public int health;
-    public int speed;
-    public int strenth;
-    public int mana;
+    private int health;
+    private int speed;
+    private int strenth;
+    private int mana;
+    private int maxMana;
+    private int maxHealth;
+    public Item[] inventory; 
+    
     //-----------------
 
     //test object
@@ -51,34 +55,15 @@ public class Shooter extends GameFigure {
         weapon = new BasicWeapon();
         health = 100;
         mana = 100;
+        maxHealth = health;
+        maxMana = mana;
+        inventory = new Item[4];
 
         // Tests for items and equipment
         //---------------------------------------------------------------------
-        System.out.print("Testing WeakPotion" + "\n");
-        p1 = new WeakPotion(1);
-        System.out.print("Health before : " + health + "\n");
-        p1.consumeItem(this);
-        System.out.print("Health after : " + health + "\n");
-
-        System.out.print("Testing MediumPotion" + "\n");
-        p2 = new MediumPotion(2);
-        System.out.print("Health before : " + health + "\n");
-        p2.consumeItem(this);
-        System.out.print("Health after : " + health + "\n");
-
-        System.out.print("Testing StrongPotion" + "\n");
-        p3 = new StrongPotion(3);
-        System.out.print("Health before : " + health + "\n");
-        p3.consumeItem(this);
-        System.out.print("Health after : " + health + "\n");
-
-        System.out.print("Testing GemOfMana" + "\n");
-        e1 = new GemOfMana(4);
-        System.out.print("Mana before : " + mana + "\n");
-        e1.attachAugment(this);
-        System.out.print("Mana after : " + mana + "\n");
-        e1.removeAugment(this);
-        System.out.print("Mana after removal : " + mana + "\n");
+        inventory[0] = new WeakPotion(1);
+        inventory[1] = new MediumPotion(2);
+        inventory[2] = new StrongPotion(3);
         //---------------------------------------------------------------------
         launcherImage = null;
 
@@ -94,6 +79,28 @@ public class Shooter extends GameFigure {
     public void render(Graphics2D g) {
         g.drawImage(launcherImage, (int) super.x, (int) super.y,
                 PLAYER_WIDTH, PLAYER_HEIGHT, null);
+        
+        
+        g.setColor(Color.red);
+        g.fillRect(20, 450, health, 20);
+        g.setColor(Color.white);
+        g.drawRect(20,450,maxHealth, 20);
+        g.setColor(Color.blue);
+        g.fillRect(20, 480, mana, 20);
+        g.setColor(Color.white);
+        g.drawRect(20,480,maxMana, 20);
+        g.drawRect(20,420,20,20);
+        g.drawRect(50,420,20,20);
+        g.drawRect(80,420,20,20);
+        g.drawRect(110,420,20,20);
+        for(int i=0;i<4;i++)
+        {
+            if(inventory[i] != null)
+            {
+                g.drawImage(inventory[i].getIcon(), 20+ i*30 , 420, 20, 20, null);
+            }
+        }
+        
     }
 
     @Override
@@ -230,5 +237,62 @@ public class Shooter extends GameFigure {
 
     public void setVelocityY(int velocityY) {
         this.velocityY = velocityY;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public int getStrenth() {
+        return strenth;
+    }
+
+    public void setStrenth(int strenth) {
+        this.strenth = strenth;
+    }
+
+    public int getMana() {
+        return mana;
+    }
+
+    public void setMana(int mana) {
+        this.mana = mana;
+    }
+
+    public int getMaxMana() {
+        return maxMana;
+    }
+
+    public void setMaxMana(int maxMana) {
+        this.maxMana = maxMana;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
+    }
+    
+    public void useItem(Consumable item,int pos)
+    {
+        if(item != null)
+        {
+        item.consumeItem(this);
+        inventory[pos] = null;
+        }
     }
 }
