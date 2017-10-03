@@ -55,9 +55,10 @@ public class ButtonListener implements ActionListener {
             } else {
                 System.exit(0);
             }
-        } else if (e.getSource() == MainWindow.resumeGame) {
-            Main.isPaused = false;
         }
+//        } else if (e.getSource() == MainWindow.resumeGame) {
+//            Main.isPaused = false;
+//        }
     }
 
     public void render(Graphics2D g) {
