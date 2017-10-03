@@ -16,6 +16,7 @@ public class MainWindow extends JFrame {
     public static JButton quitButton;
     public static JButton startGame;
 //    public static JButton resumeGame;
+    public static JButton shopButton;
     JFrame frame = new JFrame();
     public static JTextField scoreText;
     public static int score = 0;
@@ -34,7 +35,8 @@ public class MainWindow extends JFrame {
         southPanel.add(startGame);
         quitButton = new JButton("Quit");
         southPanel.add(quitButton);
-        
+        shopButton = new JButton("Shop");
+        southPanel.add(shopButton);
 //        resumeGame = new JButton("Resume");//add resume button for now
 //        southPanel.add(resumeGame);
         
@@ -44,6 +46,7 @@ public class MainWindow extends JFrame {
         
         quitButton.addActionListener(buttonListener);
         startGame.addActionListener(buttonListener);
+        shopButton.addActionListener(buttonListener);
 //        resumeGame.addActionListener(buttonListener);
 
         MouseController mouseController = new MouseController();
@@ -60,6 +63,7 @@ public class MainWindow extends JFrame {
         scoreText.setEditable(false);
        
         quitButton.setFocusable(false);
+        shopButton.setFocusable(false);
         
 //        resumeGame.setFocusable(false);
 //        resumeGame.setEnabled(false);
