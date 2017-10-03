@@ -26,7 +26,7 @@ public class Main {
         isPaused = false; //game doesn't start out paused
         
         JFrame game = new MainWindow();
-        game.setTitle("Term Project Caleb Mills");
+        game.setTitle("Super Hack N’ Slash Bloody Death Arena 3000");
         game.setSize(WIN_WIDTH, WIN_HEIGHT);
         game.setLocation(100, 0);
         game.setResizable(false); // window size cannot change
