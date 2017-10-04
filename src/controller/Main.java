@@ -53,7 +53,7 @@ public class Main {
         posterScreen.setVerticalTextPosition(JLabel.BOTTOM);
         posterScreen.setHorizontalTextPosition(JLabel.CENTER);
         gamePanel.add(posterScreen);
-        //Testing
+        //Testing Poster screen
         
         
         game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
