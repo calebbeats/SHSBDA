@@ -33,7 +33,7 @@ public class GameData {
         friendFigures.add(shooter);
         friendFigures.add(p);
         
-        //enemyFigures.add(new BlinkMage((int)(Math.random() * 500), (int)Math.random()*200));
+        enemyFigures.add(new BlinkMage((int)(Math.random() * 500), (int)Math.random()*200));
         enemyFigures.add(new BlinkMage((int)(Math.random() * 500), (int)Math.random()*200));
         enemyFigures.add(new MeleeEnemy((int)(Math.random() * 500), (int)Math.random()*200));
         enemyFigures.add(new SlowMage((int)(Math.random() * 500), (int)Math.random()*200));
