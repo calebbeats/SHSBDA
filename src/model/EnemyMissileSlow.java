@@ -22,29 +22,35 @@ import static model.GameFigure.STATE_DYING;
  * @author Kodo
  */
 public class EnemyMissileSlow extends GameFigure {
-     // missile size
+    
+    //Size
+    //------------------------------
     private static final int SIZE = 10;
-    private float dx; // displacement at each frame
-    private float dy; // displacement at each frame
+    
+    //Displace per Frame
+    //------------------------------
+    private float dx; 
+    private float dy; 
+    
+    //Target X and Y
+    //------------------------------
+    private float ty;
+    private float tx;
+    
+    //Missile Speed
+    //------------------------------
+    private static final int UNIT_TRAVEL_DISTANCE = 4;
+
     private int animationCheck=0;
 
-    // public properties for quick access
+    //Public Prop
+    //------------------------------
     public Color color;
     public Point2D.Float target;
 
-    private static final int UNIT_TRAVEL_DISTANCE = 4; // per frame move
     private Image missile1;
     private Image missile2;
- 
 
-    /**
-     *
-     * @param sx start x of the missile
-     * @param sy start y of the missile
-     * @param tx target x of the missile
-     * @param ty target y of the missile
-     * @param color color of the missile
-     */
     public EnemyMissileSlow(float sx, float sy) {
         super(sx, sy);
         
@@ -115,15 +121,12 @@ public class EnemyMissileSlow extends GameFigure {
         }
     }
 
-    public void updateLocation() {
-        
+    public void updateLocation() {        
         super.x += dx;
         super.y += dy;
     }
 
-    public void updateSize() {
-         
-    }
+    public void updateSize() {}
 
     public void updateState() {
         if (state == STATE_ALIVE) {
