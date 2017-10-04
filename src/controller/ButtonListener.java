@@ -13,6 +13,8 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
+import javax.swing.JFrame;
+import view.ShopWindow;
 
 public class ButtonListener implements ActionListener {
 
@@ -55,10 +57,14 @@ public class ButtonListener implements ActionListener {
             } else {
                 System.exit(0);
             }
+        } else if (e.getSource() == MainWindow.shopButton) {
+            JFrame shop = new ShopWindow();
+            shop.setVisible(true);
+            shop.setSize(100, 100);
+            shop.setLocation(100, 0);
+            shop.setResizable(false); // window size cannot change
+            shop.setVisible(true);
         }
-//        } else if (e.getSource() == MainWindow.resumeGame) {
-//            Main.isPaused = false;
-//        }
     }
 
     public void render(Graphics2D g) {
@@ -74,7 +80,7 @@ public class ButtonListener implements ActionListener {
             stream = AudioSystem.getAudioInputStream(getClass().getResource("PatakasWorld.wav"));
             Clip clip = AudioSystem.getClip();
             clip.open(stream);
-            clip.start();
+            //clip.start();
             stream.close();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
