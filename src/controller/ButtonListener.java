@@ -24,12 +24,15 @@ public class ButtonListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == MainWindow.startGame) {
+            
             try {
                 //MainWindow.get
                 MainWindow.startGame.setEnabled(false);
+                Main.gamePanel.remove(Main.posterScreen);
                 new Thread(Main.animator).start();
                 //choosedButton = 1;
                 choosedButton = true;
+                
                 audio();
             } catch (UnsupportedAudioFileException ex) {
                 Logger.getLogger(ButtonListener.class.getName()).log(Level.SEVERE, null, ex);

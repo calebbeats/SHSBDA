@@ -26,9 +26,11 @@ public class GamePanel extends JPanel {
     public Image backGround;
 
     public void gameRender() throws IOException, UnsupportedAudioFileException, LineUnavailableException, InterruptedException {
-        width = getSize().width;
-        height = getSize().height;
-        if (dbImage == null) {
+//        width = getSize().width;
+//        height = getSize().height;
+        width = Main.WIN_WIDTH;//getSize().width;
+        height = Main.WIN_HEIGHT;//getSize().height;
+        if (dbImage == Main.gamePanel.backGround) {
             // Creates an off-screen drawable image to be used for double buffering
             dbImage = createImage(width, height);
             if (dbImage == null) {
@@ -45,6 +47,7 @@ public class GamePanel extends JPanel {
 //           backGround = ImageIO.read(getClass().getResource("startScreen.png"));
 //           g2.drawImage(backGround, 0, 0, width, height, null);
             //audio();
+            
             g2.setBackground(Color.BLACK);
         } else {
 
