@@ -5,6 +5,8 @@
  */
 package view;
 
+import controller.ButtonListener;
+import controller.ShopButtonListener;
 import java.awt.Container;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,6 +30,9 @@ public class ShopWindow extends JFrame{
         
         c.add(centerPanel, "Center");
         
+        ShopButtonListener buttonListener = new ShopButtonListener();
+        
+        testButton.addActionListener(buttonListener);
 //        itemButton[0].setFocusable(false);
         testButton.setFocusable(false);
     }

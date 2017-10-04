@@ -60,11 +60,11 @@ public class ButtonListener implements ActionListener {
         } else if (e.getSource() == MainWindow.shopButton) {
             JFrame shop = new ShopWindow();
             shop.setVisible(true);
-            shop.setSize(100, 100);
+            shop.setSize(500, 600);
             shop.setLocation(100, 0);
             shop.setResizable(false); // window size cannot change
             shop.setVisible(true);
-        }
+        } 
     }
 
     public void render(Graphics2D g) {
