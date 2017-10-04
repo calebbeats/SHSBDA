@@ -14,18 +14,22 @@ import javax.swing.JPanel;
 public class ShopWindow extends JFrame{
 
     public static JButton itemButton[];
+    public static JButton testButton;
     
     public ShopWindow() {
         Container c = getContentPane();
         
         JPanel centerPanel = new JPanel();
         
-        itemButton[0] = new JButton("Item");
-        centerPanel.add(itemButton[0]);
+//        itemButton[0] = new JButton("Item");
+        testButton = new JButton("Item");
+//        centerPanel.add(itemButton[0]);
+        centerPanel.add(testButton);
         
-        c.add(centerPanel,"center");
+        c.add(centerPanel, "Center");
         
-        itemButton[0].setFocusable(false);
+//        itemButton[0].setFocusable(false);
+        testButton.setFocusable(false);
     }
     
 }

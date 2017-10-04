@@ -64,7 +64,7 @@ public class MainWindow extends JFrame {
        
         quitButton.setFocusable(false);
         shopButton.setFocusable(false);
-        shopButton.setEnabled(false);
+        //shopButton.setEnabled(false);
 //        resumeGame.setFocusable(false);
 //        resumeGame.setEnabled(false);
     }
