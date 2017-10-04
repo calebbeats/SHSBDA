@@ -116,65 +116,14 @@ public class SuicideEnemy extends GameFigure {
             ************************************************/
         }
         if(state == STATE_DYING){
-            if(explosionCounter ==0)
-            {
-                 g.drawImage(explosion1, (int)super.x, (int)super.y, 
-                30, 30, null);
+            if(explosionCounter<5){
+                g.drawImage(explosion1, (int)super.x, (int)super.y, 30, 30, null);   
             }
-            if(explosionCounter ==1)
-            {
-                g.drawImage(explosion1, (int)super.x, (int)super.y, 
-                30, 30, null);
+            if(explosionCounter<9){
+                g.drawImage(explosion2, (int)super.x, (int)super.y, 30, 30, null);   
             }
-            if(explosionCounter ==2)
-            {
-                g.drawImage(explosion1, (int)super.x, (int)super.y, 
-                30, 30, null);
-            }
-            if(explosionCounter ==3)
-            {
-                g.drawImage(explosion1, (int)super.x, (int)super.y, 
-                30, 30, null);
-            }
-            if(explosionCounter ==4)
-            {
-                g.drawImage(explosion2, (int)super.x, (int)super.y, 
-                30, 30, null);
-            }
-            if(explosionCounter ==5)
-            {
-                g.drawImage(explosion2, (int)super.x, (int)super.y, 
-                30, 30, null);
-            }
-            if(explosionCounter ==6)
-            {
-                g.drawImage(explosion2, (int)super.x, (int)super.y, 
-                30, 30, null);
-            }
-            if(explosionCounter ==7)
-            {
-                 g.drawImage(explosion2, (int)super.x, (int)super.y, 
-                30, 30, null);
-            }
-            if(explosionCounter ==8)
-            {
-                g.drawImage(explosion3, (int)super.x, (int)super.y, 
-                30, 30, null);
-            }
-            if(explosionCounter ==9)
-            {
-                g.drawImage(explosion3, (int)super.x, (int)super.y, 
-                30, 30, null);
-            }
-            if(explosionCounter ==10)
-            {
-                g.drawImage(explosion3, (int)super.x, (int)super.y, 
-                30, 30, null);
-            }
-            if(explosionCounter ==11)
-            {
-                g.drawImage(explosion3, (int)super.x, (int)super.y, 
-                30, 30, null);
+            if(explosionCounter<12){
+                g.drawImage(explosion3, (int)super.x, (int)super.y, 30, 30, null);   
             }
             
         }
