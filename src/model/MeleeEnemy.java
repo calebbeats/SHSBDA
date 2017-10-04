@@ -22,10 +22,19 @@ public class MeleeEnemy extends GameFigure {
 
     // missile size
     private static final int SIZE = 10;
-    private static final int MAX_EXPLOSION_SIZE = 3;
+    
+    //Final Despawn Counter
+    //Go-to "render() -> STATE_DYING"
+    //------------------------------
+    private static final int MAX_DEATH_DESPAWN = 20;
+    private static final int MAX_ATTK_TIME = 10;
+    private static int deathCounter=0;
+    private static int attackCounter=0;
+
     private float dx; // displacement at each frame
     private float dy; // displacement at each frame
     private int animationCheck=0;
+    
     private float ox;
     private float oy;
     private float ty;
@@ -35,14 +44,10 @@ public class MeleeEnemy extends GameFigure {
     public Point2D.Float target;
 
     private static final int UNIT_TRAVEL_DISTANCE = 1; // per frame move
-
-   
-    private Image launcherImage;
-    private Image launcherImage2;
-    
-    //image attack
-    //image death
-    
+  
+    private Image alive;
+    private Image attack1;
+    private Image attack2;
     private Image death;
 
     /**
@@ -75,11 +80,13 @@ public class MeleeEnemy extends GameFigure {
             // dx > 0 , dy > 0
         }
         
-        launcherImage = null;
+        alive = null;
+        death = null;
         
         try {
-            //add enemy place holder.
-            launcherImage = ImageIO.read(getClass().getResource("melee1.png"));
+            alive = ImageIO.read(getClass().getResource("melee1.png"));
+            attack1 = ImageIO.read(getClass().getResource("meleeAttack1.png"));
+            attack2 = ImageIO.read(getClass().getResource("meleeAttack2.png"));
             death = ImageIO.read(getClass().getResource("meleeDead.png"));
       
         } catch (IOException ex) {
@@ -89,27 +96,50 @@ public class MeleeEnemy extends GameFigure {
         
     }
 
-    
-
     @Override
     public void render(Graphics2D g) {
-        if(state == STATE_ALIVE)
-        {
+        if(state == STATE_ALIVE)    {
             if(animationCheck == 0){
-                g.drawImage(launcherImage, (int)super.x, (int)super.y, 
+                g.drawImage(alive, (int)super.x, (int)super.y, 
                 30, 30, null);
                 animationCheck = 1;
             }
             else{
-                g.drawImage(launcherImage, (int)super.x, (int)super.y, 
+                g.drawImage(alive, (int)super.x, (int)super.y, 
                 30, 30, null);
                 animationCheck = 0;
             }
+           
+            //IF ALIVE - DO ATTACK STUFF
+            //Check for Distance - Done
+            //IF TARGET REACHED - Done
+            //Target attack - Done
+            //Need to disable death on collision
+            //------------------------------
+            double distance = target.distance(super.x, super.y);
+            boolean targetReached = distance <= 10.0;
+            if (targetReached) {
+
+                if ((attackCounter & 1)==0){
+                    g.drawImage(attack1, (int)super.x, (int)super.y,30,30,null);
+                    updateAttack();
+                } else {
+                    g.drawImage(attack2, (int)super.x, (int)super.y,30,30,null);
+                    updateAttack();
+                }
+            }
         }
-        if(state == STATE_DYING){
-                        
-            g.drawImage(death, (int)super.x, (int)super.y, 
+        if(state == STATE_DYING)    {
+            
+            //Death Counter = 20
+            //Time to show dead sprite
+            //------------------------------
+            if ((deathCounter & 1)==0)  {
+                g.drawImage(death, (int)super.x, (int)super.y, 
                 30, 30, null); 
+            } else 
+                g.drawImage(death, (int)super.x, (int)super.y, 
+                30, 30, null);           
         }
     }
 
@@ -130,7 +160,11 @@ public class MeleeEnemy extends GameFigure {
     }
 
     public void updateSize() {
-         
+        deathCounter++;         
+    }
+    
+    public void updateAttack(){
+        attackCounter++;
     }
 
     public void updateState() {
@@ -138,9 +172,7 @@ public class MeleeEnemy extends GameFigure {
             double distance = target.distance(super.x, super.y);
             boolean targetReached = distance <= 10.0;
             if (targetReached) {
-                           
-                //add melee attack image and code
-                           
+     
                 ox = tx;
                 oy = ty;
                
@@ -165,14 +197,21 @@ public class MeleeEnemy extends GameFigure {
                 }
                 System.out.println("Dx Dy" + dx + " " + dy);
             }
-        } else if (state == STATE_DYING) {
+        } 
+        //If Dead (Counter = MAX)
+        //goNextState
+        //------------------------------
+        else if (state == STATE_DYING) {
+            if(deathCounter >= MAX_DEATH_DESPAWN){
                 this.goNextState();
+            }
         }
     }
 
     @Override
     public Rectangle2D getCollisionBox() {
         return new Rectangle2D.Double(this.x - SIZE , this.y - SIZE, SIZE * 0.9D, SIZE * 0.9D);
+        //this.x - SIZE , this.y - SIZE, SIZE * 0.9D, SIZE * 0.9D
     }
 
     @Override
