@@ -7,6 +7,8 @@ package view;
 
 import controller.ShopButtonListener;
 import java.awt.Container;
+import java.awt.GridLayout;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,26 +16,35 @@ import javax.swing.JPanel;
 
 public class ShopWindow extends JFrame{
 
-    public static JButton itemButton[];
-    public static JButton testButton;
+    public static JButton weakPotionButton;
+    public static JButton mediumPotionButton;
+    public static JButton strongPotionButton;
     
     public ShopWindow() {
         Container c = getContentPane();
         
         JPanel centerPanel = new JPanel();
+        centerPanel.setLayout(new GridLayout(3,2));
         
-//        itemButton[0] = new JButton("Item");
-        testButton = new JButton("Item");
-//        centerPanel.add(itemButton[0]);
-        centerPanel.add(testButton);
+        weakPotionButton = new JButton("Weak Potion: 1 Coin");
+        mediumPotionButton = new JButton("Medium Potion: 2 Coins");
+        strongPotionButton = new JButton("Strong Potion: 3 Coins");
+
+        centerPanel.add(weakPotionButton);
+        centerPanel.add(mediumPotionButton);
+        centerPanel.add(strongPotionButton);
         
         c.add(centerPanel, "Center");
         
         ShopButtonListener buttonListener = new ShopButtonListener();
         
-        testButton.addActionListener(buttonListener);
-//        itemButton[0].setFocusable(false);
-        testButton.setFocusable(false);
+        weakPotionButton.addActionListener(buttonListener);
+        mediumPotionButton.addActionListener(buttonListener);
+        strongPotionButton.addActionListener(buttonListener);
+        
+        weakPotionButton.setFocusable(false);
+        mediumPotionButton.setFocusable(false);
+        strongPotionButton.setFocusable(false);
     }
     
 }
