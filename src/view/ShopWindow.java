@@ -8,14 +8,15 @@ package view;
 import controller.ShopButtonListener;
 import java.awt.Container;
 import java.awt.GridLayout;
-import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 
 public class ShopWindow extends JFrame{
 
+    public static JTextField coinText;
     public static JButton weakPotionButton;
     public static JButton mediumPotionButton;
     public static JButton strongPotionButton;
@@ -34,7 +35,9 @@ public class ShopWindow extends JFrame{
         centerPanel.add(mediumPotionButton);
         centerPanel.add(strongPotionButton);
         
+        coinText = new JTextField("Coins: " + MainWindow.coins);
         c.add(centerPanel, "Center");
+        c.add(coinText, "North");
         
         ShopButtonListener buttonListener = new ShopButtonListener();
         
@@ -45,6 +48,9 @@ public class ShopWindow extends JFrame{
         weakPotionButton.setFocusable(false);
         mediumPotionButton.setFocusable(false);
         strongPotionButton.setFocusable(false);
+        coinText.setFocusable(false);
+        
+        coinText.setEditable(false);
     }
     
 }
