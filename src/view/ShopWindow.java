@@ -5,7 +5,6 @@
  */
 package view;
 
-import controller.ButtonListener;
 import controller.ShopButtonListener;
 import java.awt.Container;
 import javax.swing.JButton;

@@ -15,7 +15,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import static model.GameFigure.STATE_ALIVE;
-import static model.GameFigure.STATE_DONE;
 import static model.GameFigure.STATE_DYING;
 
 public class EnemyMissile extends GameFigure {
