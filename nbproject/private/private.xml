@@ -10,12 +10,16 @@
             <file>file:/F:/CoreyGit/SHSBDA/src/model/Missile.java</file>
         </group>
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Git/SHSBDA/src/view/MainWindow.java</file>
             <file>file:/C:/Git/SHSBDA/src/controller/Main.java</file>
             <file>file:/C:/Git/SHSBDA/src/controller/Animator.java</file>
             <file>file:/C:/Git/SHSBDA/src/model/GameData.java</file>
             <file>file:/C:/Git/SHSBDA/src/view/GamePanel.java</file>
             <file>file:/C:/Git/SHSBDA/src/controller/ButtonListener.java</file>
+=======
+            <file>file:/C:/git/SHSBDA/src/model/SuicideEnemy.java</file>
+>>>>>>> Dev
         </group>
     </open-files>
 </project-private>
