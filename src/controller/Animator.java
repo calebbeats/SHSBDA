@@ -86,7 +86,6 @@ public class Animator implements Runnable {
             {
               s.goNextState();              
               GameData.multiplier = 0;
-              GameData.shooter.takeDamage(20);
             
             }
        
