@@ -15,17 +15,14 @@ public class Melee extends GameFigure {
 
     // missile size
     private static final int SIZE = 15;
-    private static final int MAX_SWING_SIZE = 6;
+    private static final int MAX_SWING_SIZE = 4;
     private float dx; // displacement at each frame
     private float dy; // displacement at each frame
-    //private int animationCheck = 0;
-    private int swordSwing = 0; //1 for right 0 for left
-
+    
     // public properties for quick access
-    public Color color;
     public Point2D.Float target;
 
-    private static final int UNIT_TRAVEL_DISTANCE = 15; // per frame move
+    private static final int UNIT_TRAVEL_DISTANCE = 20; // per frame move
 
     private int swingCounter = 0;
     private Image swordUp;
@@ -84,23 +81,22 @@ public class Melee extends GameFigure {
         if (state == STATE_DYING) {
 
             //if (swordSwing == 0) { //left sword swing
-                if (swingCounter < 2) {
-                    g.drawImage(swordLeft, (int) super.x, (int) super.y,
-                            30, 30, null);
-                }
-                if (swingCounter < 4) {
-                    g.drawImage(swordUp, (int) super.x, (int) super.y,
-                            30, 30, null);
-                }
-                if (swingCounter < 6) {
-                    g.drawImage(swordRight, (int) super.x, (int) super.y,
-                            30, 30, null);
-                }
-                //if (swingCounter < 8) {
-                   // g.drawImage(swordUp, (int) super.x, (int) super.y,
-                           // 30, 30, null);
-                //}
-            
+            if (swingCounter < 1) {
+                g.drawImage(swordUp, (int) super.x, (int) super.y,
+                        30, 30, null);
+            }
+            if (swingCounter < 2) {
+                g.drawImage(swordLeft, (int) super.x, (int) super.y,
+                        30, 30, null);
+            }
+            if (swingCounter < 3) {
+                g.drawImage(swordDown, (int) super.x, (int) super.y,
+                        30, 30, null);
+            }
+            if (swingCounter < 4) {
+                g.drawImage(swordRight, (int) super.x, (int) super.y,
+                        30, 30, null);
+            }
 
         }
     }
@@ -110,7 +106,7 @@ public class Melee extends GameFigure {
         //updateState();
         if (state == STATE_ALIVE) {
             updateLocation();
-          //  distanceTraveled++;
+            //  distanceTraveled++;
         } else if (state == STATE_DYING) {
             updateSize();
         }
