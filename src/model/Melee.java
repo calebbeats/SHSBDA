@@ -25,7 +25,7 @@ public class Melee extends GameFigure {
     public Color color;
     public Point2D.Float target;
 
-    private static final int UNIT_TRAVEL_DISTANCE = 100; // per frame move
+    private static final int UNIT_TRAVEL_DISTANCE = 15; // per frame move
 
     private int swingCounter = 0;
     private Image swordUp;
