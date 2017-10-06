@@ -19,7 +19,7 @@ import static model.GameFigure.STATE_DYING;
 public class MeleeEnemy extends GameFigure {
 
     // missile size
-    private static final int SIZE = 10;
+    private static final int SIZE = 30;
     
     //Final Despawn Counter
     //Go-to "render() -> STATE_DYING"
@@ -253,7 +253,7 @@ public class MeleeEnemy extends GameFigure {
 
     @Override
     public Rectangle2D getCollisionBox() {
-        return new Rectangle2D.Double(this.x - SIZE , this.y - SIZE, SIZE * 0.9D, SIZE * 0.9D);
+        return new Rectangle2D.Double(this.x, this.y, SIZE * 0.9D, SIZE * 0.9D);
         //this.x - SIZE , this.y - SIZE, SIZE * 0.9D, SIZE * 0.9D
     }
 

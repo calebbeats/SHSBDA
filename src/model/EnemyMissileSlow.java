@@ -25,7 +25,7 @@ public class EnemyMissileSlow extends GameFigure {
     
     //Size
     //------------------------------
-    private static final int SIZE = 10;
+    private static final int SIZE = 30;
     
     //Displace per Frame
     //------------------------------
@@ -95,12 +95,12 @@ public class EnemyMissileSlow extends GameFigure {
         {
             if(animationCheck == 0){
                 g.drawImage(missile1, (int)super.x, (int)super.y, 
-                30, 30, null);
+                SIZE, SIZE, null);
                 animationCheck = 1;
             }
             else{
                 g.drawImage(missile2, (int)super.x, (int)super.y, 
-                30, 30, null);
+                SIZE, SIZE, null);
                 animationCheck = 0;
             }
         }
@@ -142,7 +142,7 @@ public class EnemyMissileSlow extends GameFigure {
 
     @Override
     public Rectangle2D getCollisionBox() {
-        return new Rectangle2D.Double(this.x - SIZE , this.y - SIZE, SIZE * 0.9D, SIZE * 0.9D);
+        return new Rectangle2D.Double(this.x, this.y, SIZE * 0.9D, SIZE * 0.9D);
     }
 
     @Override

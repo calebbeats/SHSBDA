@@ -20,7 +20,7 @@ public class SuicideEnemy extends GameFigure {
 
     // Size
     //------------------------------
-    private static final int SIZE = 10;
+    private static final int SIZE = 30;
     
     //MAX EXPLOSION SIZE
     //Explosion Counter
@@ -101,7 +101,7 @@ public class SuicideEnemy extends GameFigure {
             //Suicide Enemy Sprite
             //------------------------------
             g.drawImage(left, (int)super.x, (int)super.y, 
-            30, 30, null);
+            SIZE, SIZE, null);
             
             /************************************************
             if(animationCheck == 0){
@@ -123,13 +123,13 @@ public class SuicideEnemy extends GameFigure {
             //Explosion 3 Part Animation
             //------------------------------
             if(explosionCounter<9){
-                g.drawImage(explosion1, (int)super.x, (int)super.y, 30, 30, null);   
+                g.drawImage(explosion1, (int)super.x, (int)super.y, SIZE, SIZE, null);   
             }
             if(explosionCounter>8 && explosionCounter<18)   {
-                g.drawImage(explosion2, (int)super.x, (int)super.y, 30, 30, null);
+                g.drawImage(explosion2, (int)super.x, (int)super.y, SIZE, SIZE, null);
             }
             if(explosionCounter>17 && explosionCounter<27)  {
-                g.drawImage(explosion3, (int)super.x, (int)super.y, 30, 30, null);
+                g.drawImage(explosion3, (int)super.x, (int)super.y, SIZE, SIZE, null);
             }
         }
     }
@@ -237,7 +237,7 @@ public class SuicideEnemy extends GameFigure {
 
     @Override
     public Rectangle2D getCollisionBox() {
-        return new Rectangle2D.Double(this.x - SIZE , this.y - SIZE, SIZE * 0.9D, SIZE * 0.9D);
+        return new Rectangle2D.Double(this.x, this.y, SIZE * 0.9D, SIZE * 0.9D);
     }
 
     @Override
