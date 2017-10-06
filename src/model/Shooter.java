@@ -188,24 +188,49 @@ public class Shooter extends GameFigure {
         // Allow player to move around terrain and disable sprint if move backward from mouse's position
         Shooter shooterIntendedPossition = new Shooter((int) super.x + velocityX
                 + Integer.signum(velocityX) * velocitySprint, (int) super.y);
-        Main.gameData.terrainFigures.forEach(terrain -> {
+//        Main.gameData.terrainFigures.forEach(terrain -> {
+//            if (velocityX != 0 && !shooterIntendedPossition
+//                    .getCollisionBox().intersects(terrain.getCollisionBox())) {
+//                super.x += velocityX + Integer.signum(velocityX) * velocitySprint;
+//                
+//            }
+//        });
+        
+        for(GameFigure t : Main.gameData.terrainFigures){
             if (velocityX != 0 && !shooterIntendedPossition
-                    .getCollisionBox().intersects(terrain.getCollisionBox())) {
+                    .getCollisionBox().intersects(t.getCollisionBox())) {
                 super.x += velocityX + Integer.signum(velocityX) * velocitySprint;
+                
             }
-        });
+            else{
+                super.x -= 4*( velocityX + Integer.signum(velocityX) * velocitySprint);
+                return;
+            }
+        }
     }
 
     private void moveY() {
         // Allow player to move around terrain and disable sprint if move backward from mouse's position
         Shooter shooterIntendedPossition = new Shooter((int) super.x,
                 (int) super.y + velocityY + Integer.signum(velocityY) * velocitySprint);
-        Main.gameData.terrainFigures.forEach(terrain -> {
-            if (velocityY != 0 && !shooterIntendedPossition
-                    .getCollisionBox().intersects(terrain.getCollisionBox())) {
+//        Main.gameData.terrainFigures.forEach(terrain -> {
+//            if (velocityY != 0 && !shooterIntendedPossition
+//                    .getCollisionBox().intersects(terrain.getCollisionBox())) {
+//                super.y += velocityY + Integer.signum(velocityY) * velocitySprint;
+//            }
+//        });
+        
+        for(GameFigure t : Main.gameData.terrainFigures){
+             if (velocityY != 0 && !shooterIntendedPossition
+                    .getCollisionBox().intersects(t.getCollisionBox())) {
                 super.y += velocityY + Integer.signum(velocityY) * velocitySprint;
+               
             }
-        });
+             else{
+                 super.y -= 4* (velocityY + Integer.signum(velocityY) * velocitySprint);
+                 return;
+             }
+        }
     }
 
     // Missile shoot location: adjut x and y to the image

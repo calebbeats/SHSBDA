@@ -144,9 +144,25 @@ public class SuicideEnemy extends GameFigure {
         }
     }
 
-    public void updateLocation() {        
-        super.x += dx;
-        super.y += dy;
+    public void updateLocation() {
+        GameFigure enemyToMove = new SuicideEnemy(super.x + dx, super.y +dy);
+        
+        
+        for(GameFigure t : Main.gameData.terrainFigures){
+            if(!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox()))){
+                super.x += dx;
+                super.y += dy;
+            }
+//            else{
+//                super.x -= dx;
+//                super.y -= dy;
+//                return;
+//            }
+        }
+        enemyToMove = null;
+        
+//        super.x += dx;
+//        super.y += dy;
     }
 
     public void updateSize() {
