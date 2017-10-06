@@ -49,6 +49,7 @@ public class Missile extends GameFigure {
         super(sx, sy);
         super.state = STATE_ALIVE;
         this.target = new Point2D.Float(tx, ty);
+        this.color = color;
         //this.color = color;
         
         double angle = Math.atan2(Math.abs(ty - sy), Math.abs(tx - sx));

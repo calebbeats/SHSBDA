@@ -29,7 +29,13 @@ public class Animator implements Runnable {
             
             processCollisions();
 
-            Main.gameData.update();
+            try {
+                Main.gameData.update();
+            } catch (UnsupportedAudioFileException ex) {
+                Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
+            }
             try {
                 Main.gamePanel.gameRender();
             } catch (IOException ex) {
@@ -71,9 +77,9 @@ public class Animator implements Runnable {
             }
        
             for(GameFigure f : Main.gameData.friendFigures)
-            {
-                if(f.getCollisionBox().intersects(s.getCollisionBox()) && f.state != f.STATE_DYING && s.state != s.STATE_DYING
-                        && f.state != f.STATE_DONE && s.state != s.STATE_DONE)   
+            {if(f.getCollisionBox().intersects(s.getCollisionBox()) && f.state != f.STATE_DYING && s.state != s.STATE_DYING
+                        && f.state != f.STATE_DONE && s.state != s.STATE_DONE)
+                   
                 {
                     f.goNextState();
                     s.goNextState();
@@ -81,6 +87,7 @@ public class Animator implements Runnable {
                     MainWindow.scoreText.setText("Score: " + MainWindow.score + " || Coins: " + MainWindow.coins);
                 }
             }
+
             //detection for enemy attacks hitting terrain
             for(GameFigure t : Main.gameData.terrainFigures){
                 if(s.getCollisionBox().intersects(t.getCollisionBox()) && !((s instanceof BlinkMage) || (s instanceof SuicideEnemy) || (s instanceof MeleeEnemy) || (s instanceof SlowMage))){
