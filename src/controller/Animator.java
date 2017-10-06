@@ -12,7 +12,6 @@ import model.BlinkMage;
 import model.SuicideEnemy;
 import model.MeleeEnemy;
 import model.SlowMage;
-import model.GameFigureState;
 import model.GameData;
 import view.MainWindow;
 
@@ -25,11 +24,18 @@ public class Animator implements Runnable {
     public void run() {
 
         while (running) {
-            long startTime = System.currentTimeMillis();
+            if(!Main.isPaused){//as long as game is not paused, update everything
+                long startTime = System.currentTimeMillis();
             
-            processCollisions();
+                processCollisions();
 
-            Main.gameData.update();
+            try {
+                Main.gameData.update();
+            } catch (UnsupportedAudioFileException ex) {
+                Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
+            }
             try {
                 Main.gamePanel.gameRender();
             } catch (IOException ex) {
@@ -43,17 +49,35 @@ public class Animator implements Runnable {
             }
             Main.gamePanel.printScreen();
 
-            long endTime = System.currentTimeMillis();
-            int sleepTime = (int) (1.0 / FRAMES_PER_SECOND * 1000)
-                    - (int) (endTime - startTime);
+                long endTime = System.currentTimeMillis();
+                int sleepTime = (int) (1.0 / FRAMES_PER_SECOND * 1000)
+                        - (int) (endTime - startTime);
 
-            if (sleepTime > 0) {
-                try {
-                    TimeUnit.MILLISECONDS.sleep(sleepTime);
-                } catch (InterruptedException e) {
+                if (sleepTime > 0) {
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(sleepTime);
+                    } catch (InterruptedException e) {
 
+                    }
                 }
+            }else{
+//                MainWindow.resumeGame.setEnabled(true);
+                long startTime = System.currentTimeMillis();
+                long endTime = System.currentTimeMillis();
+                int sleepTime = (int) (1.0 / FRAMES_PER_SECOND * 1000)
+                        - (int) (endTime - startTime);
+
+                if (sleepTime > 0) {
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(sleepTime);
+                    } catch (InterruptedException e) {
+
+                    }
+                }
+                //bring up pause menu here
+                //Main.gameData.update();
             }
+            
         }
         System.exit(0);
     }
@@ -67,13 +91,14 @@ public class Animator implements Runnable {
             {
               s.goNextState();              
               GameData.multiplier = 0;
+              GameData.shooter.takeDamage(20);
             
             }
        
             for(GameFigure f : Main.gameData.friendFigures)
-            {
-                if(f.getCollisionBox().intersects(s.getCollisionBox()) && f.state != f.STATE_DYING && s.state != s.STATE_DYING
-                        && f.state != f.STATE_DONE && s.state != s.STATE_DONE)   
+            {if(f.getCollisionBox().intersects(s.getCollisionBox()) && f.state != f.STATE_DYING && s.state != s.STATE_DYING
+                        && f.state != f.STATE_DONE && s.state != s.STATE_DONE)
+                   
                 {
                     f.goNextState();
                     s.goNextState();
@@ -81,6 +106,7 @@ public class Animator implements Runnable {
                     MainWindow.scoreText.setText("Score: " + MainWindow.score + " || Coins: " + MainWindow.coins);
                 }
             }
+
             //detection for enemy attacks hitting terrain
             for(GameFigure t : Main.gameData.terrainFigures){
                 if(s.getCollisionBox().intersects(t.getCollisionBox()) && !((s instanceof BlinkMage) || (s instanceof SuicideEnemy) || (s instanceof MeleeEnemy) || (s instanceof SlowMage))){

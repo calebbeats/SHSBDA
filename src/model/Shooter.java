@@ -4,6 +4,8 @@ import controller.Main;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -13,16 +15,23 @@ import static model.GameFigure.STATE_DYING;
 
 public class Shooter extends GameFigure {
 
-    private static final int PLAYER_WIDTH = 30, PLAYER_HEIGHT = 30;
+    public static final int PLAYER_WIDTH = 30, PLAYER_HEIGHT = 30;
 
     //Player Stats
     //-------------------
-    public int health;
-    public int speed;
-    public int strenth;
-    public int mana;
-    //-----------------
+    private int health;
+    private int speed;
+    private int strenth;
+    private int mana;
+    private int maxMana;
+    private int maxHealth;
 
+    //made static so shop can access invo
+    public static Item[] inventory = new Item[4]; 
+    
+
+
+    //-----------------
     //test object
     //-------------------
     public WeakPotion p1;
@@ -33,7 +42,7 @@ public class Shooter extends GameFigure {
 
     //Images for animations go below
     //----------------------------------
-    private Image launcherImage;
+    private Image[] playerImage;
     //private Image shooterLeft;
     //private Image shooterRight;
     public WeaponComponent weapon;
@@ -42,7 +51,10 @@ public class Shooter extends GameFigure {
 
     //Player Movement
     //-------------------
-    private int velocityX, velocityY;
+    private int velocityX, velocityY, velocitySprint;
+    private boolean isSprint;
+    private MouseEvent mouseMovedEvent;
+    private float angleOfView;
     //-----------------
 
     public Shooter(int x, int y) {
@@ -51,54 +63,68 @@ public class Shooter extends GameFigure {
         weapon = new BasicWeapon();
         health = 100;
         mana = 100;
+        maxHealth = health;
+        maxMana = mana;
+//        inventory = new Item[4];
 
         // Tests for items and equipment
+        // This gets added every time the shooter is created, so it slows game way down
         //---------------------------------------------------------------------
-        System.out.print("Testing WeakPotion" + "\n");
-        p1 = new WeakPotion(1);
-        System.out.print("Health before : " + health + "\n");
-        p1.consumeItem(this);
-        System.out.print("Health after : " + health + "\n");
-
-        System.out.print("Testing MediumPotion" + "\n");
-        p2 = new MediumPotion(2);
-        System.out.print("Health before : " + health + "\n");
-        p2.consumeItem(this);
-        System.out.print("Health after : " + health + "\n");
-
-        System.out.print("Testing StrongPotion" + "\n");
-        p3 = new StrongPotion(3);
-        System.out.print("Health before : " + health + "\n");
-        p3.consumeItem(this);
-        System.out.print("Health after : " + health + "\n");
-
-        System.out.print("Testing GemOfMana" + "\n");
-        e1 = new GemOfMana(4);
-        System.out.print("Mana before : " + mana + "\n");
-        e1.attachAugment(this);
-        System.out.print("Mana after : " + mana + "\n");
-        e1.removeAugment(this);
-        System.out.print("Mana after removal : " + mana + "\n");
+//        inventory[0] = new WeakPotion(1);
+//        inventory[1] = new MediumPotion(2);
+//        inventory[2] = new StrongPotion(3);
         //---------------------------------------------------------------------
-        launcherImage = null;
 
+        playerImage = new Image[4];
         try {
-            launcherImage = ImageIO.read(getClass().getResource("shooterRight1.png"));
+            playerImage[0] = ImageIO.read(getClass().getResource("playerRight.png"));
+            playerImage[1] = ImageIO.read(getClass().getResource("playerTop.png"));
+            playerImage[2] = ImageIO.read(getClass().getResource("playerLeft.png"));
+            playerImage[3] = ImageIO.read(getClass().getResource("playerFront.png"));
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");
+            JOptionPane.showMessageDialog(null, "Error: Cannot open Player Image");
             System.exit(-1);
         }
     }
 
     @Override
     public void render(Graphics2D g) {
-        g.drawImage(launcherImage, (int) super.x, (int) super.y,
-                PLAYER_WIDTH, PLAYER_HEIGHT, null);
+        // Update player's view based on angleOfView
+        if (angleOfView <= 45 || angleOfView >= 315) {
+            g.drawImage(playerImage[0], (int) super.x, (int) super.y,
+                    PLAYER_WIDTH, PLAYER_HEIGHT, null);
+        } else if (angleOfView > 45 && angleOfView < 135) {
+            g.drawImage(playerImage[1], (int) super.x, (int) super.y,
+                    PLAYER_WIDTH, PLAYER_HEIGHT, null);
+        } else if (angleOfView >= 135 && angleOfView <= 225) {
+            g.drawImage(playerImage[2], (int) super.x, (int) super.y,
+                    PLAYER_WIDTH, PLAYER_HEIGHT, null);
+        } else if (angleOfView > 225 && angleOfView < 315) {
+            g.drawImage(playerImage[3], (int) super.x, (int) super.y,
+                    PLAYER_WIDTH, PLAYER_HEIGHT, null);
+        }
+
+        g.setColor(Color.red);
+        g.fillRect(20, 450, health, 20);
+        g.setColor(Color.white);
+        g.drawRect(20, 450, maxHealth, 20);
+        g.setColor(Color.blue);
+        g.fillRect(20, 480, mana, 20);
+        g.setColor(Color.white);
+        g.drawRect(20, 480, maxMana, 20);
+        g.drawRect(20, 420, 20, 20);
+        g.drawRect(50, 420, 20, 20);
+        g.drawRect(80, 420, 20, 20);
+        g.drawRect(110, 420, 20, 20);
+        for (int i = 0; i < 4; i++) {
+            if (inventory[i] != null) {
+                g.drawImage(inventory[i].getIcon(), 20 + i * 30, 420, 20, 20, null);
+            }
+        }
     }
 
     @Override
     public void update() {
-
         if (state == STATE_DYING) {
             if (deadTimer < 10) {
                 deadTimer++;
@@ -106,18 +132,19 @@ public class Shooter extends GameFigure {
                 this.goNextState();
             }
         } else {
-            //for now this is how the character moves left and right and back
-            //can remove this once we get the mouse direction working
-            if (velocityX < 0) {
-                this.moveLeft();
-            } else if (velocityX > 0 || velocityX == 0 && velocityY > 0) {
-                this.moveRight();
-            } else if (velocityX == 0 && velocityY < 0) {
-                this.moveBack();
-            }
-
             moveX();
             moveY();
+
+            calculateAngleOfView();
+
+            double deltaDistance = calculateDistance(new Point.Float(super.x, super.y))
+                    - calculateDistance(new Point.Float(super.x + velocityX, super.y + velocityY));
+
+            if (isSprint && deltaDistance > 0) {
+                velocitySprint = 2;
+            } else if (isSprint && deltaDistance < 0 || !isSprint) {
+                velocitySprint = 0;
+            }
 
             // Window boundary
             if (super.x <= 0) {
@@ -129,74 +156,80 @@ public class Shooter extends GameFigure {
             if (super.y <= 0) {
                 super.y = 0;
             }
-            if (super.y >= Main.WIN_HEIGHT - PLAYER_HEIGHT - 70) {
-                super.y = Main.WIN_HEIGHT - PLAYER_HEIGHT - 70;
+            if (super.y >= Main.WIN_HEIGHT - PLAYER_HEIGHT - 90) {
+                super.y = Main.WIN_HEIGHT - PLAYER_HEIGHT - 90;
             }
         }
+    }
+
+    private void calculateAngleOfView() {
+        // Find the angle between player's position and mouse's position
+        if (mouseMovedEvent != null) {
+            angleOfView = (float) Math.toDegrees(
+                    Math.atan2(-(mouseMovedEvent.getY() - (super.y + PLAYER_HEIGHT / 2)),
+                            mouseMovedEvent.getX() - (super.x + PLAYER_HEIGHT / 2)));
+
+            if (angleOfView < 0) {
+                angleOfView += 360;
+            }
+        }
+    }
+
+    private double calculateDistance(Point.Float point) {
+        // Find the distance between player's position and mouse's position
+        if (mouseMovedEvent != null) {
+            return Math.hypot(mouseMovedEvent.getX()
+                    - point.x, mouseMovedEvent.getY() - point.y);
+        }
+        return 0;
     }
 
     private void moveX() {
-
-        Main.gameData.terrainFigures.forEach(terrain -> {
-            if (velocityX > 0) {
-                Shooter shooterIntendedPossition = new Shooter((int) super.x + velocityX, (int) super.y);
-
-                if (!shooterIntendedPossition.getCollisionBox().intersects(terrain.getCollisionBox())) {
-                    super.x += velocityX;
-                }
-            } else if (velocityX < 0) {
-                Shooter shooterIntendedPossition = new Shooter((int) super.x + velocityX, (int) super.y);
-
-                if (!shooterIntendedPossition.getCollisionBox().intersects(terrain.getCollisionBox())) {
-                    super.x += velocityX;
-                }
+        // Allow player to move around terrain and disable sprint if move backward from mouse's position
+        Shooter shooterIntendedPossition = new Shooter((int) super.x + velocityX
+                + Integer.signum(velocityX) * velocitySprint, (int) super.y);
+//        Main.gameData.terrainFigures.forEach(terrain -> {
+//            if (velocityX != 0 && !shooterIntendedPossition
+//                    .getCollisionBox().intersects(terrain.getCollisionBox())) {
+//                super.x += velocityX + Integer.signum(velocityX) * velocitySprint;
+//                
+//            }
+//        });
+        
+        for(GameFigure t : Main.gameData.terrainFigures){
+            if (velocityX != 0 && !shooterIntendedPossition
+                    .getCollisionBox().intersects(t.getCollisionBox())) {
+                super.x += velocityX + Integer.signum(velocityX) * velocitySprint;
+                
             }
-        });
+            else{
+                super.x -= 4*( velocityX + Integer.signum(velocityX) * velocitySprint);
+                return;
+            }
+        }
     }
 
     private void moveY() {
-
-        Main.gameData.terrainFigures.forEach(terrain -> {
-            if (velocityY > 0) {
-                Shooter shooterIntendedPossition = new Shooter((int) super.x, (int) super.y + velocityY);
-
-                if (!shooterIntendedPossition.getCollisionBox().intersects(terrain.getCollisionBox())) {
-                    super.y += velocityY;
-                }
-            } else if (velocityY < 0) {
-                Shooter shooterIntendedPossition = new Shooter((int) super.x, (int) super.y + velocityY);
-
-                if (!shooterIntendedPossition.getCollisionBox().intersects(terrain.getCollisionBox())) {
-                    super.y += velocityY;
-                }
+        // Allow player to move around terrain and disable sprint if move backward from mouse's position
+        Shooter shooterIntendedPossition = new Shooter((int) super.x,
+                (int) super.y + velocityY + Integer.signum(velocityY) * velocitySprint);
+//        Main.gameData.terrainFigures.forEach(terrain -> {
+//            if (velocityY != 0 && !shooterIntendedPossition
+//                    .getCollisionBox().intersects(terrain.getCollisionBox())) {
+//                super.y += velocityY + Integer.signum(velocityY) * velocitySprint;
+//            }
+//        });
+        
+        for(GameFigure t : Main.gameData.terrainFigures){
+             if (velocityY != 0 && !shooterIntendedPossition
+                    .getCollisionBox().intersects(t.getCollisionBox())) {
+                super.y += velocityY + Integer.signum(velocityY) * velocitySprint;
+               
             }
-        });
-    }
-
-    private void moveLeft() {
-        try {
-            launcherImage = ImageIO.read(getClass().getResource("shooterLeft1.png"));
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");
-            System.exit(-1);
-        }
-    }
-
-    private void moveRight() {
-        try {
-            launcherImage = ImageIO.read(getClass().getResource("shooterRight1.png"));
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");
-            System.exit(-1);
-        }
-    }
-
-    private void moveBack() {
-        try {
-            launcherImage = ImageIO.read(getClass().getResource("shooterBack.png"));
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");
-            System.exit(-1);
+             else{
+                 super.y -= 4* (velocityY + Integer.signum(velocityY) * velocitySprint);
+                 return;
+             }
         }
     }
 
@@ -230,5 +263,72 @@ public class Shooter extends GameFigure {
 
     public void setVelocityY(int velocityY) {
         this.velocityY = velocityY;
+    }
+
+    public boolean isSprint() {
+        return isSprint;
+    }
+
+    public void isSprint(boolean isSprint) {
+        this.isSprint = isSprint;
+    }
+
+    public void setMouseMovedEvent(MouseEvent mouseMovedEvent) {
+        this.mouseMovedEvent = mouseMovedEvent;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public int getStrenth() {
+        return strenth;
+    }
+
+    public void setStrenth(int strenth) {
+        this.strenth = strenth;
+    }
+
+    public int getMana() {
+        return mana;
+    }
+
+    public void setMana(int mana) {
+        this.mana = mana;
+    }
+
+    public int getMaxMana() {
+        return maxMana;
+    }
+
+    public void setMaxMana(int maxMana) {
+        this.maxMana = maxMana;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
+    }
+
+    public void useItem(Consumable item, int pos) {
+        if (item != null) {
+            item.consumeItem(this);
+            inventory[pos] = null;
+        }
     }
 }

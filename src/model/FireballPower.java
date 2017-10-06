@@ -6,7 +6,6 @@
 package model;
 
 import controller.Main;
-import java.awt.Color;
 
 /**
  *

@@ -1,13 +1,20 @@
 package model;
 
 import controller.Main;
+import java.io.IOException;
 import view.MainWindow;
-import view.GamePanel;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class GameData {
 
@@ -18,13 +25,12 @@ public class GameData {
     public static Shooter shooter;
     ReentrantLock lock = new ReentrantLock();
     public static int multiplier = 0;
-    
-    
+
     public GameData() {
         enemyFigures = new CopyOnWriteArrayList<>();
         friendFigures = new CopyOnWriteArrayList<>();
         terrainFigures = new CopyOnWriteArrayList<>();
-        PowerUp  p = new PowerUp(400, 480);
+        PowerUp p = new PowerUp(400, 480);
         // GamePanel.width, height are known when rendered. 
         // Thus, at this moment,
         // we cannot use GamePanel.width and height.
@@ -32,20 +38,15 @@ public class GameData {
 
         friendFigures.add(shooter);
         friendFigures.add(p);
-        
-        //enemyFigures.add(new BlinkMage((int)(Math.random() * 500), (int)Math.random()*200));
         enemyFigures.add(new BlinkMage((int)(Math.random() * 500), (int)Math.random()*200));
         enemyFigures.add(new MeleeEnemy((int)(Math.random() * 500), (int)Math.random()*200));
         enemyFigures.add(new SlowMage((int)(Math.random() * 500), (int)Math.random()*200));
- 
         enemyFigures.add(new SuicideEnemy((int)(Math.random() * 500), (int)Math.random()*200));
-        
-        terrainFigures.add(new BlockTerrain(100, 100));
-    }
-    
-  
 
-    public void update() {
+        terrainFigures.add(new BlockTerrain(200, 200));
+    }
+
+    public void update() throws UnsupportedAudioFileException, IOException {
 
         // no enemy is removed in the program
         // since collision detection is not implemented yet.
@@ -56,27 +57,54 @@ public class GameData {
         for (int i = 0; i < enemyFigures.size(); i++) {
             f = enemyFigures.get(i);
             if (f.state == GameFigureState.STATE_DONE && f instanceof EnemyMissile) {
+
                 removeEnemies.add(f);
-            }
-            else if (f.state == GameFigureState.STATE_DONE){
+
+            } 
+            else if (f.state == GameFigureState.STATE_DONE) {
                 multiplier += 1;
                 MainWindow.coins += multiplier;
                 MainWindow.scoreText.setText("Score: " + MainWindow.score + " || Coins: " + MainWindow.coins);
                 removeEnemies.add(f);
+                try {
+                    audio();
+                } catch (LineUnavailableException ex) {
+                    Logger.getLogger(GameData.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(GameData.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
         enemyFigures.removeAll(removeEnemies);
 
+        if(enemyFigures.isEmpty()) //if enemies are dead so set button enabled
+            MainWindow.shopButton.setEnabled(true);
+        else
+            MainWindow.shopButton.setEnabled(false);
+        
         for (GameFigure g : enemyFigures) {
             g.update();
         }
+
+        //Blink Mage
+        //-----------------------------------
+        for(Iterator<GameFigure> it = enemyFigures.iterator(); it.hasNext();) {
+            GameFigure g = it.next();
+            if(g.shootTimer == 20)
+            enemyFigures.add(new EnemyMissile(g.x,g.y));
+        }
         
-        for(Iterator<GameFigure> it = enemyFigures.iterator(); it.hasNext();)
-            {
-                GameFigure g = it.next();
-                if(g.shootTimer == 20)
-                enemyFigures.add(new EnemyMissile(g.x,g.y));
-            }
+        //Slow Mage
+        //-----------------------------------
+        for(Iterator<GameFigure> it = enemyFigures.iterator(); it.hasNext();) {
+            GameFigure slow = it.next();
+            if(slow.slowTimer == 20)
+                enemyFigures.add(new EnemyMissileSlow(slow.x,slow.y));
+        }
+        
+        //Make EnemyMissileSlow actually slow
+        //-----------------------------------        
+
 
         // missiles are removed if explosion is done
         ArrayList<GameFigure> removeFriends = new ArrayList<>();
@@ -91,5 +119,21 @@ public class GameData {
         for (GameFigure g : friendFigures) {
             g.update();
         }
+    }
+
+    public void audio() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
+
+        AudioInputStream stream = null;
+        try {
+            //File file = new File("C:/Users/dinhn/Documents/GitHub/SHSBDA/PatakasWorld.wav");
+            stream = AudioSystem.getAudioInputStream(getClass().getResource("explosion.wav"));
+            Clip clip = AudioSystem.getClip();
+            clip.open(stream);
+            clip.start();
+            stream.close();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+
     }
 }

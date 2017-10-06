@@ -8,7 +8,6 @@ import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
-import model.GameFigure;
 import static model.GameFigure.STATE_ALIVE;
 
 

@@ -53,6 +53,6 @@ public class BlockTerrain extends GameFigure {
 
     @Override
     public Rectangle2D getCollisionBox() {
-        return new Rectangle2D.Double(this.x, this.y, 50, 50);
+        return new Rectangle2D.Double(this.x, this.y, TERRAIN_WIDTH, TERRAIN_HEIGHT);
     }
 }
