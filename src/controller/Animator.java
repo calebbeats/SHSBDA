@@ -29,6 +29,7 @@ public class Animator implements Runnable {
             
                 processCollisions();
 
+<<<<<<< HEAD
                 Main.gameData.update();
                 try {
                     Main.gamePanel.gameRender();
@@ -42,6 +43,27 @@ public class Animator implements Runnable {
                     Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 Main.gamePanel.printScreen();
+=======
+            try {
+                Main.gameData.update();
+            } catch (UnsupportedAudioFileException ex) {
+                Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                Main.gamePanel.gameRender();
+            } catch (IOException ex) {
+                Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnsupportedAudioFileException ex) {
+                Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (LineUnavailableException ex) {
+                Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            Main.gamePanel.printScreen();
+>>>>>>> Sound-effects-for-killing-enemies-and-shooting-missles
 
                 long endTime = System.currentTimeMillis();
                 int sleepTime = (int) (1.0 / FRAMES_PER_SECOND * 1000)
@@ -90,9 +112,9 @@ public class Animator implements Runnable {
             }
        
             for(GameFigure f : Main.gameData.friendFigures)
-            {
-                if(f.getCollisionBox().intersects(s.getCollisionBox()) && f.state != f.STATE_DYING && s.state != s.STATE_DYING
-                        && f.state != f.STATE_DONE && s.state != s.STATE_DONE)   
+            {if(f.getCollisionBox().intersects(s.getCollisionBox()) && f.state != f.STATE_DYING && s.state != s.STATE_DYING
+                        && f.state != f.STATE_DONE && s.state != s.STATE_DONE)
+                   
                 {
                     f.goNextState();
                     s.goNextState();
@@ -100,6 +122,7 @@ public class Animator implements Runnable {
                     MainWindow.scoreText.setText("Score: " + MainWindow.score + " || Coins: " + MainWindow.coins);
                 }
             }
+
             //detection for enemy attacks hitting terrain
             for(GameFigure t : Main.gameData.terrainFigures){
                 if(s.getCollisionBox().intersects(t.getCollisionBox()) && !((s instanceof BlinkMage) || (s instanceof SuicideEnemy) || (s instanceof MeleeEnemy) || (s instanceof SlowMage))){

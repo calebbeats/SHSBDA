@@ -4,6 +4,7 @@ public class GameFigureState {
 
     /* common to all game figures */
     public static final int STATE_DONE = 0;
+    public static final int STATE_DYING = 1;
 
     /* missile states */
     public static final int MISSILE_STATE_LAUNCHED = 1;
