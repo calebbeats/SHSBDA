@@ -12,7 +12,6 @@ import model.BlinkMage;
 import model.SuicideEnemy;
 import model.MeleeEnemy;
 import model.SlowMage;
-import model.GameFigureState;
 import model.GameData;
 import view.MainWindow;
 
@@ -56,7 +55,7 @@ public class Animator implements Runnable {
                     }
                 }
             }else{
-                MainWindow.resumeGame.setEnabled(true);
+//                MainWindow.resumeGame.setEnabled(true);
                 long startTime = System.currentTimeMillis();
                 long endTime = System.currentTimeMillis();
                 int sleepTime = (int) (1.0 / FRAMES_PER_SECOND * 1000)

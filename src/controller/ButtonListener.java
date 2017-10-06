@@ -13,6 +13,8 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
+import javax.swing.JFrame;
+import view.ShopWindow;
 
 public class ButtonListener implements ActionListener {
 
@@ -44,20 +46,27 @@ public class ButtonListener implements ActionListener {
             //choosedButton = 2;
             choosedButton = false;
             if (Main.animator.running) {
-
+                
                 try {
                     Thread.sleep(1500);
+                    
                 } catch (InterruptedException ex) {
                     Logger.getLogger(ButtonListener.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 Main.animator.running = false;
+                
                 System.exit(0);
             } else {
                 System.exit(0);
             }
-        } else if (e.getSource() == MainWindow.resumeGame) {
-            Main.isPaused = false;
-        }
+        } else if (e.getSource() == MainWindow.shopButton) {
+            JFrame shop = new ShopWindow();
+            shop.setVisible(true);
+            shop.setSize(400, 500);
+            shop.setLocation(150, 100);
+            shop.setResizable(false); // window size cannot change
+            shop.setVisible(true);
+        } 
     }
 
     public void render(Graphics2D g) {

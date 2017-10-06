@@ -5,10 +5,6 @@
  */
 package model;
 
-import model.GameFigure;
-import model.GameFigure;
-import model.GameFigure;
-
 /**
  *
  * @author caleb

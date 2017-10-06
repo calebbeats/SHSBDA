@@ -2,7 +2,6 @@ package model;
 
 import controller.Main;
 import view.MainWindow;
-import view.GamePanel;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -65,6 +64,11 @@ public class GameData {
         }
         enemyFigures.removeAll(removeEnemies);
 
+        if(enemyFigures.isEmpty()) //if enemies are dead so set button enabled
+            MainWindow.shopButton.setEnabled(true);
+        else
+            MainWindow.shopButton.setEnabled(false);
+        
         for (GameFigure g : enemyFigures) {
             g.update();
         }

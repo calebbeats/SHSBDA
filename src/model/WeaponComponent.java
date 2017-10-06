@@ -5,8 +5,6 @@
  */
 package model;
 
-import model.Shooter;
-
 /**
  *
  * @author caleb

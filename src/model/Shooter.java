@@ -25,7 +25,11 @@ public class Shooter extends GameFigure {
     private int mana;
     private int maxMana;
     private int maxHealth;
-    public Item[] inventory;
+
+    //made static so shop can access invo
+    public static Item[] inventory = new Item[4]; 
+    
+
 
     //-----------------
     //test object
@@ -61,13 +65,14 @@ public class Shooter extends GameFigure {
         mana = 100;
         maxHealth = health;
         maxMana = mana;
-        inventory = new Item[4];
+//        inventory = new Item[4];
 
         // Tests for items and equipment
+        // This gets added every time the shooter is created, so it slows game way down
         //---------------------------------------------------------------------
-        inventory[0] = new WeakPotion(1);
-        inventory[1] = new MediumPotion(2);
-        inventory[2] = new StrongPotion(3);
+//        inventory[0] = new WeakPotion(1);
+//        inventory[1] = new MediumPotion(2);
+//        inventory[2] = new StrongPotion(3);
         //---------------------------------------------------------------------
 
         playerImage = new Image[4];

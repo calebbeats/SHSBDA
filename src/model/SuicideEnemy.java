@@ -6,7 +6,6 @@
 package model;
 
 import controller.Main;
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.Point2D;
@@ -15,7 +14,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import static model.GameFigure.STATE_ALIVE;
-import static model.GameFigure.STATE_DONE;
 import static model.GameFigure.STATE_DYING;
 
 public class SuicideEnemy extends GameFigure {
