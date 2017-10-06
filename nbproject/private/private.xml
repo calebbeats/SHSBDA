@@ -3,67 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-<<<<<<< HEAD
-            <file>file:/C:/Git/SHSBDA/src/controller/KeyController.java</file>
-            <file>file:/C:/Git/SHSBDA/src/model/Item.java</file>
-            <file>file:/C:/Git/SHSBDA/src/controller/Animator.java</file>
-            <file>file:/C:/Git/SHSBDA/src/view/ShopWindow.java</file>
-            <file>file:/C:/Git/SHSBDA/src/view/GamePanel.java</file>
-            <file>file:/C:/Git/SHSBDA/src/controller/ButtonListener.java</file>
-            <file>file:/C:/Git/SHSBDA/src/model/Shooter.java</file>
-=======
-            <file>file:/C:/Users/hungt/Documents/GitHub/SHSBDA/src/model/Shooter.java</file>
-        </group>
-        <group>
-            <file>file:/C:/Users/hungt/Documents/GitHub/SHSBDA/src/model/Shooter.java</file>
->>>>>>> Dev
-=======
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/controller/ButtonListener.java</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/model/FireballPower.java</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/model/BlinkMage0.png</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/model/swordUp.png</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/model/BlinkMage.java</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/model/BasicWeapon.java</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/view/GamePanel.java</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/controller/Animator.java</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/model/enemyMissile0.png</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/model/explosion0.png</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/model/GameData.java</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/model/GameFigure.java</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/model/Bigboss.java</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/controller/KeyController.java</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/controller/MouseController.java</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/model/fireball.gif</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/model/explosion1.png</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/model/FigureState.java</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/model/GameFigureState.java</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/controller/Main.java</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/model/Missile.java</file>
-        </group>
-        <group>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/controller/ButtonListener.java</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/model/FireballPower.java</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/model/BlinkMage0.png</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/model/swordUp.png</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/model/BlinkMage.java</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/model/BasicWeapon.java</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/view/GamePanel.java</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/controller/Animator.java</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/model/enemyMissile0.png</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/model/explosion0.png</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/model/GameData.java</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/model/GameFigure.java</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/model/Bigboss.java</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/controller/KeyController.java</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/controller/MouseController.java</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/model/fireball.gif</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/model/explosion1.png</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/model/FigureState.java</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/model/GameFigureState.java</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/controller/Main.java</file>
-            <file>file:/D:/Software%20Design&amp;Development/V1/SHSBDA/src/model/Missile.java</file>
->>>>>>> Sound-effects-for-killing-enemies-and-shooting-missles
+            <file>file:/F:/CoreyGit/SHSBDA/src/controller/Animator.java</file>
+            <file>file:/F:/CoreyGit/SHSBDA/src/controller/ShopButtonListener.java</file>
+            <file>file:/F:/CoreyGit/SHSBDA/src/controller/ButtonListener.java</file>
+            <file>file:/F:/CoreyGit/SHSBDA/src/view/ShopWindow.java</file>
         </group>
     </open-files>
 </project-private>
