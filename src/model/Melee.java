@@ -13,7 +13,6 @@ import static model.GameFigure.STATE_DYING;
 
 public class Melee extends GameFigure {
 
-    // missile size
     private static final int SIZE = 15;
     private static final int MAX_SWING_SIZE = 4;
     private float dx; // displacement at each frame
@@ -80,7 +79,6 @@ public class Melee extends GameFigure {
         //draw animation based on direction of mouse click
         if (state == STATE_DYING) {
 
-            //if (swordSwing == 0) { //left sword swing
             if (swingCounter < 1) {
                 g.drawImage(swordUp, (int) super.x, (int) super.y,
                         30, 30, null);
