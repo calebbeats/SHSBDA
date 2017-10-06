@@ -2,6 +2,12 @@ package controller;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+<<<<<<< HEAD
+=======
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.Consumable;
+>>>>>>> Dev
 import model.Shooter;
 
 public class KeyController implements KeyListener {
@@ -30,6 +36,18 @@ public class KeyController implements KeyListener {
             case KeyEvent.VK_D:
                 shooter.setVelocityX(VELOCITY_X);
                 keyDown[3] = true;
+                break;
+            case KeyEvent.VK_1:
+                shooter.useItem((Consumable)shooter.inventory[0], 0);
+                break;
+            case KeyEvent.VK_2:
+                shooter.useItem((Consumable)shooter.inventory[1], 1);
+                break;
+            case KeyEvent.VK_3:
+                shooter.useItem((Consumable)shooter.inventory[2], 2);
+                break;
+            case KeyEvent.VK_4:
+                shooter.useItem((Consumable)shooter.inventory[3], 3);
                 break;
             case KeyEvent.VK_ESCAPE: //pause the game when escape key is pressed
                 if(Main.isPaused)

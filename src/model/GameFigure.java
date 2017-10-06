@@ -13,8 +13,15 @@ public abstract class GameFigure implements CollisionBox{
     public static final int STATE_ALIVE = 1;
     public static final int STATE_DYING = 2;
     public static final int STATE_DONE = 0;
+    
+    //Blink Mage
+    //-----------------------------------
     public int shootTimer = 0;
 
+    //Slow Mage 
+    //-----------------------------------
+    public int slowTimer = 0;
+    
     public GameFigure(float x, float y) {
         this.x = x;
         this.y = y;
@@ -28,18 +35,14 @@ public abstract class GameFigure implements CollisionBox{
     public void setState(FigureState state) {
         this.fState = state;
     }
-    
-    
-    
+      
     // how to render on the canvas
+    //-----------------------------------
     public abstract void render(Graphics2D g);
     
     public abstract void shoot();
+    
     // changes per frame
+    //-----------------------------------
     public abstract void update();
-
-    
-
-    
-
 }

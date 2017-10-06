@@ -1,4 +1,3 @@
-
 package model;
 
 import java.awt.Graphics2D;
@@ -8,6 +7,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import static model.GameFigure.STATE_ALIVE;
+import static model.GameFigure.STATE_DYING;
 
 
 public class SlowMage extends GameFigure {
@@ -17,7 +17,6 @@ public class SlowMage extends GameFigure {
     private Image slowMage1;
     private Image slowMage2;
     public FigureState eState;
-    
     private int direction = 1; // +1: to the right; -1 to the left
     
     public SlowMage(float x, float y) {
@@ -30,7 +29,7 @@ public class SlowMage extends GameFigure {
             JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");
            System.exit(-1);
         }
-        shootTimer=0;
+        slowTimer=0;
         timer=0;
     }
 
@@ -59,9 +58,10 @@ public class SlowMage extends GameFigure {
                 30, 30, null);
             }
         }
-        if(state == STATE_DYING)
-        {
+        if(state == STATE_DYING){
             
+            //Create Death Animation
+            //------------------------------
         }
     }
 
@@ -69,13 +69,15 @@ public class SlowMage extends GameFigure {
     public void update() {
         if(state == STATE_ALIVE)
         {
-            if(shootTimer < 20)
+            //Attack Speed of Slow Mage
+            //-----------------------------------
+            if(slowTimer < 50)
             {
-                shootTimer++;
+                slowTimer++;
             }
             else
             {
-                shootTimer = 0;
+                slowTimer = 0;
             }
         }
         
