@@ -145,24 +145,54 @@ public class SuicideEnemy extends GameFigure {
     }
 
     public void updateLocation() {
-        GameFigure enemyToMove = new SuicideEnemy(super.x + dx, super.y +dy);
-        
+        GameFigure enemyToMove = new SuicideEnemy(super.x + dx, super.y +dy);        
         
         for(GameFigure t : Main.gameData.terrainFigures){
             if(!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox()))){
                 super.x += dx;
                 super.y += dy;
             }
-//            else{
-//                super.x -= dx;
-//                super.y -= dy;
-//                return;
-//            }
-        }
-        enemyToMove = null;
+            else{
+                
+                tx = Main.gameData.shooter.x + 10;
+                ty = Main.gameData.shooter.y + 10;
+                System.out.println("Tx Ty" + tx + " " + ty);
+                this.target = new Point2D.Float(tx, ty);
         
-//        super.x += dx;
-//        super.y += dy;
+                double angle = Math.atan2(Math.abs(ty - super.y), Math.abs(tx - super.x));
+                dx = (float) (UNIT_TRAVEL_DISTANCE * Math.cos(angle));
+                dy = (float) (UNIT_TRAVEL_DISTANCE * Math.sin(angle));
+        
+                if (tx > super.x && ty < super.y) { // target is upper-right side
+                    dy = -dy; // dx > 0, dx < 0
+                } else if (tx < super.x && ty < super.y) { // target is upper-left side
+                    dx = -dx;
+                    dy = -dy;
+                } else if (tx < super.x && ty > super.y) { // target is lower-left side
+                    dx = -dx;
+                } else { // target is lower-right side
+                    
+                }
+                System.out.println("Dx Dy" + dx + " " + dy);
+                
+                enemyToMove = new SuicideEnemy(super.x + dx, super.y);
+                if (!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox()))) {
+                    super.x += dx;
+                    super.y -= 2*dy;
+                }
+                else{
+                    enemyToMove = new SuicideEnemy(super.x, super.y + dy);
+                    if (!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox()))) {
+                        super.y += dy;
+                        super.x -= 2*dx;
+                    }
+                }
+                
+                return;
+            }
+            enemyToMove = new SuicideEnemy(super.x + dx, super.y +dy);
+        }
+        enemyToMove = null;        
     }
 
     public void updateSize() {
