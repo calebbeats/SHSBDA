@@ -33,11 +33,9 @@ public class GameData {
         friendFigures.add(shooter);
         friendFigures.add(p);
         
-        //enemyFigures.add(new BlinkMage((int)(Math.random() * 500), (int)Math.random()*200));
         enemyFigures.add(new BlinkMage((int)(Math.random() * 500), (int)Math.random()*200));
         enemyFigures.add(new MeleeEnemy((int)(Math.random() * 500), (int)Math.random()*200));
         enemyFigures.add(new SlowMage((int)(Math.random() * 500), (int)Math.random()*200));
- 
         enemyFigures.add(new SuicideEnemy((int)(Math.random() * 500), (int)Math.random()*200));
         
         terrainFigures.add(new BlockTerrain(100, 100));
@@ -71,12 +69,24 @@ public class GameData {
             g.update();
         }
         
-        for(Iterator<GameFigure> it = enemyFigures.iterator(); it.hasNext();)
-            {
-                GameFigure g = it.next();
-                if(g.shootTimer == 20)
-                enemyFigures.add(new EnemyMissile(g.x,g.y));
-            }
+        //Blink Mage
+        //-----------------------------------
+        for(Iterator<GameFigure> it = enemyFigures.iterator(); it.hasNext();) {
+            GameFigure g = it.next();
+            if(g.shootTimer == 20)
+            enemyFigures.add(new EnemyMissile(g.x,g.y));
+        }
+        
+        //Slow Mage
+        //-----------------------------------
+        for(Iterator<GameFigure> it = enemyFigures.iterator(); it.hasNext();) {
+            GameFigure slow = it.next();
+            if(slow.slowTimer == 20)
+                enemyFigures.add(new EnemyMissileSlow(slow.x,slow.y));
+        }
+        
+        //Make EnemyMissileSlow actually slow
+        //-----------------------------------        
 
         // missiles are removed if explosion is done
         ArrayList<GameFigure> removeFriends = new ArrayList<>();
