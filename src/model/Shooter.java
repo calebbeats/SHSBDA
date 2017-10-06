@@ -80,7 +80,7 @@ public class Shooter extends GameFigure {
             playerImage[0] = ImageIO.read(getClass().getResource("playerRight.png"));
             playerImage[1] = ImageIO.read(getClass().getResource("playerTop.png"));
             playerImage[2] = ImageIO.read(getClass().getResource("playerLeft.png"));
-            playerImage[3] = ImageIO.read(getClass().getResource("playerRight.png"));
+            playerImage[3] = ImageIO.read(getClass().getResource("playerFront.png"));
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open Player Image");
             System.exit(-1);
