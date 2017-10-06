@@ -15,7 +15,7 @@ public class Melee extends GameFigure {
 
     // missile size
     private static final int SIZE = 15;
-    private static final int MAX_SWING_SIZE = 4;
+    private static final int MAX_SWING_SIZE = 6;
     private float dx; // displacement at each frame
     private float dy; // displacement at each frame
     //private int animationCheck = 0;
@@ -25,10 +25,9 @@ public class Melee extends GameFigure {
     public Color color;
     public Point2D.Float target;
 
-    private static final int UNIT_TRAVEL_DISTANCE = 3; // per frame move
+    private static final int UNIT_TRAVEL_DISTANCE = 100; // per frame move
 
     private int swingCounter = 0;
-    public int distanceTraveled;
     private Image swordUp;
     private Image swordDown;
     private Image swordRight;
@@ -46,7 +45,6 @@ public class Melee extends GameFigure {
         super(sx, sy);
 
         this.target = new Point2D.Float(tx, ty);
-        this.color = color;
 
         double angle = Math.atan2(Math.abs(ty - sy), Math.abs(tx - sx));
         dx = (float) (UNIT_TRAVEL_DISTANCE * Math.cos(angle));
@@ -54,20 +52,15 @@ public class Melee extends GameFigure {
 
         if (tx > sx && ty < sy) { // target is upper-right side
             dy = -dy; // dx > 0, dx < 0
-            swordSwing = 1;
         } else if (tx < sx && ty < sy) { // target is upper-left side
             dx = -dx;
             dy = -dy;
-            swordSwing = 0;
         } else if (tx < sx && ty > sy) { // target is lower-left side
             dx = -dx;
-            swordSwing = 0;
         } else { // target is lower-right side
             // dx > 0 , dy > 0
-            swordSwing = 1;
         }
 
-        //launcherImage = null;
         try {
             swordUp = ImageIO.read(getClass().getResource("swordUp.png"));
             swordDown = ImageIO.read(getClass().getResource("swordDown.png"));
@@ -82,79 +75,46 @@ public class Melee extends GameFigure {
 
     @Override
     public void render(Graphics2D g) {
-        //hold sword up waiting to attack
+        //Initially, sword is in the upright position for first animation
         if (state == STATE_ALIVE) {
-            //if (animationCheck == 0) {
-            //g.drawImage(launcherImage, (int) super.x, (int) super.y,
-            //       30, 30, null);
             g.drawImage(swordUp, (int) super.x, (int) super.y,
                     30, 30, null);
-            //   animationCheck = 1;
-            //} else {
-            //g.drawImage(launcherImage2, (int) super.x, (int) super.y,
-            // 30, 30, null);
-            //  g.drawImage(swordUp, (int) super.x, (int) super.y,
-            //    30, 30, null);
-            //   animationCheck = 0;
-            // }
         }
-        //draw animation based on left attack or right attack.
-        // WORK IN PROGRESS
+        //draw animation based on direction of mouse click
         if (state == STATE_DYING) {
 
-            if (swordSwing == 0) { //left sword swing
-                if (swingCounter == 0) {
+            //if (swordSwing == 0) { //left sword swing
+                if (swingCounter < 2) {
                     g.drawImage(swordLeft, (int) super.x, (int) super.y,
                             30, 30, null);
                 }
-                if (swingCounter == 1) {
-                    g.drawImage(swordDown, (int) super.x, (int) super.y,
-                            30, 30, null);
-                }
-                if (swingCounter == 2) {
-                    g.drawImage(swordLeft, (int) super.x, (int) super.y,
-                            30, 30, null);
-                }
-                if (swingCounter == 3) {
+                if (swingCounter < 4) {
                     g.drawImage(swordUp, (int) super.x, (int) super.y,
                             30, 30, null);
                 }
-            }
-
-            if (swordSwing == 1) { //right sword swing
-                if (swingCounter == 0) {
+                if (swingCounter < 6) {
                     g.drawImage(swordRight, (int) super.x, (int) super.y,
                             30, 30, null);
                 }
-                if (swingCounter == 1) {
-                    g.drawImage(swordDown, (int) super.x, (int) super.y,
-                            30, 30, null);
-                }
-                if (swingCounter == 2) {
-                    g.drawImage(swordRight, (int) super.x, (int) super.y,
-                            30, 30, null);
-                }
-                if (swingCounter == 3) {
-                    g.drawImage(swordUp, (int) super.x, (int) super.y,
-                            30, 30, null);
-                }
-            }
+                //if (swingCounter < 8) {
+                   // g.drawImage(swordUp, (int) super.x, (int) super.y,
+                           // 30, 30, null);
+                //}
+            
 
         }
     }
 
     @Override
     public void update() {
-        updateState();
-        //if (this.x > 470 || this.x < 20 || this.y > 540 || this.y < 20) {
-        //    this.goNextState();
-        //}
+        //updateState();
         if (state == STATE_ALIVE) {
             updateLocation();
-            distanceTraveled++;
+          //  distanceTraveled++;
         } else if (state == STATE_DYING) {
             updateSize();
         }
+        updateState();
     }
 
     public void updateLocation() {
@@ -171,11 +131,7 @@ public class Melee extends GameFigure {
 
     public void updateState() {
         if (state == STATE_ALIVE) {
-            //double distance = target.distance(super.x, super.y);
-            //boolean targetReached = distance <= 2.0;
-            //if (targetReached) {
-            this.goNextState(); // WORK IN PROGRESS
-            // }
+            this.goNextState();
         } else if (state == STATE_DYING) {
             if (swingCounter >= MAX_SWING_SIZE) {
                 this.goNextState();
