@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import model.Shooter;
 
 
 public class ShopWindow extends JFrame{
@@ -51,6 +52,8 @@ public class ShopWindow extends JFrame{
         coinText.setFocusable(false);
         
         coinText.setEditable(false);
+        
+
     }
     
 }
