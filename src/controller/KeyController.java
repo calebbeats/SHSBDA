@@ -2,12 +2,7 @@ package controller;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-<<<<<<< HEAD
-=======
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Consumable;
->>>>>>> Dev
 import model.Shooter;
 
 public class KeyController implements KeyListener {

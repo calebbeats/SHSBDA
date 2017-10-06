@@ -1,6 +1,7 @@
 package model;
 
 import controller.Main;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.Rectangle2D;
