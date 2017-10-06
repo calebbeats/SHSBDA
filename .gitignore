@@ -28,5 +28,10 @@ hs_err_pid*
 *.properties
 *.xml
 *.xml
+<<<<<<< HEAD
 *.properties
 *.xml
+=======
+/build/
+/nbproject/private/
+>>>>>>> Dev
