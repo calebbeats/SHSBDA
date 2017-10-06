@@ -15,6 +15,7 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.swing.JFrame;
 import view.ShopWindow;
+import view.HighScore;
 
 public class ButtonListener implements ActionListener {
 
@@ -40,6 +41,12 @@ public class ButtonListener implements ActionListener {
             } catch (LineUnavailableException ex) {
                 Logger.getLogger(ButtonListener.class.getName()).log(Level.SEVERE, null, ex);
             } catch (InterruptedException ex) {
+                Logger.getLogger(ButtonListener.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (e.getSource() == MainWindow.highScores) {
+            try {
+                HighScore.createFrame();
+            } catch (IOException ex) {
                 Logger.getLogger(ButtonListener.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (e.getSource() == MainWindow.quitButton) {
