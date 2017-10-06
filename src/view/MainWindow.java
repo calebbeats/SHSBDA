@@ -47,6 +47,7 @@ public class MainWindow extends JFrame {
 
         MouseController mouseController = new MouseController();
         Main.gamePanel.addMouseListener(mouseController);
+        Main.gamePanel.addMouseMotionListener(mouseController);
 
         KeyController keyListener = new KeyController();
         Main.gamePanel.addKeyListener(keyListener);
