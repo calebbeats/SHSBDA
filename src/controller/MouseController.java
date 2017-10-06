@@ -11,14 +11,15 @@ public class MouseController extends MouseAdapter {
     private int px;
     private int py;
 
+    Shooter shooter = (Shooter) Main.gameData.friendFigures.get(0);
+
     @Override
     public void mousePressed(MouseEvent me) {
         px = me.getX();
         py = me.getY();
-        
-        if(!Main.isPaused){//if game is paused don't do anything after unpausing
-            Shooter shooter = (Shooter) Main.gameData.friendFigures.get(0);
-            if (me.getButton() == MouseEvent.BUTTON1) {//Left click detected, initiate melee attack
+
+        if (!Main.isPaused) {//if game is paused don't do anything after unpausing
+            if (me.getButton() == MouseEvent.BUTTON1 && !shooter.isSprint()) {//Left click detected, initiate melee attack
                 //melee attack in the direction the mouse is in regards to the player
                 Melee m = new Melee(
                         shooter.getXofMissileShoot(),
@@ -28,7 +29,7 @@ public class MouseController extends MouseAdapter {
                 Main.gameData.friendFigures.add(m);
             }
 
-            if (me.getButton() == MouseEvent.BUTTON3) { //Right click detected, initiate ranged attack
+            if (me.getButton() == MouseEvent.BUTTON3 && !shooter.isSprint()) { //Right click detected, initiate ranged attack
                 //shoot a missle at the mouse press location
                 Missile m = new Missile(
                         shooter.getXofMissileShoot(),
@@ -38,7 +39,10 @@ public class MouseController extends MouseAdapter {
                 Main.gameData.friendFigures.add(m);
             }
         }
-        
     }
 
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        shooter.setMouseMovedEvent(e);        
+    }
 }
