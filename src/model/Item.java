@@ -21,5 +21,10 @@ public abstract class Item {
     {
         id = i;
     }
+
+    public Image getIcon() {
+        return icon;
+    }
+    
 }
 
