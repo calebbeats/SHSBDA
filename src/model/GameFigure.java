@@ -36,9 +36,6 @@ public abstract class GameFigure implements CollisionBox {
     public void setState(FigureState state) {
         this.fState = state;
     }
-<<<<<<< HEAD
-      
-=======
 
     public boolean Collides(GameFigure anotherGF) { // overide this method in child classes
         return true;
@@ -48,22 +45,12 @@ public abstract class GameFigure implements CollisionBox {
         return "GameFigure";
     }
 
->>>>>>> Sound-effects-for-killing-enemies-and-shooting-missles
     // how to render on the canvas
     //-----------------------------------
     public abstract void render(Graphics2D g);
 
     public abstract void shoot();
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> Sound-effects-for-killing-enemies-and-shooting-missles
     // changes per frame
     //-----------------------------------
     public abstract void update();
-<<<<<<< HEAD
-=======
-
->>>>>>> Sound-effects-for-killing-enemies-and-shooting-missles
 }

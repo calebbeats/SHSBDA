@@ -29,21 +29,6 @@ public class Animator implements Runnable {
             
                 processCollisions();
 
-<<<<<<< HEAD
-                Main.gameData.update();
-                try {
-                    Main.gamePanel.gameRender();
-                } catch (IOException ex) {
-                    Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (UnsupportedAudioFileException ex) {
-                    Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (LineUnavailableException ex) {
-                    Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                Main.gamePanel.printScreen();
-=======
             try {
                 Main.gameData.update();
             } catch (UnsupportedAudioFileException ex) {
@@ -63,7 +48,6 @@ public class Animator implements Runnable {
                 Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
             }
             Main.gamePanel.printScreen();
->>>>>>> Sound-effects-for-killing-enemies-and-shooting-missles
 
                 long endTime = System.currentTimeMillis();
                 int sleepTime = (int) (1.0 / FRAMES_PER_SECOND * 1000)

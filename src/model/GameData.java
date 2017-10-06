@@ -38,24 +38,11 @@ public class GameData {
 
         friendFigures.add(shooter);
         friendFigures.add(p);
-<<<<<<< HEAD
-        
         enemyFigures.add(new BlinkMage((int)(Math.random() * 500), (int)Math.random()*200));
         enemyFigures.add(new MeleeEnemy((int)(Math.random() * 500), (int)Math.random()*200));
         enemyFigures.add(new SlowMage((int)(Math.random() * 500), (int)Math.random()*200));
         enemyFigures.add(new SuicideEnemy((int)(Math.random() * 500), (int)Math.random()*200));
         
-=======
-
-        enemyFigures.add(new BlinkMage((int)(Math.random() * 500), (int)Math.random()*200));
-        enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) Math.random() * 200));
-        enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
-        enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
-
-        enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
-
-
->>>>>>> Sound-effects-for-killing-enemies-and-shooting-missles
         terrainFigures.add(new BlockTerrain(100, 100));
     }
 
@@ -98,8 +85,7 @@ public class GameData {
         for (GameFigure g : enemyFigures) {
             g.update();
         }
-<<<<<<< HEAD
-        
+
         //Blink Mage
         //-----------------------------------
         for(Iterator<GameFigure> it = enemyFigures.iterator(); it.hasNext();) {
@@ -118,15 +104,7 @@ public class GameData {
         
         //Make EnemyMissileSlow actually slow
         //-----------------------------------        
-=======
 
-        for (Iterator<GameFigure> it = enemyFigures.iterator(); it.hasNext();) {
-            GameFigure g = it.next();
-            if (g.shootTimer == 20) {
-                enemyFigures.add(new EnemyMissile(g.x, g.y));
-            }
-        }
->>>>>>> Sound-effects-for-killing-enemies-and-shooting-missles
 
         // missiles are removed if explosion is done
         ArrayList<GameFigure> removeFriends = new ArrayList<>();
