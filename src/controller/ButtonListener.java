@@ -46,13 +46,15 @@ public class ButtonListener implements ActionListener {
             //choosedButton = 2;
             choosedButton = false;
             if (Main.animator.running) {
-
+                
                 try {
                     Thread.sleep(1500);
+                    
                 } catch (InterruptedException ex) {
                     Logger.getLogger(ButtonListener.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 Main.animator.running = false;
+                
                 System.exit(0);
             } else {
                 System.exit(0);
@@ -80,7 +82,7 @@ public class ButtonListener implements ActionListener {
             stream = AudioSystem.getAudioInputStream(getClass().getResource("PatakasWorld.wav"));
             Clip clip = AudioSystem.getClip();
             clip.open(stream);
-            //clip.start();
+            clip.start();
             stream.close();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

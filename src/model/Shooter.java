@@ -23,7 +23,7 @@ public class Shooter extends GameFigure {
     private int mana;
     private int maxMana;
     private int maxHealth;
-    public Item[] inventory; 
+    public static Item[] inventory; 
     
     //-----------------
 
