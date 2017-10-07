@@ -6,12 +6,12 @@ import model.Consumable;
 import model.Shooter;
 
 public class KeyController implements KeyListener {
-    
+
     public static final int VELOCITY_X = 2, VELOCITY_Y = 2, VELOCITY_ZERO = 0;
-    
+
     private final Shooter shooter = (Shooter) Main.gameData.friendFigures.get(0);
     private boolean[] keyDown = new boolean[4];
-    
+
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
@@ -56,7 +56,7 @@ public class KeyController implements KeyListener {
                 break;
         }
     }
-    
+
     @Override
     public void keyReleased(KeyEvent e) {
         // Set player's velocity to 0 when WASD keys are released
@@ -94,9 +94,9 @@ public class KeyController implements KeyListener {
             shooter.setVelocityY(VELOCITY_ZERO);
         }
     }
-    
+
     @Override
     public void keyTyped(KeyEvent e) {
     }
-    
+
 }

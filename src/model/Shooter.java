@@ -4,14 +4,19 @@ import controller.Main;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import static model.GameFigure.STATE_ALIVE;
 import static model.GameFigure.STATE_DYING;
+import sun.util.calendar.CalendarUtils;
 
 public class Shooter extends GameFigure {
 
@@ -27,9 +32,7 @@ public class Shooter extends GameFigure {
     private int maxHealth;
 
     //made static so shop can access invo
-    public static Item[] inventory = new Item[4]; 
-    
-
+    public static Item[] inventory = new Item[4];
 
     //-----------------
     //test object
@@ -42,9 +45,8 @@ public class Shooter extends GameFigure {
 
     //Images for animations go below
     //----------------------------------
-    private Image[] playerImage;
-    //private Image shooterLeft;
-    //private Image shooterRight;
+    private Map<String, List<Image>> playerSprites;
+    private Image playerImage;
     public WeaponComponent weapon;
     int deadTimer = 0;
     // ----------------------------------
@@ -74,13 +76,23 @@ public class Shooter extends GameFigure {
 //        inventory[1] = new MediumPotion(2);
 //        inventory[2] = new StrongPotion(3);
         //---------------------------------------------------------------------
-
-        playerImage = new Image[4];
         try {
-            playerImage[0] = ImageIO.read(getClass().getResource("playerRight.png"));
-            playerImage[1] = ImageIO.read(getClass().getResource("playerTop.png"));
-            playerImage[2] = ImageIO.read(getClass().getResource("playerLeft.png"));
-            playerImage[3] = ImageIO.read(getClass().getResource("playerFront.png"));
+            // Create HashMap that contains player sprites 
+            // to update mouse and sprint movement animations
+            playerSprites = new HashMap<String, List<Image>>() {
+                {
+                    put("Walk", new ArrayList<>(Arrays.asList(
+                            ImageIO.read(getClass().getResource("/resources/WalkEast.png")),
+                            ImageIO.read(getClass().getResource("/resources/WalkNorth.png")),
+                            ImageIO.read(getClass().getResource("/resources/WalkWest.png")),
+                            ImageIO.read(getClass().getResource("/resources/WalkSouth.png")))));
+                    put("Sprint", new ArrayList<>(Arrays.asList(
+                            ImageIO.read(getClass().getResource("/resources/SprintEast.png")),
+                            ImageIO.read(getClass().getResource("/resources/SprintNorth.png")),
+                            ImageIO.read(getClass().getResource("/resources/SprintWest.png")),
+                            ImageIO.read(getClass().getResource("/resources/SprintSouth.png")))));
+                }
+            };
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open Player Image");
             System.exit(-1);
@@ -90,19 +102,10 @@ public class Shooter extends GameFigure {
     @Override
     public void render(Graphics2D g) {
         // Update player's view based on angleOfView
-        if (angleOfView <= 45 || angleOfView >= 315) {
-            g.drawImage(playerImage[0], (int) super.x, (int) super.y,
-                    PLAYER_WIDTH, PLAYER_HEIGHT, null);
-        } else if (angleOfView > 45 && angleOfView < 135) {
-            g.drawImage(playerImage[1], (int) super.x, (int) super.y,
-                    PLAYER_WIDTH, PLAYER_HEIGHT, null);
-        } else if (angleOfView >= 135 && angleOfView <= 225) {
-            g.drawImage(playerImage[2], (int) super.x, (int) super.y,
-                    PLAYER_WIDTH, PLAYER_HEIGHT, null);
-        } else if (angleOfView > 225 && angleOfView < 315) {
-            g.drawImage(playerImage[3], (int) super.x, (int) super.y,
-                    PLAYER_WIDTH, PLAYER_HEIGHT, null);
-        }
+        playerImage = isSprint && (velocityX != 0 || velocityY != 0)
+                ? updatePlayerImage("Sprint")
+                : updatePlayerImage("Walk");
+        g.drawImage(playerImage, (int) super.x, (int) super.y, PLAYER_WIDTH, PLAYER_HEIGHT, null);
 
         g.setColor(Color.red);
         g.fillRect(20, 450, health, 20);
@@ -132,19 +135,12 @@ public class Shooter extends GameFigure {
                 this.goNextState();
             }
         } else {
+            velocitySprint = isSprint ? 2 : 0;
+
             moveX();
             moveY();
 
             calculateAngleOfView();
-
-            double deltaDistance = calculateDistance(new Point.Float(super.x, super.y))
-                    - calculateDistance(new Point.Float(super.x + velocityX, super.y + velocityY));
-
-            if (isSprint && deltaDistance > 0) {
-                velocitySprint = 2;
-            } else if (isSprint && deltaDistance < 0 || !isSprint) {
-                velocitySprint = 0;
-            }
 
             // Window boundary
             if (super.x <= 0) {
@@ -175,17 +171,21 @@ public class Shooter extends GameFigure {
         }
     }
 
-    private double calculateDistance(Point.Float point) {
-        // Find the distance between player's position and mouse's position
-        if (mouseMovedEvent != null) {
-            return Math.hypot(mouseMovedEvent.getX()
-                    - point.x, mouseMovedEvent.getY() - point.y);
+    private Image updatePlayerImage(String movement) {
+        if (angleOfView > 45 && angleOfView < 135) {
+            return (Image) (playerSprites.get(movement)).get(1);
+        } else if (angleOfView >= 135 && angleOfView <= 225) {
+            return (Image) (playerSprites.get(movement)).get(2);
+        } else if (angleOfView > 225 && angleOfView < 315) {
+            return (Image) (playerSprites.get(movement)).get(3);
+        } else {
+            return (Image) (playerSprites.get(movement)).get(0);
         }
-        return 0;
     }
 
     private void moveX() {
-        // Allow player to move around terrain and disable sprint if move backward from mouse's position
+        // Allow player to move around terrain 
+        // and disable sprint if move backward from mouse's position
         Shooter shooterIntendedPossition = new Shooter((int) super.x + velocityX
                 + Integer.signum(velocityX) * velocitySprint, (int) super.y);
 //        Main.gameData.terrainFigures.forEach(terrain -> {
@@ -195,41 +195,41 @@ public class Shooter extends GameFigure {
 //                
 //            }
 //        });
-        
-        for(GameFigure t : Main.gameData.terrainFigures){
+
+        for (GameFigure t : Main.gameData.terrainFigures) {
             if (velocityX != 0 && !shooterIntendedPossition
                     .getCollisionBox().intersects(t.getCollisionBox())) {
                 super.x += velocityX + Integer.signum(velocityX) * velocitySprint;
-                
-            }
-            else{
-                super.x -= 4*( velocityX + Integer.signum(velocityX) * velocitySprint);
+
+            } else {
+                super.x -= 4 * (velocityX + Integer.signum(velocityX) * velocitySprint);
                 return;
             }
         }
     }
 
     private void moveY() {
-        // Allow player to move around terrain and disable sprint if move backward from mouse's position
+        // Allow player to move around terrain 
+        // and disable sprint if move backward from mouse's position
         Shooter shooterIntendedPossition = new Shooter((int) super.x,
                 (int) super.y + velocityY + Integer.signum(velocityY) * velocitySprint);
+        
 //        Main.gameData.terrainFigures.forEach(terrain -> {
 //            if (velocityY != 0 && !shooterIntendedPossition
 //                    .getCollisionBox().intersects(terrain.getCollisionBox())) {
 //                super.y += velocityY + Integer.signum(velocityY) * velocitySprint;
 //            }
 //        });
-        
-        for(GameFigure t : Main.gameData.terrainFigures){
-             if (velocityY != 0 && !shooterIntendedPossition
+
+        for (GameFigure t : Main.gameData.terrainFigures) {
+            if (velocityY != 0 && !shooterIntendedPossition
                     .getCollisionBox().intersects(t.getCollisionBox())) {
                 super.y += velocityY + Integer.signum(velocityY) * velocitySprint;
-               
+
+            } else {
+                super.y -= 4 * (velocityY + Integer.signum(velocityY) * velocitySprint);
+                return;
             }
-             else{
-                 super.y -= 4* (velocityY + Integer.signum(velocityY) * velocitySprint);
-                 return;
-             }
         }
     }
 
