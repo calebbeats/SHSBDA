@@ -1,6 +1,7 @@
 package model;
 
 import controller.Main;
+import java.awt.Image;
 import java.io.IOException;
 import view.MainWindow;
 import java.util.ArrayList;
@@ -25,25 +26,40 @@ public class GameData {
     public static Shooter shooter;
     ReentrantLock lock = new ReentrantLock();
     public static int multiplier = 0;
+    private boolean levelComplete = false;
+    private Image levelCompleteImage;
+    private int level = 1;
 
     public GameData() {
         enemyFigures = new CopyOnWriteArrayList<>();
         friendFigures = new CopyOnWriteArrayList<>();
         terrainFigures = new CopyOnWriteArrayList<>();
         PowerUp p = new PowerUp(400, 480);
+        
+        /*
+        try {
+            levelCompleteImage = ImageIO.read(getClass().getResource("view/levelComplete.png"));
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error: Cannot open levelComplete.png");
+           System.exit(-1);
+        }
+        **/
+        
         // GamePanel.width, height are known when rendered. 
         // Thus, at this moment,
         // we cannot use GamePanel.width and height.
         shooter = new Shooter(Main.WIN_WIDTH / 2, Main.WIN_HEIGHT / 2);
 
+        //load enemies, terrain, and powerups based on current level
+        if (level == 1) {
         friendFigures.add(shooter);
         friendFigures.add(p);
         enemyFigures.add(new BlinkMage((int)(Math.random() * 500), (int)Math.random()*200));
         enemyFigures.add(new MeleeEnemy((int)(Math.random() * 500), (int)Math.random()*200));
         enemyFigures.add(new SlowMage((int)(Math.random() * 500), (int)Math.random()*200));
         enemyFigures.add(new SuicideEnemy((int)(Math.random() * 500), (int)Math.random()*200));
-
         terrainFigures.add(new BlockTerrain(200, 200));
+        }
     }
 
     public void update() throws UnsupportedAudioFileException, IOException {
@@ -77,8 +93,11 @@ public class GameData {
         }
         enemyFigures.removeAll(removeEnemies);
 
-        if(enemyFigures.isEmpty()) //if enemies are dead so set button enabled
+        if(enemyFigures.isEmpty()) { //if enemies are dead so set button enabled
             MainWindow.shopButton.setEnabled(true);
+            levelComplete = true;
+            levelCheck();
+        }
         else
             MainWindow.shopButton.setEnabled(false);
         
@@ -118,6 +137,30 @@ public class GameData {
 
         for (GameFigure g : friendFigures) {
             g.update();
+        }
+    }
+    
+    private void levelCheck() {
+        //if current level is complete
+        //increment level counter
+        //clear powerups and all terrain from the screen
+        //display message at top indicating level complete and how many coins aquired
+        //display image on screen to indicate completion as well
+        if (levelComplete) {
+            level++;
+            GameFigure f;
+            ArrayList<GameFigure> removePowerUps = new ArrayList<>();
+            for (int i = 0; i < friendFigures.size(); i++) {
+                f = friendFigures.get(i);
+                if (f instanceof PowerUp) {
+                    removePowerUps.add(f);
+                }
+            }
+            friendFigures.removeAll(removePowerUps);
+            terrainFigures.clear();
+            MainWindow.scoreText.setText("Level complete! You have "
+                    + MainWindow.coins + " coins to spend at the shop.");
+            // g.drawImage(levelCompleteImage, 0, 0, GamePanel.width, GamePanel.height, null);
         }
     }
 
