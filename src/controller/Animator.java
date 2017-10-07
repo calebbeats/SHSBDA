@@ -17,29 +17,29 @@ import view.MainWindow;
 
 public class Animator implements Runnable {
 
-    public boolean running = true;
+    public boolean running = false;
     private final int FRAMES_PER_SECOND = 50;
-    
+
     @Override
     public void run() {
 
         while (running) {
-            if(!Main.isPaused){//as long as game is not paused, update everything
+            if (!Main.isPaused) {//as long as game is not paused, update everything
                 long startTime = System.currentTimeMillis();
-            
+
                 processCollisions();
 
-            try {
-                Main.gameData.update();
-            } catch (UnsupportedAudioFileException | IOException ex) {
-                Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try {
-                Main.gamePanel.gameRender();
-            } catch (IOException | UnsupportedAudioFileException | LineUnavailableException | InterruptedException ex) {
-                Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            Main.gamePanel.printScreen();
+                try {
+                    Main.gameData.update();
+                } catch (UnsupportedAudioFileException | IOException ex) {
+                    Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                try {
+                    Main.gamePanel.gameRender();
+                } catch (IOException | UnsupportedAudioFileException | LineUnavailableException | InterruptedException ex) {
+                    Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                Main.gamePanel.printScreen();
 
                 long endTime = System.currentTimeMillis();
                 int sleepTime = (int) (1.0 / FRAMES_PER_SECOND * 1000)
@@ -52,7 +52,7 @@ public class Animator implements Runnable {
 
                     }
                 }
-            }else{
+            } else {
 //                MainWindow.resumeGame.setEnabled(true);
                 long startTime = System.currentTimeMillis();
                 long endTime = System.currentTimeMillis();
@@ -70,26 +70,31 @@ public class Animator implements Runnable {
                 //Main.gameData.update();
             }
         }
+
+        try {
+            Thread.sleep(1500);
+            Thread.currentThread().interrupt();
+            System.exit(0);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
+
     private void processCollisions() {
         // detect collisions between friendFigure and enemyFigures
         // if detected, mark it as STATE_DONE, so that
         // they can be removed at update() method
         for (GameFigure s : Main.gameData.enemyFigures) {
-            if(Main.gameData.shooter.getCollisionBox().intersects(s.getCollisionBox()) && s.state != s.STATE_DYING )
-            {
-              s.goNextState();              
-              GameData.multiplier = 0;
-              GameData.shooter.takeDamage(20);
-            
+            if (Main.gameData.shooter.getCollisionBox().intersects(s.getCollisionBox()) && s.state != s.STATE_DYING) {
+                s.goNextState();
+                GameData.multiplier = 0;
+                GameData.shooter.takeDamage(20);
+
             }
-       
-            for(GameFigure f : Main.gameData.friendFigures)
-            {if(f.getCollisionBox().intersects(s.getCollisionBox()) && f.state != f.STATE_DYING && s.state != s.STATE_DYING
-                        && f.state != f.STATE_DONE && s.state != s.STATE_DONE)
-                   
-                {
+
+            for (GameFigure f : Main.gameData.friendFigures) {
+                if (f.getCollisionBox().intersects(s.getCollisionBox()) && f.state != f.STATE_DYING && s.state != s.STATE_DYING
+                        && f.state != f.STATE_DONE && s.state != s.STATE_DONE) {
                     f.goNextState();
                     s.goNextState();
                     MainWindow.score += 5;
@@ -98,16 +103,16 @@ public class Animator implements Runnable {
             }
 
             //detection for enemy attacks hitting terrain
-            for(GameFigure t : Main.gameData.terrainFigures){
-                if(s.getCollisionBox().intersects(t.getCollisionBox()) && !((s instanceof BlinkMage) || (s instanceof SuicideEnemy) || (s instanceof MeleeEnemy) || (s instanceof SlowMage))){
+            for (GameFigure t : Main.gameData.terrainFigures) {
+                if (s.getCollisionBox().intersects(t.getCollisionBox()) && !((s instanceof BlinkMage) || (s instanceof SuicideEnemy) || (s instanceof MeleeEnemy) || (s instanceof SlowMage))) {
                     s.goNextState();
                 }
             }
         }
         //detection for freindly attacks hitting terrain
-        for (GameFigure m : Main.gameData.friendFigures){
-            for(GameFigure t : Main.gameData.terrainFigures){
-                if(m.getCollisionBox().intersects(t.getCollisionBox()) && !(m instanceof Shooter)){
+        for (GameFigure m : Main.gameData.friendFigures) {
+            for (GameFigure t : Main.gameData.terrainFigures) {
+                if (m.getCollisionBox().intersects(t.getCollisionBox()) && !(m instanceof Shooter)) {
                     m.goNextState();
                 }
             }

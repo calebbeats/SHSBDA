@@ -38,30 +38,25 @@ public class MouseController extends MouseAdapter {
                 Main.gameData.friendFigures.add(m);
             }
 
-           if (me.getButton() == MouseEvent.BUTTON3) { try {
-            //Right click detected, initiate ranged attack
-            //shoot a missle at the mouse press location
-            audio();
-            } catch (UnsupportedAudioFileException ex) {
-                Logger.getLogger(MouseController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(MouseController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (LineUnavailableException ex) {
-                Logger.getLogger(MouseController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(MouseController.class.getName()).log(Level.SEVERE, null, ex);
+            if (me.getButton() == MouseEvent.BUTTON3 && !shooter.isSprint()) {
+                try {
+                    //Right click detected, initiate ranged attack
+                    //shoot a missle at the mouse press location
+                    audio();
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
+                    Logger.getLogger(MouseController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                Missile m = new Missile(
+                        shooter.getXofMissileShoot(),
+                        shooter.getYofMissileShoot(),
+                        px, py // target location where the missile explodes
+                );
+                Main.gameData.friendFigures.add(m);
             }
-            Missile m = new Missile(
-                    shooter.getXofMissileShoot(),
-                    shooter.getYofMissileShoot(),
-                    px, py // target location where the missile explodes
-            );
-            Main.gameData.friendFigures.add(m);
         }
     }
-    }
-    
-      public void audio() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
+
+    public void audio() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
 
         AudioInputStream stream = null;
         try {
@@ -75,12 +70,10 @@ public class MouseController extends MouseAdapter {
             System.out.println(ex.getMessage());
         }
 
-    }  
+    }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        shooter.setMouseMovedEvent(e);        
+        shooter.setMouseMovedEvent(e);
     }
 }
-
-
