@@ -31,20 +31,12 @@ public class Animator implements Runnable {
 
             try {
                 Main.gameData.update();
-            } catch (UnsupportedAudioFileException ex) {
-                Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
+            } catch (UnsupportedAudioFileException | IOException ex) {
                 Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
             }
             try {
                 Main.gamePanel.gameRender();
-            } catch (IOException ex) {
-                Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (UnsupportedAudioFileException ex) {
-                Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (LineUnavailableException ex) {
-                Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InterruptedException ex) {
+            } catch (IOException | UnsupportedAudioFileException | LineUnavailableException | InterruptedException ex) {
                 Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
             }
             Main.gamePanel.printScreen();
@@ -77,9 +69,7 @@ public class Animator implements Runnable {
                 //bring up pause menu here
                 //Main.gameData.update();
             }
-            
         }
-        System.exit(0);
     }
     
     private void processCollisions() {
