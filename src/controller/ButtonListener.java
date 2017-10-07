@@ -29,6 +29,7 @@ public class ButtonListener implements ActionListener {
         if (e.getSource() == MainWindow.startGame) {
             try {
                 //MainWindow.get
+                Main.animator.running = true;
                 MainWindow.startGame.setEnabled(false);
                 Main.gamePanel.remove(Main.posterScreen);
                 new Thread(Main.animator).start();
@@ -48,15 +49,7 @@ public class ButtonListener implements ActionListener {
             //choosedButton = 2;
             choosedButton = false;
             if (Main.animator.running) {
-
-                try {
-                    Main.animator.running = false;
-                    Thread.currentThread().sleep(1500);
-                    Thread.currentThread().interrupt();
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(ButtonListener.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                System.exit(0);
+                Main.animator.running = false;
             } else {
                 System.exit(0);
             }
