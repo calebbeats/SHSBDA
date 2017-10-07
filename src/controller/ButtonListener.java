@@ -35,13 +35,7 @@ public class ButtonListener implements ActionListener {
                 //choosedButton = 1;
                 choosedButton = true;
                 audio();
-            } catch (UnsupportedAudioFileException ex) {
-                Logger.getLogger(ButtonListener.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(ButtonListener.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (LineUnavailableException ex) {
-                Logger.getLogger(ButtonListener.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InterruptedException ex) {
+            } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
                 Logger.getLogger(ButtonListener.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (e.getSource() == MainWindow.highScores) {
@@ -54,15 +48,14 @@ public class ButtonListener implements ActionListener {
             //choosedButton = 2;
             choosedButton = false;
             if (Main.animator.running) {
-                
+
                 try {
-                    Thread.sleep(1500);
-                    
+                    Main.animator.running = false;
+                    Thread.currentThread().sleep(1500);
+                    Thread.currentThread().interrupt();
                 } catch (InterruptedException ex) {
                     Logger.getLogger(ButtonListener.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                Main.animator.running = false;
-                
                 System.exit(0);
             } else {
                 System.exit(0);
@@ -74,7 +67,7 @@ public class ButtonListener implements ActionListener {
             shop.setLocation(150, 100);
             shop.setResizable(false); // window size cannot change
             shop.setVisible(true);
-        } 
+        }
     }
 
     public void render(Graphics2D g) {
@@ -92,7 +85,7 @@ public class ButtonListener implements ActionListener {
             clip.open(stream);
             clip.start();
             stream.close();
-        } catch (Exception ex) {
+        } catch (IOException | LineUnavailableException | UnsupportedAudioFileException ex) {
             System.out.println(ex.getMessage());
         }
 
