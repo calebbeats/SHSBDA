@@ -37,10 +37,7 @@ public class Shooter extends GameFigure {
     //-----------------
     //test object
     //-------------------
-    public WeakPotion p1;
-    public MediumPotion p2;
-    public StrongPotion p3;
-    public GemOfMana e1;
+
     //-------------------
 
     //Images for animations go below
@@ -330,5 +327,12 @@ public class Shooter extends GameFigure {
             item.consumeItem(this);
             inventory[pos] = null;
         }
+    }
+    
+    public void testItem()
+    {
+        inventory[0] = new WeakPotion(1);
+        inventory[1] = new MediumPotion(2);
+        inventory[2] = new StrongPotion(3);
     }
 }
