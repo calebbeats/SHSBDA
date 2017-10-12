@@ -14,8 +14,10 @@ import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
+import static model.GameData.shooter;
 import static model.GameFigure.STATE_ALIVE;
 import static model.GameFigure.STATE_DYING;
+import view.MainWindow;
 
 /**
  *
@@ -117,6 +119,7 @@ public class EnemyMissileSlow extends GameFigure {
         if (state == STATE_ALIVE) {
             updateLocation();
         } else if (state == STATE_DYING) {
+            slow();
             updateSize();
         }
     }
@@ -126,6 +129,14 @@ public class EnemyMissileSlow extends GameFigure {
         super.y += dy;
     }
 
+    public void slow(){
+        for(GameFigure f : Main.gameData.friendFigures){
+            if(getCollisionBox().intersects(f.getCollisionBox())){
+                shooter.isSprint(false);
+            }
+        }
+    }
+    
     public void updateSize() {}
 
     public void updateState() {
