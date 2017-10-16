@@ -21,6 +21,7 @@ public class ShopWindow extends JFrame{
     public static JButton weakPotionButton;
     public static JButton mediumPotionButton;
     public static JButton strongPotionButton;
+    public static int invoAmount;
     
     public ShopWindow() {
         Container c = getContentPane();
@@ -53,7 +54,26 @@ public class ShopWindow extends JFrame{
         
         coinText.setEditable(false);
         
-
+        checkInvo();
+    }
+    
+    private void checkInvo(){
+        invoAmount = 4;
+        //get character invo count and disable buttons as needed.
+        for(int i = 0; i<4; i++){            
+            if(Shooter.inventory[i] == null)
+                invoAmount--;
+        }
+        if(invoAmount == 4){
+            weakPotionButton.setEnabled(false);
+            mediumPotionButton.setEnabled(false);
+            strongPotionButton.setEnabled(false);
+        }
+        else{
+            weakPotionButton.setEnabled(true);
+            mediumPotionButton.setEnabled(true);
+            strongPotionButton.setEnabled(true);
+        }
     }
     
 }
