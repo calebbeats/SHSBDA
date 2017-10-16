@@ -53,18 +53,20 @@ public class ShopWindow extends JFrame{
         coinText.setFocusable(false);
         
         coinText.setEditable(false);
-        
-        checkInvo();
     }
     
-    private void checkInvo(){
+    public static void updateText(){
+        coinText.setText("Coins: " + MainWindow.coins);
+    }
+    
+    public static void checkInvo(){
         invoAmount = 4;
         //get character invo count and disable buttons as needed.
         for(int i = 0; i<4; i++){            
-            if(Shooter.inventory[i] == null)
-                invoAmount--;
+            if(Shooter.inventory[i] == null) //if the inventory spot is null
+                invoAmount--; //subtract used inventory availability
         }
-        if(invoAmount == 4){
+        if(invoAmount == 4){ //no open spots
             weakPotionButton.setEnabled(false);
             mediumPotionButton.setEnabled(false);
             strongPotionButton.setEnabled(false);

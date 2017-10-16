@@ -60,6 +60,8 @@ public class ButtonListener implements ActionListener {
             shop.setLocation(450, 300);
             shop.setResizable(false); // window size cannot change
             shop.setVisible(true);
+            ShopWindow.checkInvo();
+            ShopWindow.updateText();
         }
     }
 
