@@ -18,13 +18,13 @@ public class ShopButtonListener implements ActionListener{
     
     
     private void checkInvo(){
-        int invoAmount = 4;
+        ShopWindow.invoAmount = 4;
         //get character invo count and disable buttons as needed.
         for(int i = 0; i<4; i++){            
             if(Shooter.inventory[i] == null)
-                invoAmount--;
+                ShopWindow.invoAmount--;
         }
-        if(invoAmount == 4){
+        if(ShopWindow.invoAmount == 4){
             weakPotionButton.setEnabled(false);
             mediumPotionButton.setEnabled(false);
             strongPotionButton.setEnabled(false);
@@ -38,7 +38,7 @@ public class ShopButtonListener implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         //check to see if there's enough space to allow buying of powerups
-        checkInvo();
+        //checkInvo();
 
         //when you push whatever button, update the text to show coins were taken out to buy the item
         if(e.getSource() == ShopWindow.weakPotionButton){

@@ -1,5 +1,6 @@
 package model;
 
+import controller.ButtonListener;
 import controller.Main;
 import java.awt.Image;
 import java.io.IOException;
@@ -94,7 +95,7 @@ public class GameData {
         enemyFigures.removeAll(removeEnemies);
 
         if(enemyFigures.isEmpty()) { //if enemies are dead so set button enabled
-            MainWindow.shopButton.setEnabled(true);
+            disableShop();
             levelComplete = true;
             levelCheck();
         }
@@ -138,6 +139,13 @@ public class GameData {
         for (GameFigure g : friendFigures) {
             g.update();
         }
+    }
+    
+    private void disableShop(){
+        if(ButtonListener.shop.isVisible())
+            MainWindow.shopButton.setEnabled(false);        
+        else
+            MainWindow.shopButton.setEnabled(true);
     }
     
     private void levelCheck() {
