@@ -82,10 +82,10 @@ public class MeleeEnemy extends GameFigure {
         death = null;
         
         try {
-            alive = ImageIO.read(getClass().getResource("melee1.png"));
-            attack1 = ImageIO.read(getClass().getResource("meleeAttack1.png"));
-            attack2 = ImageIO.read(getClass().getResource("meleeAttack2.png"));
-            death = ImageIO.read(getClass().getResource("meleeDead.png"));
+            alive = ImageIO.read(getClass().getResource("/resources/melee1.png"));
+            attack1 = ImageIO.read(getClass().getResource("/resources/meleeAttack1.png"));
+            attack2 = ImageIO.read(getClass().getResource("/resources/meleeAttack2.png"));
+            death = ImageIO.read(getClass().getResource("/resources/meleeDead.png"));
       
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");

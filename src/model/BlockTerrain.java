@@ -26,7 +26,7 @@ public class BlockTerrain extends GameFigure {
         super(x, y);
         super.state = STATE_ALIVE;
         try {
-            blockImage = ImageIO.read(getClass().getResource("BlockTerrain.png"));
+            blockImage = ImageIO.read(getClass().getResource("/resources/BlockTerrain.png"));
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open BlockTerrain.png");
             System.exit(-1);

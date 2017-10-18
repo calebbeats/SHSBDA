@@ -23,7 +23,7 @@ public class PowerUp extends GameFigure{
     public PowerUp(float x, float y) {
         super(x, y);
         try {
-            powerUpImage = ImageIO.read(getClass().getResource("PowerUp.png"));
+            powerUpImage = ImageIO.read(getClass().getResource("/resources/PowerUp.png"));
             
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");

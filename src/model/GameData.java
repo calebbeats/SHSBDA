@@ -1,5 +1,6 @@
 package model;
 
+import controller.ButtonListener;
 import controller.Main;
 import java.awt.Image;
 import java.io.IOException;
@@ -94,7 +95,7 @@ public class GameData {
         enemyFigures.removeAll(removeEnemies);
 
         if(enemyFigures.isEmpty()) { //if enemies are dead so set button enabled
-            MainWindow.shopButton.setEnabled(true);
+            disableShop();
             levelComplete = true;
             levelCheck();
         }
@@ -140,6 +141,13 @@ public class GameData {
         }
     }
     
+    private void disableShop(){
+        if(ButtonListener.shop.isVisible())
+            MainWindow.shopButton.setEnabled(false);        
+        else
+            MainWindow.shopButton.setEnabled(true);
+    }
+    
     private void levelCheck() {
         //if current level is complete
         //increment level counter
@@ -169,11 +177,11 @@ public class GameData {
         AudioInputStream stream = null;
         try {
             //File file = new File("C:/Users/dinhn/Documents/GitHub/SHSBDA/PatakasWorld.wav");
-            stream = AudioSystem.getAudioInputStream(getClass().getResource("explosion.wav"));
+            stream = AudioSystem.getAudioInputStream(getClass().getResource("/resources/explosion8bit.wav"));
             Clip clip = AudioSystem.getClip();
             clip.open(stream);
             clip.start();
-            stream.close();
+            stream.close();            
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
