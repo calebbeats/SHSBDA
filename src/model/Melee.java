@@ -35,7 +35,6 @@ public class Melee extends GameFigure {
      * @param sy start y of the missile
      * @param tx target x of the missile
      * @param ty target y of the missile
-     * @param color color of the missile
      */
     public Melee(float sx, float sy, float tx, float ty) {
         super(sx, sy);

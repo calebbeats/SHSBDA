@@ -74,9 +74,7 @@ public class GameData {
         for (int i = 0; i < enemyFigures.size(); i++) {
             f = enemyFigures.get(i);
             if (f.state == GameFigureState.STATE_DONE && f instanceof EnemyMissile) {
-
                 removeEnemies.add(f);
-
             } 
             else if (f.state == GameFigureState.STATE_DONE) {
                 multiplier += 1;
