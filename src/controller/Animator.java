@@ -101,7 +101,7 @@ public class Animator implements Runnable {
                 //this is where the enemy melee attacks would go
             }
 
-            for (GameFigure f : Main.gameData.friendFigures) {
+            for (GameFigure f : Main.gameData.friendFigures) { //only process gamefigure collisionboxes if they are weapon or missile
                 if(f instanceof Missile || f instanceof Melee){
                     if (f.getCollisionBox().intersects(s.getCollisionBox()) && f.state != f.STATE_DYING && s.state != s.STATE_DYING
                         && f.state != f.STATE_DONE && s.state != s.STATE_DONE) {
