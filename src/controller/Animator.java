@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import static java.lang.Boolean.FALSE;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -9,16 +10,23 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import model.GameFigure;
 import model.Shooter;
 import model.BlinkMage;
+import model.EnemyMissileSlow;
 import model.SuicideEnemy;
 import model.MeleeEnemy;
 import model.SlowMage;
 import model.GameData;
+import static model.GameData.shooter;
 import view.MainWindow;
 
 public class Animator implements Runnable {
 
     public boolean running = false;
     private final int FRAMES_PER_SECOND = 50;
+    
+    //Slow Vars
+    //--------------------
+    private int slowCounter;
+    private final int MAX_SLOW=3;
 
     @Override
     public void run() {
@@ -101,6 +109,23 @@ public class Animator implements Runnable {
                     MainWindow.scoreText.setText("Score: " + MainWindow.score + " || Coins: " + MainWindow.coins);
                 }
             }
+            
+            //Slow Missile Logic
+            //------------------------------
+            if (Main.gameData.shooter.getCollisionBox().intersects(s.getCollisionBox()) && s instanceof EnemyMissileSlow) {
+                for(int i=0; i>3; i++){
+                    slowCounter++;
+                    System.out.println("Slow Counter =" + slowCounter);
+
+                }
+                if(slowCounter != MAX_SLOW) {
+                    shooter.isSprint(FALSE);
+                    System.out.println("You Are Slowed!");
+                } 
+                if (slowCounter == 3) {
+                    System.out.println("Sprint Enabled!");
+                }
+            } 
 
             //detection for enemy attacks hitting terrain
             for (GameFigure t : Main.gameData.terrainFigures) {
