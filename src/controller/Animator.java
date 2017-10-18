@@ -9,10 +9,14 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import model.GameFigure;
 import model.Shooter;
 import model.BlinkMage;
+import model.EnemyMissile;
+import model.EnemyMissileSlow;
 import model.SuicideEnemy;
 import model.MeleeEnemy;
 import model.SlowMage;
 import model.GameData;
+import model.Melee;
+import model.Missile;
 import view.MainWindow;
 
 public class Animator implements Runnable {
@@ -85,21 +89,28 @@ public class Animator implements Runnable {
         // if detected, mark it as STATE_DONE, so that
         // they can be removed at update() method
         for (GameFigure s : Main.gameData.enemyFigures) {
-            if (Main.gameData.shooter.getCollisionBox().intersects(s.getCollisionBox()) && s.state != s.STATE_DYING) {
-                s.goNextState();
-                GameData.multiplier = 0;
-                GameData.shooter.takeDamage(20);
-
+            if (Main.gameData.shooter.getCollisionBox().intersects(s.getCollisionBox()) && s.state != s.STATE_DYING) { //if shooter intersects any enemyfigure do this
+                if(s instanceof EnemyMissile){//this is if a hurtful enemy missile happens
+                    s.goNextState();
+                    GameData.multiplier = 0;
+                    GameData.shooter.takeDamage(20);
+                }
+                else if(s instanceof EnemyMissileSlow){//do the enemy slow missile stuff here
+                    System.out.println("Slowed");
+                }
+                //this is where the enemy melee attacks would go
             }
 
             for (GameFigure f : Main.gameData.friendFigures) {
-                if (f.getCollisionBox().intersects(s.getCollisionBox()) && f.state != f.STATE_DYING && s.state != s.STATE_DYING
+                if(f instanceof Missile || f instanceof Melee){
+                    if (f.getCollisionBox().intersects(s.getCollisionBox()) && f.state != f.STATE_DYING && s.state != s.STATE_DYING
                         && f.state != f.STATE_DONE && s.state != s.STATE_DONE) {
-                    f.goNextState();
-                    s.goNextState();
-                    MainWindow.score += 5;
-                    MainWindow.scoreText.setText("Score: " + MainWindow.score + " || Coins: " + MainWindow.coins);
-                }
+                        f.goNextState();
+                        s.goNextState();
+                        MainWindow.score += 5;
+                        MainWindow.scoreText.setText("Score: " + MainWindow.score + " || Coins: " + MainWindow.coins);
+                    }
+                }                
             }
 
             //detection for enemy attacks hitting terrain
