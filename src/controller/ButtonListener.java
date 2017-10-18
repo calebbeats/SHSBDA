@@ -74,8 +74,7 @@ public class ButtonListener implements ActionListener {
 
         AudioInputStream stream = null;
         try {
-            //File file = new File("C:/Users/dinhn/Documents/GitHub/SHSBDA/PatakasWorld.wav");
-            stream = AudioSystem.getAudioInputStream(getClass().getResource("PatakasWorld.wav"));
+            stream = AudioSystem.getAudioInputStream(getClass().getResource("/resources/chugchug.wav"));
             Clip clip = AudioSystem.getClip();
             clip.open(stream);
             clip.start();

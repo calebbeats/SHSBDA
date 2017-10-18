@@ -82,12 +82,12 @@ public class SuicideEnemy extends GameFigure {
         back = null;
                        
         try {           
-            right = ImageIO.read(getClass().getResource("suicideRight.png"));
-            left = ImageIO.read(getClass().getResource("suicideLeft.png"));
-            back = ImageIO.read(getClass().getResource("suicideBack.png"));
-            explosion1 = ImageIO.read(getClass().getResource("nuke1.png"));
-            explosion2 = ImageIO.read(getClass().getResource("nuke2.png"));
-            explosion3 = ImageIO.read(getClass().getResource("nuke3.png"));
+            right = ImageIO.read(getClass().getResource("/resources/suicideRight.png"));
+            left = ImageIO.read(getClass().getResource("/resources/suicideLeft.png"));
+            back = ImageIO.read(getClass().getResource("/resources/suicideBack.png"));
+            explosion1 = ImageIO.read(getClass().getResource("/resources/nuke1.png"));
+            explosion2 = ImageIO.read(getClass().getResource("/resources/nuke2.png"));
+            explosion3 = ImageIO.read(getClass().getResource("/resources/nuke3.png"));
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");
             System.exit(-1);

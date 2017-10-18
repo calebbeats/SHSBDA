@@ -18,7 +18,7 @@ public class MediumPotion extends Consumable {
     public MediumPotion(int i) {
         super(i);
         try{
-        icon = ImageIO.read(getClass().getResource("MediumPotion.png"));
+        icon = ImageIO.read(getClass().getResource("/resources/MediumPotion.png"));
         }
         catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");

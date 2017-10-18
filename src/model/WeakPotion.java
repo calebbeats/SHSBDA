@@ -20,7 +20,7 @@ public class WeakPotion extends Consumable {
     public WeakPotion(int i) {
         super(i);
         try{
-        icon = ImageIO.read(getClass().getResource("SmallPotion.png"));
+        icon = ImageIO.read(getClass().getResource("/resources/SmallPotion.png"));
         }
         catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");

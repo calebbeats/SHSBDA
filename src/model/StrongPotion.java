@@ -19,7 +19,7 @@ public class StrongPotion extends Consumable{
     {
         super(i);
         try{
-        icon = ImageIO.read(getClass().getResource("LargePotion.png"));
+        icon = ImageIO.read(getClass().getResource("/resources/LargePotion.png"));
         }
         catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");
