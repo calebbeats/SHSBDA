@@ -177,11 +177,11 @@ public class GameData {
         AudioInputStream stream = null;
         try {
             //File file = new File("C:/Users/dinhn/Documents/GitHub/SHSBDA/PatakasWorld.wav");
-            stream = AudioSystem.getAudioInputStream(getClass().getResource("explosion.wav"));
+            stream = AudioSystem.getAudioInputStream(getClass().getResource("/resources/explosion8bit.wav"));
             Clip clip = AudioSystem.getClip();
             clip.open(stream);
             clip.start();
-            stream.close();
+            stream.close();            
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }

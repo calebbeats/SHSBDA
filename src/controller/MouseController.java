@@ -61,7 +61,7 @@ public class MouseController extends MouseAdapter {
         AudioInputStream stream = null;
         try {
             //File file = new File("C:/Users/dinhn/Documents/GitHub/SHSBDA/PatakasWorld.wav");
-            stream = AudioSystem.getAudioInputStream(getClass().getResource("climactic-boom.wav"));
+            stream = AudioSystem.getAudioInputStream(getClass().getResource("/resources/shooterFBwoosh.wav"));
             Clip clip = AudioSystem.getClip();
             clip.open(stream);
             clip.start();
