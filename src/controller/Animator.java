@@ -96,7 +96,7 @@ public class Animator implements Runnable {
                     GameData.shooter.takeDamage(20);
                 }
                 else if(s instanceof EnemyMissileSlow){//do the enemy slow missile stuff here
-                    System.out.println("Slowed");
+                    //System.out.println("Slowed");
                 }
                 //this is where the enemy melee attacks would go
             }
