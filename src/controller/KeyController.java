@@ -2,10 +2,14 @@ package controller;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import javax.swing.JFrame;
 import model.Consumable;
 import model.Shooter;
+import view.DevWindow;
 
 public class KeyController implements KeyListener {
+
+    public static JFrame dev = new DevWindow();
 
     public static final int VELOCITY_X = 2, VELOCITY_Y = 2, VELOCITY_ZERO = 0;
 
@@ -55,6 +59,13 @@ public class KeyController implements KeyListener {
                     Main.isPaused = true;
                 }
                 break;
+        }
+        if(e.getKeyCode() == KeyEvent.VK_HOME){
+            dev.setVisible(true);
+            dev.setSize(100,200);
+            dev.setLocation(700,0);
+            dev.setResizable(false); // window size cannot change
+            dev.setVisible(true);
         }
     }
 

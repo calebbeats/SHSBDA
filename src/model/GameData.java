@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
@@ -55,14 +56,15 @@ public class GameData {
         if (level == 1) {
         friendFigures.add(shooter);
         friendFigures.add(p);
-        enemyFigures.add(new BlinkMage((int)(Math.random() * 500), (int)Math.random()*200));
-        enemyFigures.add(new MeleeEnemy((int)(Math.random() * 500), (int)Math.random()*200));
-        enemyFigures.add(new SlowMage((int)(Math.random() * 500), (int)Math.random()*200));
-        enemyFigures.add(new SuicideEnemy((int)(Math.random() * 500), (int)Math.random()*200));
+        addMelee();
+        addSui();
+        addBlink();
+        addSlow();
         terrainFigures.add(new BlockTerrain(200, 200));
+        
         }
     }
-
+    
     public void update() throws UnsupportedAudioFileException, IOException {
 
         // no enemy is removed in the program
@@ -171,6 +173,22 @@ public class GameData {
             // g.drawImage(levelCompleteImage, 0, 0, GamePanel.width, GamePanel.height, null);
         }
     }
+    
+                 
+    //Add Enemies
+    //------------------------------
+    public final void addMelee(){
+        enemyFigures.add(new MeleeEnemy((int)(Math.random() * 500), (int) (Math.random() * 200)));
+    }
+    public final void addSui(){
+        enemyFigures.add(new SuicideEnemy((int)(Math.random() * 500), (int) (Math.random() * 200)));
+    }  
+    public final void addBlink(){
+        enemyFigures.add(new BlinkMage((int)(Math.random() * 500), (int) (Math.random() * 200)));
+    }      
+    public final void addSlow(){
+        enemyFigures.add(new SlowMage((int)(Math.random() * 500), (int) (Math.random() * 200)));
+    } 
 
     public void audio() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
 
@@ -180,11 +198,13 @@ public class GameData {
             stream = AudioSystem.getAudioInputStream(getClass().getResource("/resources/explosion8bit.wav"));
             Clip clip = AudioSystem.getClip();
             clip.open(stream);
+            FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+                gainControl.setValue(-10f); // Decrease volume by 10 decibels.
+                //float Max = gainControl.getMaximum();
             clip.start();
             stream.close();            
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-
     }
 }

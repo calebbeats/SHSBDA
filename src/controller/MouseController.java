@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import model.Melee;
@@ -73,6 +74,9 @@ public class MouseController extends MouseAdapter {
             fireball = AudioSystem.getAudioInputStream(getClass().getResource("/resources/shooterFBwoosh.wav"));
             Clip clip = AudioSystem.getClip();
             clip.open(fireball);
+            FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+                gainControl.setValue(-10f); // Decrease volume by 10 decibels.
+                //float Max = gainControl.getMaximum();
             clip.start();
             fireball.close();
         } catch (Exception ex) {
@@ -87,6 +91,9 @@ public class MouseController extends MouseAdapter {
             swordSwing = AudioSystem.getAudioInputStream(getClass().getResource("/resources/swoosh.wav"));
             Clip clip = AudioSystem.getClip();
             clip.open(swordSwing);
+            FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+                gainControl.setValue(-10f); // Decrease volume by 10 decibels.
+                //float Max = gainControl.getMaximum();
             clip.start();
             swordSwing.close();
         } catch (IOException | LineUnavailableException | UnsupportedAudioFileException ex) {
