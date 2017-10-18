@@ -120,9 +120,13 @@ public class GameData {
                 enemyFigures.add(new EnemyMissileSlow(slow.x,slow.y));
         }
         
-        //Make EnemyMissileSlow actually slow
-        //-----------------------------------        
-
+        //Melee Enemy
+        //------------------------------
+        for(Iterator<GameFigure> it = enemyFigures.iterator(); it.hasNext();) {
+            GameFigure swing = it.next();
+            if(swing.swingTimer == 20)
+                enemyFigures.add(new MeleeEnemyAttack(swing.x,swing.y));
+        }
 
         // missiles are removed if explosion is done
         ArrayList<GameFigure> removeFriends = new ArrayList<>();
