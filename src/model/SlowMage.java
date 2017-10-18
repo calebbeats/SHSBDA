@@ -23,8 +23,8 @@ public class SlowMage extends GameFigure {
         super(x, y);
         super.state = STATE_ALIVE;
         try {
-            slowMage1 = ImageIO.read(getClass().getResource("slowMage1.png"));
-            slowMage2 = ImageIO.read(getClass().getResource("slowMage2.png"));
+            slowMage1 = ImageIO.read(getClass().getResource("/resources/slowMage1.png"));
+            slowMage2 = ImageIO.read(getClass().getResource("/resources/slowMage2.png"));
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");
            System.exit(-1);

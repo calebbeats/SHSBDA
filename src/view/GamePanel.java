@@ -48,7 +48,7 @@ public class GamePanel extends JPanel {
             g2.setBackground(Color.BLACK);
         } else {
 
-            backGround = ImageIO.read(getClass().getResource("gameFinish.png"));
+            backGround = ImageIO.read(getClass().getResource("/resources/gameFinish.png"));
             g2.drawImage(backGround, 0, 0, width, height, null);
         }
         //backGround = ImageIO.read(getClass().getResource("startScreen.png"));
