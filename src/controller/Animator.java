@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,6 +17,7 @@ import model.SuicideEnemy;
 import model.MeleeEnemy;
 import model.SlowMage;
 import model.GameData;
+import static model.GameData.shooter;
 import model.Melee;
 import model.Missile;
 import view.MainWindow;
@@ -23,6 +26,9 @@ public class Animator implements Runnable {
 
     public boolean running = false;
     private final int FRAMES_PER_SECOND = 50;
+    
+    private final int MAX_SLOW = 10;
+    private int slow = 0;
 
     @Override
     public void run() {
@@ -95,10 +101,27 @@ public class Animator implements Runnable {
                     GameData.multiplier = 0;
                     GameData.shooter.takeDamage(20);
                 }
-                else if(s instanceof EnemyMissileSlow){//do the enemy slow missile stuff here
-                    //System.out.println("Slowed");
+                
+                //Slow Missile
+                //------------------------------
+                else if(s instanceof EnemyMissileSlow){
+                    /*
+                    if(slow != MAX_SLOW){
+                        shooter.isSprint(FALSE);
+                        System.out.println("Slowed");
+                        updateSlow();
+                    } else {
+                        shooter.isSprint(TRUE);
+                        System.out.println("Not Slow");
+                        slow = 0;
+                    }
+                    */
+                    shooter.isSprint(FALSE);
+                    System.out.println("Sprint Stopped!");
+                    shooter.takeDamage(1);
                 }
                 //this is where the enemy melee attacks would go
+                s.goNextState();
             }
 
             for (GameFigure f : Main.gameData.friendFigures) { //only process gamefigure collisionboxes if they are weapon or missile
@@ -128,5 +151,9 @@ public class Animator implements Runnable {
                 }
             }
         }
+    }
+    
+    public void updateSlow(){
+        slow++;
     }
 }
