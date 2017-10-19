@@ -145,7 +145,7 @@ public class SuicideEnemy extends GameFigure {
     }
 
     public void updateLocation() {
-        GameFigure enemyToMove = new SuicideEnemy(super.x + dx, super.y +dy);        
+        BasicCollisionBox enemyToMove = new BasicCollisionBox(super.x + dx, super.y +dy, SIZE, SIZE);        
         
         for(GameFigure t : Main.gameData.terrainFigures){
             if(!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox()))){
@@ -175,13 +175,13 @@ public class SuicideEnemy extends GameFigure {
                 }
                 System.out.println("Dx Dy" + dx + " " + dy);
                 
-                enemyToMove = new SuicideEnemy(super.x + dx, super.y);
+                enemyToMove = new BasicCollisionBox(super.x + dx, super.y, SIZE, SIZE);
                 if (!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox()))) {
                     super.x += dx;
                     super.y -= 2*dy;
                 }
                 else{
-                    enemyToMove = new SuicideEnemy(super.x, super.y + dy);
+                    enemyToMove = new BasicCollisionBox(super.x, super.y + dy, SIZE, SIZE);
                     if (!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox()))) {
                         super.y += dy;
                         super.x -= 2*dx;
@@ -190,7 +190,7 @@ public class SuicideEnemy extends GameFigure {
                 
                 return;
             }
-            enemyToMove = new SuicideEnemy(super.x + dx, super.y +dy);
+            enemyToMove = new BasicCollisionBox(super.x + dx, super.y +dy, SIZE, SIZE);
         }
         enemyToMove = null;        
     }

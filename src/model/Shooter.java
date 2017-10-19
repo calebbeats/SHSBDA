@@ -183,8 +183,8 @@ public class Shooter extends GameFigure {
     private void moveX() {
         // Allow player to move around terrain 
         // and disable sprint if move backward from mouse's position
-        Shooter shooterIntendedPossition = new Shooter((int) super.x + velocityX
-                + Integer.signum(velocityX) * velocitySprint, (int) super.y);
+        BasicCollisionBox shooterIntendedPossition = new BasicCollisionBox((int) super.x + velocityX
+                + Integer.signum(velocityX) * velocitySprint, (int) super.y, PLAYER_HEIGHT, PLAYER_WIDTH);
 //        Main.gameData.terrainFigures.forEach(terrain -> {
 //            if (velocityX != 0 && !shooterIntendedPossition
 //                    .getCollisionBox().intersects(terrain.getCollisionBox())) {
