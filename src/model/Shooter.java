@@ -127,11 +127,16 @@ public class Shooter extends GameFigure {
     public void update() {
         if (state == STATE_DYING) {
             if (deadTimer < 10) {
+                //do some death animation that lasts deadTimer amt of time
                 deadTimer++;
             } else {
                 this.goNextState();
             }
         } else {
+            
+            if (health <= 0) {
+                state = STATE_DYING;
+            }
             velocitySprint = isSprint ? 2 : 0;
 
             moveX();
