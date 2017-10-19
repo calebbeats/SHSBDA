@@ -26,10 +26,7 @@ public class Animator implements Runnable {
 
     public boolean running = false;
     private final int FRAMES_PER_SECOND = 50;
-    
-    private final int MAX_SLOW = 10;
-    private int slow = 0;
-
+  
     @Override
     public void run() {
 
@@ -105,23 +102,12 @@ public class Animator implements Runnable {
                 //Slow Missile
                 //------------------------------
                 else if(s instanceof EnemyMissileSlow){
-                    /*
-                    if(slow != MAX_SLOW){
-                        shooter.isSprint(FALSE);
-                        System.out.println("Slowed");
-                        updateSlow();
-                    } else {
-                        shooter.isSprint(TRUE);
-                        System.out.println("Not Slow");
-                        slow = 0;
-                    }
-                    */
                     shooter.isSprint(FALSE);
                     System.out.println("Sprint Stopped!");
                     shooter.takeDamage(1);
                 }
                 //this is where the enemy melee attacks would go
-                s.goNextState();
+                s.goNextState();                                                                                   
             }
 
             for (GameFigure f : Main.gameData.friendFigures) { //only process gamefigure collisionboxes if they are weapon or missile
@@ -151,9 +137,5 @@ public class Animator implements Runnable {
                 }
             }
         }
-    }
-    
-    public void updateSlow(){
-        slow++;
     }
 }
