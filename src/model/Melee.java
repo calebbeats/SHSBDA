@@ -21,7 +21,7 @@ public class Melee extends GameFigure {
     // public properties for quick access
     public Point2D.Float target;
 
-    private static final int UNIT_TRAVEL_DISTANCE = 15; // per frame move
+    private static final int UNIT_TRAVEL_DISTANCE = 15; // per frame move was 15
 
     private int swingCounter = 0;
     private Image swordUp;
@@ -71,13 +71,12 @@ public class Melee extends GameFigure {
     @Override
     public void render(Graphics2D g) {
         //Initially, sword is in the upright position for first animation
-        if (state == STATE_ALIVE) {
-            g.drawImage(swordUp, (int) super.x, (int) super.y,
-                    30, 30, null);
-        }
+        //if (state == STATE_ALIVE) {
+        //     g.drawImage(swordUp, (int) super.x, (int) super.y,
+        //             30, 30, null);
+        //}
         //draw animation based on direction of mouse click
         if (state == STATE_DYING) {
-
             if (swingCounter < 1) {
                 g.drawImage(swordUp, (int) super.x, (int) super.y,
                         30, 30, null);

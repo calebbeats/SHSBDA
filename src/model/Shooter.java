@@ -256,7 +256,7 @@ public class Shooter extends GameFigure {
 
     //Temporary method to test healing items.
     public void takeDamage(int i) {
-        health = health - i;
+        health = health - (i/5);
     }
 
     public void setVelocityX(int velocityX) {
