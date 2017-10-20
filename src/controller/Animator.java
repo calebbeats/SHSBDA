@@ -90,27 +90,26 @@ public class Animator implements Runnable {
         // they can be removed at update() method
         for (GameFigure s : Main.gameData.enemyFigures) {
             if (Main.gameData.shooter.getCollisionBox().intersects(s.getCollisionBox()) && s.state != s.STATE_DYING) { //if shooter intersects any enemyfigure do this
-                if(s instanceof EnemyMissile || s instanceof SuicideEnemy){//this is if a hurtful enemy missile happens
+                if (s instanceof EnemyMissile || s instanceof SuicideEnemy) {//this is if a hurtful enemy missile happens
                     s.goNextState();
                     GameData.multiplier = 0;
                     GameData.shooter.takeDamage(20);
-                }
-                else if(s instanceof EnemyMissileSlow){//do the enemy slow missile stuff here
+                } else if (s instanceof EnemyMissileSlow) {//do the enemy slow missile stuff here
                     //System.out.println("Slowed");
                 }
                 //this is where the enemy melee attacks would go
             }
 
             for (GameFigure f : Main.gameData.friendFigures) { //only process gamefigure collisionboxes if they are weapon or missile
-                if(f instanceof Missile || f instanceof Melee){
-                    if (f.getCollisionBox().intersects(s.getCollisionBox()) && f.state != f.STATE_DYING && s.state != s.STATE_DYING
-                        && f.state != f.STATE_DONE && s.state != s.STATE_DONE ) {
+                if (f instanceof Missile || f instanceof Melee) {
+                    if (f.getCollisionBox().intersects(s.getCollisionBox()) /*&& f.state != f.STATE_DYING && s.state != s.STATE_DYING **/
+                            && f.state != f.STATE_DONE && s.state != s.STATE_DONE) {
                         f.goNextState();
                         s.goNextState();
                         MainWindow.score += 5;
                         MainWindow.scoreText.setText("Score: " + MainWindow.score + " || Coins: " + MainWindow.coins);
                     }
-                }                
+                }
             }
 
             //detection for enemy attacks hitting terrain
