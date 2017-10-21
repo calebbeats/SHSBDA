@@ -28,7 +28,7 @@ public class MeleeEnemy extends GameFigure {
     private static final int MAX_ATTK_TIME = 10;
     private static int deathCounter=0;
     private static int attackCounter=0;
-
+    
     private float dx; // displacement at each frame
     private float dy; // displacement at each frame
     private int animationCheck=0;
@@ -59,6 +59,8 @@ public class MeleeEnemy extends GameFigure {
     public MeleeEnemy(float sx, float sy) {
         super(sx, sy);
         
+        swingTimer=0;
+        
         tx = Main.gameData.shooter.x + 10;
         ty = Main.gameData.shooter.y + 10;
         this.target = new Point2D.Float(tx, ty);
@@ -82,10 +84,10 @@ public class MeleeEnemy extends GameFigure {
         death = null;
         
         try {
-            alive = ImageIO.read(getClass().getResource("melee1.png"));
-            attack1 = ImageIO.read(getClass().getResource("meleeAttack1.png"));
-            attack2 = ImageIO.read(getClass().getResource("meleeAttack2.png"));
-            death = ImageIO.read(getClass().getResource("meleeDead.png"));
+            alive = ImageIO.read(getClass().getResource("/resources/melee1.png"));
+            attack1 = ImageIO.read(getClass().getResource("/resources/meleeAttack1.png"));
+            attack2 = ImageIO.read(getClass().getResource("/resources/meleeAttack2.png"));
+            death = ImageIO.read(getClass().getResource("/resources/meleeDead.png"));
       
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");
@@ -107,13 +109,10 @@ public class MeleeEnemy extends GameFigure {
                 30, 30, null);
                 animationCheck = 0;
             }
-           
-            //IF ALIVE - DO ATTACK STUFF
-            //Check for Distance - Done
-            //IF TARGET REACHED - Done
-            //Target attack - Done
-            //Need to disable death on collision
-            //------------------------------
+            
+            //OLD MELEE ATTACK LOGIC
+            //Do Not Delete
+            /*
             double distance = target.distance(super.x, super.y);
             boolean targetReached = distance <= 10.0;
             if (targetReached) {
@@ -126,6 +125,7 @@ public class MeleeEnemy extends GameFigure {
                     updateAttack();
                 }
             }
+            */
         }
         if(state == STATE_DYING)    {
             
@@ -146,16 +146,17 @@ public class MeleeEnemy extends GameFigure {
         updateState();
         if (state == STATE_ALIVE) {
             updateLocation();
+            updateSwing();            
         } else if (state == STATE_DYING) {
             updateSize();
         }
     }
 
     public void updateLocation() {
-        GameFigure enemyToMove = new MeleeEnemy(super.x + dx, super.y +dy);        
+        BasicCollisionBox enemyToMove = new BasicCollisionBox(super.x + dx, super.y +dy, SIZE, SIZE);        
         
         for(GameFigure t : Main.gameData.terrainFigures){
-            if(!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox()))){
+            if(!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox())) || t instanceof IceTerrain){
                 super.x += dx;
                 super.y += dy;
             }
@@ -182,13 +183,13 @@ public class MeleeEnemy extends GameFigure {
                 }
                 System.out.println("Dx Dy" + dx + " " + dy);
                 
-                enemyToMove = new MeleeEnemy(super.x + dx, super.y);
+                enemyToMove = new BasicCollisionBox(super.x + dx, super.y, SIZE, SIZE);
                 if (!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox()))) {
                     super.x += dx;
                     super.y -= 2*dy;
                 }
                 else{
-                    enemyToMove = new MeleeEnemy(super.x, super.y + dy);
+                    enemyToMove = new BasicCollisionBox(super.x, super.y + dy, SIZE, SIZE);
                     if (!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox()))) {
                         super.y += dy;
                         super.x -= 2*dx;
@@ -197,7 +198,7 @@ public class MeleeEnemy extends GameFigure {
                 
                 return;
             }
-            enemyToMove = new MeleeEnemy(super.x + dx, super.y +dy);
+            enemyToMove = new BasicCollisionBox(super.x + dx, super.y +dy, SIZE, SIZE);
         }
         enemyToMove = null;        
     }
@@ -208,6 +209,21 @@ public class MeleeEnemy extends GameFigure {
     
     public void updateAttack(){
         attackCounter++;
+    }
+    
+    public void updateSwing(){
+        double distance = target.distance(super.x, super.y);
+        boolean attackRange = distance <= 10.0;
+        if (attackRange) {
+            //Attack Speed of Melee
+            //-----------------------------------
+            if(swingTimer < 50)  {
+                    swingTimer++;
+            }
+            else    {
+                swingTimer = 0;
+            }
+        }
     }
 
     public void updateState() {
@@ -253,8 +269,7 @@ public class MeleeEnemy extends GameFigure {
 
     @Override
     public Rectangle2D getCollisionBox() {
-        return new Rectangle2D.Double(this.x, this.y, SIZE * 0.9D, SIZE * 0.9D);
-        //this.x - SIZE , this.y - SIZE, SIZE * 0.9D, SIZE * 0.9D
+        return new Rectangle2D.Double(this.x, this.y, SIZE * 0.9D, SIZE * 0.9D);        
     }
 
     @Override

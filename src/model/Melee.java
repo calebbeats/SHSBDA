@@ -21,7 +21,7 @@ public class Melee extends GameFigure {
     // public properties for quick access
     public Point2D.Float target;
 
-    private static final int UNIT_TRAVEL_DISTANCE = 15; // per frame move
+    private static final int UNIT_TRAVEL_DISTANCE = 15; // per frame move was 15
 
     private int swingCounter = 0;
     private Image swordUp;
@@ -35,7 +35,6 @@ public class Melee extends GameFigure {
      * @param sy start y of the missile
      * @param tx target x of the missile
      * @param ty target y of the missile
-     * @param color color of the missile
      */
     public Melee(float sx, float sy, float tx, float ty) {
         super(sx, sy);
@@ -58,10 +57,10 @@ public class Melee extends GameFigure {
         }
 
         try {
-            swordUp = ImageIO.read(getClass().getResource("swordUp.png"));
-            swordDown = ImageIO.read(getClass().getResource("swordDown.png"));
-            swordRight = ImageIO.read(getClass().getResource("swordRight.png"));
-            swordLeft = ImageIO.read(getClass().getResource("swordLeft.png"));
+            swordUp = ImageIO.read(getClass().getResource("/resources/swordUp.png"));
+            swordDown = ImageIO.read(getClass().getResource("/resources/swordDown.png"));
+            swordRight = ImageIO.read(getClass().getResource("/resources/swordRight.png"));
+            swordLeft = ImageIO.read(getClass().getResource("/resources/swordLeft.png"));
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open image.");
             System.exit(-1);
@@ -72,13 +71,12 @@ public class Melee extends GameFigure {
     @Override
     public void render(Graphics2D g) {
         //Initially, sword is in the upright position for first animation
-        if (state == STATE_ALIVE) {
-            g.drawImage(swordUp, (int) super.x, (int) super.y,
-                    30, 30, null);
-        }
+        //if (state == STATE_ALIVE) {
+        //     g.drawImage(swordUp, (int) super.x, (int) super.y,
+        //             30, 30, null);
+        //}
         //draw animation based on direction of mouse click
         if (state == STATE_DYING) {
-
             if (swingCounter < 1) {
                 g.drawImage(swordUp, (int) super.x, (int) super.y,
                         30, 30, null);

@@ -48,7 +48,7 @@ public class GamePanel extends JPanel {
             g2.setBackground(Color.BLACK);
         } else {
 
-            backGround = ImageIO.read(getClass().getResource("gameFinish.png"));
+            backGround = ImageIO.read(getClass().getResource("/resources/gameFinish.png"));
             g2.drawImage(backGround, 0, 0, width, height, null);
         }
         //backGround = ImageIO.read(getClass().getResource("startScreen.png"));
@@ -57,6 +57,10 @@ public class GamePanel extends JPanel {
 
         if (Main.animator.running) {
 
+            for (GameFigure f : Main.gameData.terrainFigures) {
+                f.render(g2);
+            }
+            
             for (GameFigure f : Main.gameData.enemyFigures) {
                 f.render(g2);
             }
@@ -64,9 +68,7 @@ public class GamePanel extends JPanel {
             for (GameFigure f : Main.gameData.friendFigures) {
                 f.render(g2);
             }
-            for (GameFigure f : Main.gameData.terrainFigures) {
-                f.render(g2);
-            }
+            
 
         }
     }

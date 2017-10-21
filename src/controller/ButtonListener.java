@@ -22,6 +22,7 @@ public class ButtonListener implements ActionListener {
     public Image backGround;
     private Graphics2D g2;
     public static Boolean choosedButton = false;
+    public static JFrame shop = new ShopWindow();
     //public static int choosedButton = 0;
 
     @Override
@@ -53,13 +54,14 @@ public class ButtonListener implements ActionListener {
             } else {
                 System.exit(0);
             }
-        } else if (e.getSource() == MainWindow.shopButton) {
-            JFrame shop = new ShopWindow();
+        } else if (e.getSource() == MainWindow.shopButton) {            
             shop.setVisible(true);
             shop.setSize(400, 500);
-            shop.setLocation(150, 100);
+            shop.setLocation(450, 300);
             shop.setResizable(false); // window size cannot change
             shop.setVisible(true);
+            ShopWindow.checkInvo();
+            ShopWindow.updateText();
         }
     }
 
@@ -72,8 +74,7 @@ public class ButtonListener implements ActionListener {
 
         AudioInputStream stream = null;
         try {
-            //File file = new File("C:/Users/dinhn/Documents/GitHub/SHSBDA/PatakasWorld.wav");
-            stream = AudioSystem.getAudioInputStream(getClass().getResource("PatakasWorld.wav"));
+            stream = AudioSystem.getAudioInputStream(getClass().getResource("/resources/chugchug.wav"));
             Clip clip = AudioSystem.getClip();
             clip.open(stream);
             clip.start();
