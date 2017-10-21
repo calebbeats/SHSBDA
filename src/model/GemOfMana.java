@@ -19,12 +19,14 @@ public class GemOfMana extends Equipment {
     @Override
     public void attachAugment(Shooter s)
     {
+        s.setMaxMana(s.getMaxMana() + 20);
         s.setMana(s.getMana() + 20);
     }
     
     @Override
     public void removeAugment(Shooter s)
     {
+        s.setMaxMana(s.getMaxMana() - 20);
         s.setMana(s.getMana() - 20);
     }   
 }
