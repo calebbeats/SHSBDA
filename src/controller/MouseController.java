@@ -30,11 +30,7 @@ public class MouseController extends MouseAdapter {
         if (!Main.isPaused) {//if game is paused don't do anything after unpausing
             if (me.getButton() == MouseEvent.BUTTON1 && !shooter.isSprint()) {//Left click detected, initiate melee attack
                 //melee attack in the direction the mouse is in regards to the player
-                Melee m = new Melee(
-                        shooter.getXofMissileShoot(),
-                        shooter.getYofMissileShoot(),
-                        px, py // direction in which to melee attack
-                );
+                Melee m = shooter.shootMelee(px,py, Shooter.getMeleeWeapon());
                 Main.gameData.friendFigures.add(m);
             }
 
@@ -46,11 +42,7 @@ public class MouseController extends MouseAdapter {
                 } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
                     Logger.getLogger(MouseController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                Missile m = new Missile(
-                        shooter.getXofMissileShoot(),
-                        shooter.getYofMissileShoot(),
-                        px, py // target location where the missile explodes
-                );
+                Missile m = shooter.shootRanged(px,py, Shooter.getRangedWeapon());
                 Main.gameData.friendFigures.add(m);
             }
         }

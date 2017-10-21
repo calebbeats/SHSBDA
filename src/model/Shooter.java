@@ -18,7 +18,7 @@ import static model.GameFigure.STATE_ALIVE;
 import static model.GameFigure.STATE_DYING;
 import sun.util.calendar.CalendarUtils;
 
-public class Shooter extends GameFigure {
+public class Shooter extends GameFigure{
 
     public static final int PLAYER_WIDTH = 30, PLAYER_HEIGHT = 30;
 
@@ -44,6 +44,8 @@ public class Shooter extends GameFigure {
     //----------------------------------
     private Map<String, List<Image>> playerSprites;
     private Image playerImage;
+    public static Missile rangedWeapon;
+    public static Melee meleeWeapon;
     public WeaponComponent weapon;
     int deadTimer = 0;
     // ----------------------------------
@@ -329,10 +331,50 @@ public class Shooter extends GameFigure {
         }
     }
     
+    public void equipRanged(Missile weap)
+    {
+        rangedWeapon =  weap;
+    }
+    
+    public void equipMelee(Melee weap)
+    {
+        meleeWeapon = weap;
+    }
+    
+    public static Missile getRangedWeapon()
+    {
+        return rangedWeapon;
+    }
+    
+    public static Melee getMeleeWeapon()
+    {
+        return meleeWeapon;
+    }
+    
+    public Missile shootRanged(int x, int y, Missile mis)
+    {
+        mis = rangedWeapon;
+        mis = new Missile(getXofMissileShoot(),
+                        getYofMissileShoot(),
+                        x, y);
+        return mis;
+    }
+    
+    public Melee shootMelee(int x, int y, Melee mis)
+    {
+        mis = meleeWeapon;
+        mis = new Melee(getXofMissileShoot(),
+                        getYofMissileShoot(),
+                        x, y);
+        return mis;
+    }
+    
     public void testItem()
     {
         inventory[0] = new WeakPotion(1);
         inventory[1] = new MediumPotion(2);
         inventory[2] = new StrongPotion(3);
     }
+
+    
 }
