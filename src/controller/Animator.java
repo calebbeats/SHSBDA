@@ -147,9 +147,6 @@ public class Animator implements Runnable {
                     if(!(m instanceof Shooter) && (t instanceof BlockTerrain)){
                         m.goNextState();
                     }
-                    else if((m instanceof Shooter) && (t instanceof IceTerrain)){
-                        //slide
-                    }
                     
                 }
             }
