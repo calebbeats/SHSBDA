@@ -1,3 +1,4 @@
+
 package controller;
 
 import java.awt.Color;
@@ -46,7 +47,7 @@ public class KeyController implements KeyListener {
                 keyDown[3] = true;
                 break;
             case KeyEvent.VK_NUMPAD0: {
-                chooseMissile = true;
+                //chooseMissile = true;
 
                 if (chooseMissile) {
                     try {
@@ -75,9 +76,7 @@ public class KeyController implements KeyListener {
                     Main.gameData.friendFigures.add(bullet2);
                 }
             }
-
             break;
-
             case KeyEvent.VK_SHIFT:
                 shooter.isSprint(true);
                 break;
@@ -93,10 +92,6 @@ public class KeyController implements KeyListener {
             case KeyEvent.VK_4:
                 //shooter.useItem((Consumable) shooter.inventory[3], 3);
                 shooter.testItem();
-                break;
-            case KeyEvent.VK_5:
-                //shooter.useItem((Consumable) shooter.inventory[3], 3);
-                shooter.testRemoval();
                 break;
             case KeyEvent.VK_ESCAPE: //pause the game when escape key is pressed
                 if (Main.isPaused) {

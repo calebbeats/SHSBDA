@@ -110,10 +110,12 @@ public class MyBullet extends GameFigure {
             boolean targetReached = distance <= 2.0;
             if (targetReached || (super.x > Main.WIN_WIDTH || super.y > Main.WIN_HEIGHT)) {
                 state = STATE_DYING;
+                this.goNextState();
             }
         } else if (state == STATE_DYING) {
             if (size >= MAX_EXPLOSION_SIZE) {
                 state = STATE_DONE;
+                this.goNextState();
             }
         }
     }

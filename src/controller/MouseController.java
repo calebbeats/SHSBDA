@@ -13,6 +13,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import model.Melee;
 import model.Missile;
+import model.MyBullet;
 import model.Shooter;
 
 public class MouseController extends MouseAdapter {
@@ -29,7 +30,7 @@ public class MouseController extends MouseAdapter {
 
         if (!Main.isPaused) {//if game is paused don't do anything after unpausing
             if (me.getButton() == MouseEvent.BUTTON1 && !shooter.isSprint()) {//Left click detected, initiate melee attack
-                
+
                 //Audio For Sword Swing
                 //------------------------------
                 try {
@@ -37,7 +38,7 @@ public class MouseController extends MouseAdapter {
                 } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
                     Logger.getLogger(MouseController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+
                 //melee attack in the direction the mouse is in regards to the player
                 Melee m = shooter.shootMelee(px,py, Shooter.getMeleeWeapon());
                 Main.gameData.friendFigures.add(m);
@@ -58,18 +59,14 @@ public class MouseController extends MouseAdapter {
                             shooter.getYofMissileShoot(),
                             px, py // target location where the missile explodes
                     );
-                    Main.gameData.friendFigures.add(m);
-                }     
 
-                try {
-                    //Right click detected, initiate ranged attack
-                    //shoot a missle at the mouse press location
-                    fireballAudio();
-                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
-                    Logger.getLogger(MouseController.class.getName()).log(Level.SEVERE, null, ex);
+                    Main.gameData.friendFigures.add(m);
                 }
+
                 Missile m = shooter.shootRanged(px,py, Shooter.getRangedWeapon());
                 Main.gameData.friendFigures.add(m);
+
+
 
             }
         }
@@ -89,7 +86,7 @@ public class MouseController extends MouseAdapter {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     public void swordAudio() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
 
         AudioInputStream swordSwing = null;
