@@ -1,9 +1,20 @@
 package controller;
 
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import model.Consumable;
 import model.Shooter;
+import javax.swing.JOptionPane;
+import model.MyBullet;
 
 public class KeyController implements KeyListener {
 
@@ -11,6 +22,8 @@ public class KeyController implements KeyListener {
 
     private final Shooter shooter = (Shooter) Main.gameData.friendFigures.get(0);
     private boolean[] keyDown = new boolean[4];
+
+    public static boolean chooseMissile = false;
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -32,6 +45,39 @@ public class KeyController implements KeyListener {
                 shooter.setVelocityX(VELOCITY_X);
                 keyDown[3] = true;
                 break;
+            case KeyEvent.VK_NUMPAD0: {
+                chooseMissile = true;
+
+                if (chooseMissile) {
+                    try {
+                        audio();
+                    } catch (UnsupportedAudioFileException ex) {
+                        Logger.getLogger(KeyController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(KeyController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (LineUnavailableException ex) {
+                        Logger.getLogger(KeyController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(KeyController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                MyBullet bullet1 = new MyBullet(shooter.getXofMissileShoot(), shooter.getYofMissileShoot(),
+                        shooter.getXofMissileShoot(), 0,
+                        Color.GREEN);
+                MyBullet bullet2 = new MyBullet(shooter.getXofMissileShoot() + 10, shooter.getYofMissileShoot() + 15,
+                        shooter.getXofMissileShoot() + 15, 15,
+                        Color.RED);
+
+                synchronized (Main.gameData.friendFigures) {
+                    Main.gameData.friendFigures.add(bullet1);
+                }
+                synchronized (Main.gameData.friendFigures) {
+                    Main.gameData.friendFigures.add(bullet2);
+                }
+            }
+
+            break;
+
             case KeyEvent.VK_SHIFT:
                 shooter.isSprint(true);
                 break;
@@ -98,6 +144,26 @@ public class KeyController implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
+    }
+
+    private int showConfirmDialog() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void audio() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
+
+        AudioInputStream stream = null;
+        try {
+            //File file = new File("C:/Users/dinhn/Documents/GitHub/SHSBDA/PatakasWorld.wav");
+            stream = AudioSystem.getAudioInputStream(getClass().getResource("climactic-boom.wav"));
+            Clip clip = AudioSystem.getClip();
+            clip.open(stream);
+            clip.start();
+            stream.close();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+
     }
 
 }
