@@ -46,7 +46,7 @@ public class KeyController implements KeyListener {
                 keyDown[3] = true;
                 break;
             case KeyEvent.VK_NUMPAD0: {
-                chooseMissile = true;
+                //chooseMissile = true;
 
                 if (chooseMissile) {
                     try {
@@ -75,9 +75,7 @@ public class KeyController implements KeyListener {
                     Main.gameData.friendFigures.add(bullet2);
                 }
             }
-
             break;
-
             case KeyEvent.VK_SHIFT:
                 shooter.isSprint(true);
                 break;

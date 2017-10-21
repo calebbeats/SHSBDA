@@ -25,6 +25,7 @@ public class GameData {
     public final List<GameFigure> friendFigures;
     public final List<GameFigure> terrainFigures;
     public static Shooter shooter;
+    public static MyBullet myBullet;
     ReentrantLock lock = new ReentrantLock();
     public static int multiplier = 0;
     private boolean levelComplete = false;
@@ -55,6 +56,7 @@ public class GameData {
         if (level == 1) {
             terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 125, 125));
             friendFigures.add(shooter);
+            //friendFigures.add(p)
             friendFigures.add(p);
             enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) Math.random() * 200));
             enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
