@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import static java.lang.Boolean.FALSE;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -98,12 +99,20 @@ public class Animator implements Runnable {
                     s.goNextState();
                     GameData.multiplier = 0;
                     GameData.shooter.takeDamage(20);
-                } else if (s instanceof SuicideEnemy) {//do the enemy slow missile stuff here
+                }else if (s instanceof SuicideEnemy) {//do the enemy slow missile stuff here
                     s.goNextState();
                     GameData.multiplier = 0;
                     GameData.shooter.takeDamage(100);
                 }else if (s instanceof EnemyMissileSlow) {//do the enemy slow missile stuff here
-                    GameData.shooter.takeDamage(20);
+                    s.goNextState();
+                    GameData.shooter.takeDamage(1);
+                     for(int i=0; i<5; i++){
+                        GameData.shooter.isSprint(FALSE);
+                        System.out.println("Couter = " + i);                      
+                    }
+                    if(GameData.shooter.isSprint()==FALSE){
+                        System.out.println("Sprint is off");
+                    }
                 }else if (s instanceof MeleeEnemyAttack){//this is where the enemy melee attacks would go
                     s.goNextState();
                     GameData.multiplier = 0;

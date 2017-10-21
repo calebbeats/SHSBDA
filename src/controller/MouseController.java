@@ -40,11 +40,7 @@ public class MouseController extends MouseAdapter {
                 }
 
                 //melee attack in the direction the mouse is in regards to the player
-                Melee m = new Melee(
-                        shooter.getXofMissileShoot(),
-                        shooter.getYofMissileShoot(),
-                        px, py // direction in which to melee attack
-                );
+                Melee m = shooter.shootMelee(px,py, Shooter.getMeleeWeapon());
                 Main.gameData.friendFigures.add(m);
             }
 
@@ -66,6 +62,10 @@ public class MouseController extends MouseAdapter {
 
                     Main.gameData.friendFigures.add(m);
                 }
+
+                Missile m = shooter.shootRanged(px,py, Shooter.getRangedWeapon());
+                Main.gameData.friendFigures.add(m);
+
 
             }
         }
