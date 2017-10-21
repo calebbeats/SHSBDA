@@ -93,7 +93,7 @@ public class GameData {
             }
         }
         enemyFigures.removeAll(removeEnemies);
-
+        
         if (enemyFigures.isEmpty()) { //if enemies are dead set shop button enabled
             if (playerDead == false) {
                 disableShop();

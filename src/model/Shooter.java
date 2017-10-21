@@ -18,7 +18,7 @@ import static model.GameFigure.STATE_ALIVE;
 import static model.GameFigure.STATE_DYING;
 import sun.util.calendar.CalendarUtils;
 
-public class Shooter extends GameFigure {
+public class Shooter extends GameFigure{
 
     public static final int PLAYER_WIDTH = 30, PLAYER_HEIGHT = 30;
 
@@ -30,9 +30,13 @@ public class Shooter extends GameFigure {
     private int mana;
     private int maxMana;
     private int maxHealth;
+    
+    int tempCounter = 0;
+    int tempRemovalCounter;
 
     //made static so shop can access invo
     public static Item[] inventory = new Item[4];
+    public static Equipment[] equipment = new Equipment[3];
 
     //-----------------
     //test object
@@ -44,6 +48,8 @@ public class Shooter extends GameFigure {
     //----------------------------------
     private Map<String, List<Image>> playerSprites;
     private Image playerImage;
+    public static Missile rangedWeapon;
+    public static Melee meleeWeapon;
     public WeaponComponent weapon;
     int deadTimer = 0;
     // ----------------------------------
@@ -71,9 +77,7 @@ public class Shooter extends GameFigure {
         // Tests for items and equipment
         // This gets added every time the shooter is created, so it slows game way down
         //---------------------------------------------------------------------
-//        inventory[0] = new WeakPotion(1);
-//        inventory[1] = new MediumPotion(2);
-//        inventory[2] = new StrongPotion(3);
+        
         //---------------------------------------------------------------------
         try {
             // Create HashMap that contains player sprites 
@@ -223,6 +227,13 @@ public class Shooter extends GameFigure {
         Shooter shooterIntendedPossition = new Shooter((int) super.x,
                 (int) super.y + velocityY + Integer.signum(velocityY) * velocitySprint);
 
+//        Main.gameData.terrainFigures.forEach(terrain -> {
+//            if (velocityY != 0 && !shooterIntendedPossition
+//                    .getCollisionBox().intersects(terrain.getCollisionBox())) {
+//                super.y += velocityY + Integer.signum(velocityY) * velocitySprint;
+//            }
+//        });
+
         for (GameFigure t : Main.gameData.terrainFigures) {
             if (velocityY != 0 && !shooterIntendedPossition
                     .getCollisionBox().intersects(t.getCollisionBox())) {
@@ -369,11 +380,81 @@ public class Shooter extends GameFigure {
         }
     }
     
+    public void equipRanged(Missile weap)
+    {
+        rangedWeapon =  weap;
+    }
+    
+    public void equipMelee(Melee weap)
+    {
+        meleeWeapon = weap;
+    }
+    
+    public static Missile getRangedWeapon()
+    {
+        return rangedWeapon;
+    }
+    
+    public static Melee getMeleeWeapon()
+    {
+        return meleeWeapon;
+    }
+    
+    public Missile shootRanged(int x, int y, Missile mis)
+    {
+        mis = rangedWeapon;
+        mis = new Missile(getXofMissileShoot(),
+                        getYofMissileShoot(),
+                        x, y);
+        return mis;
+    }
+    
+    public Melee shootMelee(int x, int y, Melee mis)
+    {
+        mis = meleeWeapon;
+        mis = new Melee(getXofMissileShoot(),
+                        getYofMissileShoot(),
+                        x, y);
+        return mis;
+    }
+    
+    public void equipItem(Equipment e, int pos)
+    {
+        if(equipment[pos] == null)
+        {
+        equipment[pos] = e;
+        e.attachAugment(this);
+        }
+    }
+    
+    public void unequipItem(int pos)
+    {
+        if(equipment[pos] != null)
+        {
+        Equipment e = equipment[pos]; 
+        e.removeAugment(this);
+        equipment[pos] = null;
+        }
+    }
+    
     public void testItem()
     {
-        inventory[0] = new WeakPotion(1);
-        inventory[1] = new MediumPotion(2);
-        inventory[2] = new StrongPotion(3);
+        System.out.println("Adding mana augment");
+        equipItem(new GemOfMana(1), tempCounter);
+        tempCounter++;
+        tempRemovalCounter++;
+        if(tempCounter == 3)
+        {
+            tempCounter = 0;
+        }
     }
-  
-}
+    
+    public void testRemoval()
+    {
+        System.out.println("Removing mana augment");
+        unequipItem(tempRemovalCounter);
+        tempRemovalCounter--;
+    }
+    
+
+};

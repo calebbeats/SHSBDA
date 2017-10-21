@@ -39,7 +39,7 @@ public class EnemyMissileSlow extends GameFigure {
     
     //Missile Speed
     //------------------------------
-    private static final int UNIT_TRAVEL_DISTANCE = 4;
+    private static final int UNIT_TRAVEL_DISTANCE = 10;
 
     private int animationCheck=0;
 
@@ -132,7 +132,7 @@ public class EnemyMissileSlow extends GameFigure {
         if (state == STATE_ALIVE) {
             double distance = target.distance(super.x, super.y);
             boolean targetReached = distance <= 2.0;
-            if (targetReached) {
+            if (targetReached || (super.x > Main.WIN_WIDTH || super.y > Main.WIN_HEIGHT)) {
                 this.goNextState();
             }
         } else if (state == STATE_DYING) {
