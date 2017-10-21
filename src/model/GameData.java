@@ -59,7 +59,7 @@ public class GameData {
             enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
             enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
             enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
-            terrainFigures.add(new BlockTerrain(200, 200));
+            terrainFigures.add(new IceTerrain(200, 200, 80, 80));
         }
     }
 
