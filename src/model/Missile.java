@@ -1,5 +1,6 @@
 package model;
 
+import controller.Main;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.Point2D;
@@ -134,7 +135,7 @@ public class Missile extends GameFigure {
         if (state == STATE_ALIVE) {
             double distance = target.distance(super.x, super.y);
             boolean targetReached = distance <= 4.0;
-            if (targetReached) {
+            if (targetReached || (super.x > Main.WIN_WIDTH || super.y > Main.WIN_HEIGHT)) {
                 this.goNextState();
             }
         } else if (state == STATE_DYING) {
