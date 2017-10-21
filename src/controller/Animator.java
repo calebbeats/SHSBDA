@@ -107,8 +107,7 @@ public class Animator implements Runnable {
                     s.goNextState();
                     GameData.multiplier = 0;
                     GameData.shooter.takeDamage(20);
-                }
-                
+                }                
             }
 
             for (GameFigure f : Main.gameData.friendFigures) { //only process gamefigure collisionboxes if they are weapon or missile
