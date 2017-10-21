@@ -53,13 +53,14 @@ public class GameData {
 
         //load enemies, terrain, and powerups based on current level
         if (level == 1) {
+            terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 125, 125));
             friendFigures.add(shooter);
             friendFigures.add(p);
             enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) Math.random() * 200));
             enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
             enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
             enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
-            terrainFigures.add(new BlockTerrain(200, 200));
+            
         }
     }
 

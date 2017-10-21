@@ -9,12 +9,14 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import model.GameFigure;
 import model.Shooter;
 import model.BlinkMage;
+import model.BlockTerrain;
 import model.EnemyMissile;
 import model.EnemyMissileSlow;
 import model.SuicideEnemy;
 import model.MeleeEnemy;
 import model.SlowMage;
 import model.GameData;
+import model.IceTerrain;
 import model.Melee;
 import model.Missile;
 import view.MainWindow;
@@ -114,7 +116,9 @@ public class Animator implements Runnable {
 
             //detection for enemy attacks hitting terrain
             for (GameFigure t : Main.gameData.terrainFigures) {
-                if (s.getCollisionBox().intersects(t.getCollisionBox()) && !((s instanceof BlinkMage) || (s instanceof SuicideEnemy) || (s instanceof MeleeEnemy) || (s instanceof SlowMage))) {
+                if (s.getCollisionBox().intersects(t.getCollisionBox()) 
+                        && !((s instanceof BlinkMage) || (s instanceof SuicideEnemy) || (s instanceof MeleeEnemy) || (s instanceof SlowMage)) 
+                        && (t instanceof BlockTerrain)) {
                     s.goNextState();
                 }
             }
@@ -122,8 +126,14 @@ public class Animator implements Runnable {
         //detection for freindly attacks hitting terrain
         for (GameFigure m : Main.gameData.friendFigures) {
             for (GameFigure t : Main.gameData.terrainFigures) {
-                if (m.getCollisionBox().intersects(t.getCollisionBox()) && !(m instanceof Shooter)) {
-                    m.goNextState();
+                if (m.getCollisionBox().intersects(t.getCollisionBox())) {
+                    if(!(m instanceof Shooter) && (t instanceof BlockTerrain)){
+                        m.goNextState();
+                    }
+                    else if((m instanceof Shooter) && (t instanceof IceTerrain)){
+                        //slide
+                    }
+                    
                 }
             }
         }

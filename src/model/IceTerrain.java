@@ -11,26 +11,27 @@ import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
+import static model.GameFigure.STATE_ALIVE;
 
 /**
  *
  * @author Haseeb
  */
-public class BlockTerrain extends GameFigure {
+public class IceTerrain extends GameFigure {
 
     public int terrainWidth = 50, terrainHeight = 50;
     
     private Image blockImage;
 
-    public BlockTerrain(float x, float y, int width, int height) {
+    public IceTerrain(float x, float y, int width, int height) {
         super(x, y);
         this.terrainWidth = width;
         this.terrainHeight = height;
         super.state = STATE_ALIVE;
         try {
-            blockImage = ImageIO.read(getClass().getResource("/resources/BlockTerrain.png"));
+            blockImage = ImageIO.read(getClass().getResource("/resources/IceTerrain.png"));
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Error: Cannot open BlockTerrain.png");
+            JOptionPane.showMessageDialog(null, "Error: Cannot open IceTerrain.png");
             System.exit(-1);
         }
     }
