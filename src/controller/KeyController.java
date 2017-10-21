@@ -94,6 +94,10 @@ public class KeyController implements KeyListener {
                 //shooter.useItem((Consumable) shooter.inventory[3], 3);
                 shooter.testItem();
                 break;
+            case KeyEvent.VK_5:
+                //shooter.useItem((Consumable) shooter.inventory[3], 3);
+                shooter.testRemoval();
+                break;
             case KeyEvent.VK_ESCAPE: //pause the game when escape key is pressed
                 if (Main.isPaused) {
                     Main.isPaused = false;
