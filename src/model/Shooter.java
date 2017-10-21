@@ -33,6 +33,7 @@ public class Shooter extends GameFigure{
 
     //made static so shop can access invo
     public static Item[] inventory = new Item[4];
+    public static Equipment[] equipment = new Equipment[3];
 
     //-----------------
     //test object
@@ -414,6 +415,25 @@ public class Shooter extends GameFigure{
                         getYofMissileShoot(),
                         x, y);
         return mis;
+    }
+    
+    public void equipItem(Equipment e, int pos)
+    {
+        if(equipment[pos] == null)
+        {
+        equipment[pos] = e;
+        e.attachAugment(this);
+        }
+    }
+    
+    public void unequipItem(int pos)
+    {
+        if(equipment[pos] != null)
+        {
+        Equipment e = equipment[pos]; 
+        e.removeAugment(this);
+        equipment[pos] = null;
+        }
     }
     
     public void testItem()
