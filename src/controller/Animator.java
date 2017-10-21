@@ -18,6 +18,7 @@ import model.SlowMage;
 import model.GameData;
 import model.IceTerrain;
 import model.Melee;
+import model.MeleeEnemyAttack;
 import model.Missile;
 import view.MainWindow;
 
@@ -92,14 +93,22 @@ public class Animator implements Runnable {
         // they can be removed at update() method
         for (GameFigure s : Main.gameData.enemyFigures) {
             if (Main.gameData.shooter.getCollisionBox().intersects(s.getCollisionBox()) && s.state != s.STATE_DYING) { //if shooter intersects any enemyfigure do this
-                if (s instanceof EnemyMissile || s instanceof SuicideEnemy) {//this is if a hurtful enemy missile happens
+                if (s instanceof EnemyMissile) {//this is if a hurtful enemy missile happens
                     s.goNextState();
                     GameData.multiplier = 0;
                     GameData.shooter.takeDamage(20);
-                } else if (s instanceof EnemyMissileSlow) {//do the enemy slow missile stuff here
-                    //System.out.println("Slowed");
+                } else if (s instanceof SuicideEnemy) {//do the enemy slow missile stuff here
+                    s.goNextState();
+                    GameData.multiplier = 0;
+                    GameData.shooter.takeDamage(100);
+                }else if (s instanceof EnemyMissileSlow) {//do the enemy slow missile stuff here
+                    GameData.shooter.takeDamage(20);
+                }else if (s instanceof MeleeEnemyAttack){//this is where the enemy melee attacks would go
+                    s.goNextState();
+                    GameData.multiplier = 0;
+                    GameData.shooter.takeDamage(20);
                 }
-                //this is where the enemy melee attacks would go
+                
             }
 
             for (GameFigure f : Main.gameData.friendFigures) { //only process gamefigure collisionboxes if they are weapon or missile
