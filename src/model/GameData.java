@@ -1,5 +1,6 @@
 package model;
 
+import controller.ButtonListener;
 import controller.Main;
 import java.awt.Image;
 import java.io.IOException;
@@ -73,9 +74,7 @@ public class GameData {
         for (int i = 0; i < enemyFigures.size(); i++) {
             f = enemyFigures.get(i);
             if (f.state == GameFigureState.STATE_DONE && f instanceof EnemyMissile) {
-
                 removeEnemies.add(f);
-
             } 
             else if (f.state == GameFigureState.STATE_DONE) {
                 multiplier += 1;
@@ -94,7 +93,7 @@ public class GameData {
         enemyFigures.removeAll(removeEnemies);
 
         if(enemyFigures.isEmpty()) { //if enemies are dead so set button enabled
-            MainWindow.shopButton.setEnabled(true);
+            disableShop();
             levelComplete = true;
             levelCheck();
         }
@@ -121,9 +120,13 @@ public class GameData {
                 enemyFigures.add(new EnemyMissileSlow(slow.x,slow.y));
         }
         
-        //Make EnemyMissileSlow actually slow
-        //-----------------------------------        
-
+        //Melee Enemy
+        //------------------------------
+        for(Iterator<GameFigure> it = enemyFigures.iterator(); it.hasNext();) {
+            GameFigure swing = it.next();
+            if(swing.swingTimer == 20)
+                enemyFigures.add(new MeleeEnemyAttack(swing.x,swing.y));
+        }
 
         // missiles are removed if explosion is done
         ArrayList<GameFigure> removeFriends = new ArrayList<>();
@@ -138,6 +141,13 @@ public class GameData {
         for (GameFigure g : friendFigures) {
             g.update();
         }
+    }
+    
+    private void disableShop(){
+        if(ButtonListener.shop.isVisible())
+            MainWindow.shopButton.setEnabled(false);        
+        else
+            MainWindow.shopButton.setEnabled(true);
     }
     
     private void levelCheck() {
@@ -169,11 +179,11 @@ public class GameData {
         AudioInputStream stream = null;
         try {
             //File file = new File("C:/Users/dinhn/Documents/GitHub/SHSBDA/PatakasWorld.wav");
-            stream = AudioSystem.getAudioInputStream(getClass().getResource("explosion.wav"));
+            stream = AudioSystem.getAudioInputStream(getClass().getResource("/resources/explosion8bit.wav"));
             Clip clip = AudioSystem.getClip();
             clip.open(stream);
             clip.start();
-            stream.close();
+            stream.close();            
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }

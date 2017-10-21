@@ -39,9 +39,8 @@ public class Main {
         game.setLocation(100, 0);
         game.setResizable(false); // window size cannot change
         
-         try {
-            
-            URL resource = game.getClass().getResource("logo.png");
+         try {            
+            URL resource = game.getClass().getResource("/resources/logo.png");
             BufferedImage image = ImageIO.read(resource);
             game.setIconImage(image);
         } catch (IOException e) {

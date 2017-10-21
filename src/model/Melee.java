@@ -35,7 +35,6 @@ public class Melee extends GameFigure {
      * @param sy start y of the missile
      * @param tx target x of the missile
      * @param ty target y of the missile
-     * @param color color of the missile
      */
     public Melee(float sx, float sy, float tx, float ty) {
         super(sx, sy);
@@ -58,10 +57,10 @@ public class Melee extends GameFigure {
         }
 
         try {
-            swordUp = ImageIO.read(getClass().getResource("swordUp.png"));
-            swordDown = ImageIO.read(getClass().getResource("swordDown.png"));
-            swordRight = ImageIO.read(getClass().getResource("swordRight.png"));
-            swordLeft = ImageIO.read(getClass().getResource("swordLeft.png"));
+            swordUp = ImageIO.read(getClass().getResource("/resources/swordUp.png"));
+            swordDown = ImageIO.read(getClass().getResource("/resources/swordDown.png"));
+            swordRight = ImageIO.read(getClass().getResource("/resources/swordRight.png"));
+            swordLeft = ImageIO.read(getClass().getResource("/resources/swordLeft.png"));
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open image.");
             System.exit(-1);

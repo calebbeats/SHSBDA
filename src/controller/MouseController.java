@@ -29,6 +29,15 @@ public class MouseController extends MouseAdapter {
 
         if (!Main.isPaused) {//if game is paused don't do anything after unpausing
             if (me.getButton() == MouseEvent.BUTTON1 && !shooter.isSprint()) {//Left click detected, initiate melee attack
+                
+                //Audio For Sword Swing
+                //------------------------------
+                try {
+                    swordAudio();
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
+                    Logger.getLogger(MouseController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
                 //melee attack in the direction the mouse is in regards to the player
                 Melee m = new Melee(
                         shooter.getXofMissileShoot(),
@@ -39,11 +48,12 @@ public class MouseController extends MouseAdapter {
             }
 
             if (me.getButton() == MouseEvent.BUTTON3 && !shooter.isSprint()) {
+
                 if (KeyController.chooseMissile == false) {
                     try {
                         //Right click detected, initiate ranged attack
                         //shoot a missle at the mouse press location
-                        audio();
+                        fireballAudio();
                     } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
                         Logger.getLogger(MouseController.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -54,21 +64,50 @@ public class MouseController extends MouseAdapter {
                     );
                     Main.gameData.friendFigures.add(m);
                 }     
+
+                try {
+                    //Right click detected, initiate ranged attack
+                    //shoot a missle at the mouse press location
+                    fireballAudio();
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
+                    Logger.getLogger(MouseController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                Missile m = new Missile(
+                        shooter.getXofMissileShoot(),
+                        shooter.getYofMissileShoot(),
+                        px, py // target location where the missile explodes
+                );
+                Main.gameData.friendFigures.add(m);
+
             }
         }
     }
 
-    public void audio() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
+    public void fireballAudio() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
 
-        AudioInputStream stream = null;
+        AudioInputStream fireball = null;
         try {
             //File file = new File("C:/Users/dinhn/Documents/GitHub/SHSBDA/PatakasWorld.wav");
-            stream = AudioSystem.getAudioInputStream(getClass().getResource("climactic-boom.wav"));
+            fireball = AudioSystem.getAudioInputStream(getClass().getResource("/resources/shooterFBwoosh.wav"));
             Clip clip = AudioSystem.getClip();
-            clip.open(stream);
+            clip.open(fireball);
             clip.start();
-            stream.close();
+            fireball.close();
         } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    public void swordAudio() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
+
+        AudioInputStream swordSwing = null;
+        try {
+            swordSwing = AudioSystem.getAudioInputStream(getClass().getResource("/resources/swoosh.wav"));
+            Clip clip = AudioSystem.getClip();
+            clip.open(swordSwing);
+            clip.start();
+            swordSwing.close();
+        } catch (IOException | LineUnavailableException | UnsupportedAudioFileException ex) {
             System.out.println(ex.getMessage());
         }
 

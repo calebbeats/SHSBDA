@@ -79,8 +79,8 @@ public class EnemyMissileSlow extends GameFigure {
         
         try {
            
-            missile1 = ImageIO.read(getClass().getResource("slowMissile.png"));
-            missile2 = ImageIO.read(getClass().getResource("slowMissile2.png"));
+            missile1 = ImageIO.read(getClass().getResource("/resources/slowMissile.png"));
+            missile2 = ImageIO.read(getClass().getResource("/resources/slowMissile2.png"));
 
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");

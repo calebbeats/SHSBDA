@@ -23,6 +23,10 @@ public abstract class GameFigure implements CollisionBox {
     //-----------------------------------
     public int slowTimer = 0;
     
+    //Melee 
+    //-----------------------------------
+    public int swingTimer = 0;
+    
     public GameFigure(float x, float y) {
         this.x = x;
         this.y = y;
