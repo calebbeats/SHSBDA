@@ -156,7 +156,7 @@ public class MeleeEnemy extends GameFigure {
         BasicCollisionBox enemyToMove = new BasicCollisionBox(super.x + dx, super.y +dy, SIZE, SIZE);        
         
         for(GameFigure t : Main.gameData.terrainFigures){
-            if(!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox()))){
+            if(!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox())) || t instanceof IceTerrain){
                 super.x += dx;
                 super.y += dy;
             }
