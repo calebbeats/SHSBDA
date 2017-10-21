@@ -48,6 +48,23 @@ public class MouseController extends MouseAdapter {
             }
 
             if (me.getButton() == MouseEvent.BUTTON3 && !shooter.isSprint()) {
+
+                if (KeyController.chooseMissile == false) {
+                    try {
+                        //Right click detected, initiate ranged attack
+                        //shoot a missle at the mouse press location
+                        fireballAudio();
+                    } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
+                        Logger.getLogger(MouseController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    Missile m = new Missile(
+                            shooter.getXofMissileShoot(),
+                            shooter.getYofMissileShoot(),
+                            px, py // target location where the missile explodes
+                    );
+                    Main.gameData.friendFigures.add(m);
+                }     
+
                 try {
                     //Right click detected, initiate ranged attack
                     //shoot a missle at the mouse press location
@@ -61,6 +78,7 @@ public class MouseController extends MouseAdapter {
                         px, py // target location where the missile explodes
                 );
                 Main.gameData.friendFigures.add(m);
+
             }
         }
     }
