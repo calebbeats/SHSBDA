@@ -1,65 +1,62 @@
 package controller;
 
-import java.awt.Font;
-import java.awt.image.BufferedImage;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
-import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import model.GameData;
 import view.GamePanel;
 import view.MainWindow;
 
-//comment
-
 public class Main {
+
+    public static enum GameState {
+        Start, Run, Pause, Quit, LevelComplete, GameOver, Shop
+    }
 
     public static GamePanel gamePanel;
     public static GameData gameData;
     public static Animator animator;
-    public static boolean isPaused;//use this to check if we can pause the game
+    public static GameState gameState; // the state that game is currently in
 
     public static int WIN_WIDTH = 600;
     public static int WIN_HEIGHT = 600;
-    public static JLabel posterScreen; 
-    
+    public static JLabel posterScreen;
+
     public static void main(String[] args) {
-
-        animator = new Animator();
-        gameData = new GameData();
+        gameInitialize();
         gamePanel = new GamePanel();
-
-        isPaused = false; //game doesn't start out paused
-        
         JFrame game = new MainWindow();
+        try {
+            game.setIconImage(ImageIO.read(game.getClass()
+                    .getResource("/resources/Logo.png")));
+        } catch (IOException e) {
+            Logger.getLogger(Animator.class.getName())
+                    .log(Level.SEVERE, null, e);
+        }
         game.setTitle("Super Hack N’ Slash Bloody Death Arena 3000");
         game.setSize(WIN_WIDTH, WIN_HEIGHT);
         game.setLocation(100, 0);
         game.setResizable(false); // window size cannot change
-        
-         try {            
-            URL resource = game.getClass().getResource("/resources/logo.png");
-            BufferedImage image = ImageIO.read(resource);
-            game.setIconImage(image);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }   
-        ImageIcon posterPic = new ImageIcon("src/controller/background.jpg");
-//        ImageIcon posterPic = new ImageIcon("src/controller/groupKnight1.gif");
-//        ImageIcon posterPic = new ImageIcon("src/controller/knight.gif");
-        posterScreen = new JLabel("Super Hack n' Slash Bloody Death Arena 3000",posterPic, JLabel.CENTER);
-        posterScreen.setFont(new Font("Serif", Font.BOLD, 18));
-        posterScreen.setVerticalTextPosition(JLabel.BOTTOM);
-        posterScreen.setHorizontalTextPosition(JLabel.CENTER);
-        gamePanel.add(posterScreen);
-         
+        game.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                Thread.currentThread().interrupt();
+            }
+        });
         game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         game.setVisible(true);
 
-        // start animation after start button
-        //new Thread(animator).start();
+        new Thread(animator).start();
+    }
 
+    public static void gameInitialize() {
+        animator = new Animator();
+        gameData = new GameData();
+        gameState = Main.GameState.Start;
     }
 }

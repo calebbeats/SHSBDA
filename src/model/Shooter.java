@@ -16,7 +16,6 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import static model.GameFigure.STATE_ALIVE;
 import static model.GameFigure.STATE_DYING;
-import sun.util.calendar.CalendarUtils;
 
 public class Shooter extends GameFigure {
 
@@ -31,8 +30,12 @@ public class Shooter extends GameFigure {
     private int maxMana;
     private int maxHealth;
 
+    int tempCounter = 0;
+    int tempRemovalCounter;
+
     //made static so shop can access invo
     public static Item[] inventory = new Item[4];
+    public static Equipment[] equipment = new Equipment[3];
 
     //-----------------
     //test object
@@ -44,6 +47,8 @@ public class Shooter extends GameFigure {
     //----------------------------------
     private Map<String, List<Image>> playerSprites;
     private Image playerImage;
+    public static Missile rangedWeapon;
+    public static Melee meleeWeapon;
     public WeaponComponent weapon;
     int deadTimer = 0;
     // ----------------------------------
@@ -71,9 +76,7 @@ public class Shooter extends GameFigure {
         // Tests for items and equipment
         // This gets added every time the shooter is created, so it slows game way down
         //---------------------------------------------------------------------
-//        inventory[0] = new WeakPotion(1);
-//        inventory[1] = new MediumPotion(2);
-//        inventory[2] = new StrongPotion(3);
+        
         //---------------------------------------------------------------------
         try {
             // Create HashMap that contains player sprites 
@@ -107,17 +110,17 @@ public class Shooter extends GameFigure {
         g.drawImage(playerImage, (int) super.x, (int) super.y, PLAYER_WIDTH, PLAYER_HEIGHT, null);
 
         g.setColor(Color.red);
-        g.fillRect(20, 450, health, 20);
+        g.fillRect(20, 490, health, 20);
         g.setColor(Color.white);
-        g.drawRect(20, 450, maxHealth, 20);
+        g.drawRect(20, 490, maxHealth, 20);
         g.setColor(Color.blue);
-        g.fillRect(20, 480, mana, 20);
+        g.fillRect(20, 520, mana, 20);
         g.setColor(Color.white);
-        g.drawRect(20, 480, maxMana, 20);
-        g.drawRect(20, 420, 20, 20);
-        g.drawRect(50, 420, 20, 20);
-        g.drawRect(80, 420, 20, 20);
-        g.drawRect(110, 420, 20, 20);
+        g.drawRect(20, 520, maxMana, 20);
+        g.drawRect(20, 460, 20, 20);
+        g.drawRect(50, 460, 20, 20);
+        g.drawRect(80, 460, 20, 20);
+        g.drawRect(110, 460, 20, 20);
         for (int i = 0; i < 4; i++) {
             if (inventory[i] != null) {
                 g.drawImage(inventory[i].getIcon(), 20 + i * 30, 420, 20, 20, null);
@@ -159,8 +162,8 @@ public class Shooter extends GameFigure {
             if (super.y <= 0) {
                 super.y = 0;
             }
-            if (super.y >= Main.WIN_HEIGHT - PLAYER_HEIGHT - 90) {
-                super.y = Main.WIN_HEIGHT - PLAYER_HEIGHT - 90;
+            if (super.y >= Main.WIN_HEIGHT - PLAYER_HEIGHT - 50) {
+                super.y = Main.WIN_HEIGHT - PLAYER_HEIGHT - 50;
             }
         }
     }
@@ -299,8 +302,6 @@ public class Shooter extends GameFigure {
     public void setSlidingVelocityY(int slidingVelocityY) {
         this.slidingVelocityY = slidingVelocityY;
     }
-  
-    
     
     public boolean isSprint() {
         return isSprint;
@@ -369,11 +370,79 @@ public class Shooter extends GameFigure {
         }
     }
     
+    public void equipRanged(Missile weap)
+    {
+        rangedWeapon =  weap;
+    }
+    
+    public void equipMelee(Melee weap)
+    {
+        meleeWeapon = weap;
+    }
+    
+    public static Missile getRangedWeapon()
+    {
+        return rangedWeapon;
+    }
+    
+    public static Melee getMeleeWeapon()
+    {
+        return meleeWeapon;
+    }
+    
+    public Missile shootRanged(int x, int y, Missile mis)
+    {
+        mis = rangedWeapon;
+        mis = new Missile(getXofMissileShoot(),
+                        getYofMissileShoot(),
+                        x, y);
+        return mis;
+    }
+    
+    public Melee shootMelee(int x, int y, Melee mis)
+    {
+        mis = meleeWeapon;
+        mis = new Melee(getXofMissileShoot(),
+                        getYofMissileShoot(),
+                        x, y);
+        return mis;
+    }
+    
+    public void equipItem(Equipment e, int pos)
+    {
+        if(equipment[pos] == null)
+        {
+        equipment[pos] = e;
+        e.attachAugment(this);
+        }
+    }
+    
+    public void unequipItem(int pos)
+    {
+        if(equipment[pos] != null)
+        {
+        Equipment e = equipment[pos]; 
+        e.removeAugment(this);
+        equipment[pos] = null;
+        }
+    }
+    
     public void testItem()
     {
-        inventory[0] = new WeakPotion(1);
-        inventory[1] = new MediumPotion(2);
-        inventory[2] = new StrongPotion(3);
+        System.out.println("Adding mana augment");
+        equipItem(new GemOfMana(1), tempCounter);
+        tempCounter++;
+        tempRemovalCounter++;
+        if(tempCounter == 3)
+        {
+            tempCounter = 0;
+        }
     }
-  
+    
+    public void testRemoval()
+    {
+        System.out.println("Removing mana augment");
+        unequipItem(tempRemovalCounter);
+        tempRemovalCounter--;
+    }
 }
