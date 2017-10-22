@@ -135,6 +135,11 @@ public class MouseController extends MouseAdapter {
                     MainWindow.scoreText.setText("Score: " + MainWindow.score
                             + " || Coins: " + MainWindow.coins);
                     Shooter.inventory[index] = new StrongPotion(1);
+                } else if (px > Main.gamePanel.backButton.x
+                        && px < Main.gamePanel.backButton.getMaxX()
+                        && py > Main.gamePanel.backButton.y
+                        && py < Main.gamePanel.backButton.getMaxY()) {
+                    Main.gameState = Main.GameState.LevelComplete;
                 }
                 break;
         }

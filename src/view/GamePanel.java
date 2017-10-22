@@ -27,7 +27,8 @@ public class GamePanel extends JPanel {
     // off screen rendering
     public Graphics2D g2;
     public Rectangle startGameButton, highScoreButton, quitGameButton,
-            shopGameButton, weakPotionButton, mediumPotionButton, strongPotionButton;
+            shopGameButton, weakPotionButton, mediumPotionButton,
+            strongPotionButton, backButton;
     private Image dbImage = null // double buffer image
             , startBackground, startForeground;
     private int rectangleBoxWidth, rectangleBoxHeight;
@@ -76,6 +77,9 @@ public class GamePanel extends JPanel {
                     rectangleBoxWidth, rectangleBoxHeight);
             strongPotionButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
                     (int) mediumPotionButton.getMaxY() + rectangleBoxHeight / 2,
+                    rectangleBoxWidth, rectangleBoxHeight);
+            backButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
+                    (int) strongPotionButton.getMaxY() + rectangleBoxHeight / 2,
                     rectangleBoxWidth, rectangleBoxHeight);
         }
         quitGameButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
@@ -166,6 +170,9 @@ public class GamePanel extends JPanel {
                         strongPotionButton.y + 20);
                 g2.drawString("(3 Coins)", strongPotionButton.x + 25,
                         strongPotionButton.y + 40);
+                g2.draw(backButton);
+                g2.drawString("Back", backButton.x + 50,
+                        backButton.y + 30);
                 g2.fillRect(20, 490, Main.gameData.shooter.getHealth(), 20);
                 g2.setColor(Color.white);
                 g2.drawRect(20, 490, Main.gameData.shooter.getMaxHealth(), 20);
