@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import model.MediumPotion;
 import model.Melee;
 import model.Missile;
+import model.MyBullet;
 import model.Shooter;
 import model.StrongPotion;
 import model.WeakPotion;

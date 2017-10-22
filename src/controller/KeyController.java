@@ -35,9 +35,8 @@ public class KeyController implements KeyListener {
                 shooter.setVelocityX(VELOCITY_X);
                 keyDown[3] = true;
                 break;
-            case KeyEvent.VK_NUMPAD0:
-                chooseMissile = true;
-
+            case KeyEvent.VK_NUMPAD0: {
+                //chooseMissile = true;
                 if (chooseMissile) {
                     Audio a = new Audio();
                     a.playAudio("climatic-boom.wav");
@@ -57,7 +56,8 @@ public class KeyController implements KeyListener {
                 synchronized (Main.gameData.friendFigures) {
                     Main.gameData.friendFigures.add(bullet2);
                 }
-                break;
+            }
+            break;
             case KeyEvent.VK_SHIFT:
                 shooter.isSprint(true);
                 break;

@@ -21,6 +21,7 @@ import model.IceTerrain;
 import model.Melee;
 import model.MeleeEnemyAttack;
 import model.Missile;
+import model.MyBullet;
 import view.MainWindow;
 
 public class Animator implements Runnable {
@@ -107,7 +108,7 @@ public class Animator implements Runnable {
             }
 
             for (GameFigure f : Main.gameData.friendFigures) { //only process gamefigure collisionboxes if they are weapon or missile
-                if (f instanceof Missile || f instanceof Melee) {
+                if (f instanceof Missile || f instanceof Melee || f instanceof MyBullet) {
                     if (f.getCollisionBox().intersects(s.getCollisionBox()) /*&& f.state != f.STATE_DYING && s.state != s.STATE_DYING **/
                             && f.state != f.STATE_DONE
                             && s.state != s.STATE_DONE) {
@@ -138,10 +139,7 @@ public class Animator implements Runnable {
                 if (m.getCollisionBox().intersects(t.getCollisionBox())) {
                     if (!(m instanceof Shooter) && (t instanceof BlockTerrain)) {
                         m.goNextState();
-                    } else if ((m instanceof Shooter) && (t instanceof IceTerrain)) {
-                        //slide
                     }
-
                 }
             }
         }

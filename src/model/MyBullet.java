@@ -1,5 +1,6 @@
 package model;
 
+import controller.Main;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -107,12 +108,14 @@ public class MyBullet extends GameFigure {
         if (state == STATE_ALIVE) {
             double distance = target.distance(super.x, super.y);
             boolean targetReached = distance <= 2.0;
-            if (targetReached) {
+            if (targetReached || (super.x > Main.WIN_WIDTH || super.y > Main.WIN_HEIGHT)) {
                 state = STATE_DYING;
+                this.goNextState();
             }
         } else if (state == STATE_DYING) {
             if (size >= MAX_EXPLOSION_SIZE) {
                 state = STATE_DONE;
+                this.goNextState();
             }
         }
     }

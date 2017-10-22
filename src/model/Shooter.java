@@ -40,9 +40,7 @@ public class Shooter extends GameFigure {
     //-----------------
     //test object
     //-------------------
-
     //-------------------
-
     //Images for animations go below
     //----------------------------------
     private Map<String, List<Image>> playerSprites;
@@ -60,10 +58,10 @@ public class Shooter extends GameFigure {
     private MouseEvent mouseMovedEvent;
     private float angleOfView;
     private int slidingVelocityX, slidingVelocityY;
-    private boolean sliding =false;
+    private boolean sliding = false;
     //-----------------
 
-       public Shooter(int x, int y) {
+    public Shooter(int x, int y) {
         super(x, y);
         super.state = STATE_ALIVE;
         weapon = new BasicWeapon();
@@ -76,7 +74,6 @@ public class Shooter extends GameFigure {
         // Tests for items and equipment
         // This gets added every time the shooter is created, so it slows game way down
         //---------------------------------------------------------------------
-        
         //---------------------------------------------------------------------
         try {
             // Create HashMap that contains player sprites 
@@ -138,18 +135,18 @@ public class Shooter extends GameFigure {
                 this.goNextState();
             }
         } else {
-            
+
             if (health <= 0) {
                 state = STATE_DYING;
             }
             velocitySprint = isSprint ? 2 : 0;
-                        
+
             moveX();
             moveY();
-            if(!sliding){
-                slidingVelocityX=velocityX;
-                slidingVelocityY=velocityY;
-            }                                 
+            if (!sliding) {
+                slidingVelocityX = velocityX;
+                slidingVelocityY = velocityY;
+            }
             calculateAngleOfView();
 
             // Window boundary
@@ -198,21 +195,21 @@ public class Shooter extends GameFigure {
         // and disable sprint if move backward from mouse's position
         BasicCollisionBox shooterIntendedPossition = new BasicCollisionBox((int) super.x + velocityX
                 + Integer.signum(velocityX) * velocitySprint, (int) super.y, PLAYER_HEIGHT, PLAYER_WIDTH);
-        
+
         for (GameFigure t : Main.gameData.terrainFigures) {
             if (velocityX != 0 && !shooterIntendedPossition
                     .getCollisionBox().intersects(t.getCollisionBox())) {
                 super.x += velocityX + Integer.signum(velocityX) * velocitySprint;
                 slidingVelocityX = velocityX;
                 sliding = false;
-            } else if(velocityX != 0 && t instanceof BlockTerrain && shooterIntendedPossition
-                    .getCollisionBox().intersects(t.getCollisionBox())){
+            } else if (velocityX != 0 && t instanceof BlockTerrain && shooterIntendedPossition
+                    .getCollisionBox().intersects(t.getCollisionBox())) {
                 super.x -= 4 * (velocityX + Integer.signum(velocityX) * velocitySprint);
                 slidingVelocityX = velocityX;
                 sliding = false;
                 return;
-            } else if(t instanceof IceTerrain && shooterIntendedPossition
-                    .getCollisionBox().intersects(t.getCollisionBox())){
+            } else if (t instanceof IceTerrain && shooterIntendedPossition
+                    .getCollisionBox().intersects(t.getCollisionBox())) {
                 super.x += slidingVelocityX + Integer.signum(slidingVelocityX);
                 sliding = true;
                 return;
@@ -232,14 +229,14 @@ public class Shooter extends GameFigure {
                 super.y += velocityY + Integer.signum(velocityY) * velocitySprint;
                 slidingVelocityY = velocityY;
                 sliding = false;
-            } else if( velocityY != 0 && t instanceof BlockTerrain && shooterIntendedPossition
-                    .getCollisionBox().intersects(t.getCollisionBox())){
+            } else if (velocityY != 0 && t instanceof BlockTerrain && shooterIntendedPossition
+                    .getCollisionBox().intersects(t.getCollisionBox())) {
                 super.y -= 4 * (velocityY + Integer.signum(velocityY) * velocitySprint);
                 slidingVelocityY = velocityY;
                 sliding = false;
                 return;
-            } else if(t instanceof IceTerrain && shooterIntendedPossition
-                    .getCollisionBox().intersects(t.getCollisionBox())){
+            } else if (t instanceof IceTerrain && shooterIntendedPossition
+                    .getCollisionBox().intersects(t.getCollisionBox())) {
                 super.y += slidingVelocityY + Integer.signum(slidingVelocityY);
                 sliding = true;
                 return;
@@ -268,7 +265,7 @@ public class Shooter extends GameFigure {
 
     //Temporary method to test healing items.
     public void takeDamage(int i) {
-        health = health - (i/5);
+        health = health - (i / 5);
     }
 
     public void setVelocityX(int velocityX) {
@@ -302,7 +299,7 @@ public class Shooter extends GameFigure {
     public void setSlidingVelocityY(int slidingVelocityY) {
         this.slidingVelocityY = slidingVelocityY;
     }
-    
+
     public boolean isSprint() {
         return isSprint;
     }
@@ -369,78 +366,65 @@ public class Shooter extends GameFigure {
             inventory[pos] = null;
         }
     }
-    
-    public void equipRanged(Missile weap)
-    {
-        rangedWeapon =  weap;
+
+    public void equipRanged(Missile weap) {
+        rangedWeapon = weap;
     }
-    
-    public void equipMelee(Melee weap)
-    {
+
+    public void equipMelee(Melee weap) {
         meleeWeapon = weap;
     }
-    
-    public static Missile getRangedWeapon()
-    {
+
+    public static Missile getRangedWeapon() {
         return rangedWeapon;
     }
-    
-    public static Melee getMeleeWeapon()
-    {
+
+    public static Melee getMeleeWeapon() {
         return meleeWeapon;
     }
-    
-    public Missile shootRanged(int x, int y, Missile mis)
-    {
+
+    public Missile shootRanged(int x, int y, Missile mis) {
         mis = rangedWeapon;
         mis = new Missile(getXofMissileShoot(),
-                        getYofMissileShoot(),
-                        x, y);
+                getYofMissileShoot(),
+                x, y);
         return mis;
     }
-    
-    public Melee shootMelee(int x, int y, Melee mis)
-    {
+
+    public Melee shootMelee(int x, int y, Melee mis) {
         mis = meleeWeapon;
         mis = new Melee(getXofMissileShoot(),
-                        getYofMissileShoot(),
-                        x, y);
+                getYofMissileShoot(),
+                x, y);
         return mis;
     }
-    
-    public void equipItem(Equipment e, int pos)
-    {
-        if(equipment[pos] == null)
-        {
-        equipment[pos] = e;
-        e.attachAugment(this);
+
+    public void equipItem(Equipment e, int pos) {
+        if (equipment[pos] == null) {
+            equipment[pos] = e;
+            e.attachAugment(this);
         }
     }
-    
-    public void unequipItem(int pos)
-    {
-        if(equipment[pos] != null)
-        {
-        Equipment e = equipment[pos]; 
-        e.removeAugment(this);
-        equipment[pos] = null;
+
+    public void unequipItem(int pos) {
+        if (equipment[pos] != null) {
+            Equipment e = equipment[pos];
+            e.removeAugment(this);
+            equipment[pos] = null;
         }
     }
-    
-    public void testItem()
-    {
+
+    public void testItem() {
         System.out.println("Adding mana augment");
         equipItem(new GemOfMana(1), tempCounter);
         tempCounter++;
         tempRemovalCounter++;
-        if(tempCounter == 3)
-        {
+        if (tempCounter == 3) {
             tempCounter = 0;
         }
     }
-    
-    public void testRemoval()
-    {
+
+    public void testRemoval() {
         System.out.println("Removing mana augment");
         unequipItem(tempRemovalCounter);
         tempRemovalCounter--;
