@@ -136,16 +136,16 @@ public class GamePanel extends JPanel {
                 break;
             case Run:
                 g2.setBackground(Color.BLACK);
+                for (GameFigure f : Main.gameData.terrainFigures) {
+                    f.render(g2);
+                }
                 for (GameFigure f : Main.gameData.enemyFigures) {
                     f.render(g2);
                 }
 
                 for (GameFigure f : Main.gameData.friendFigures) {
                     f.render(g2);
-                }
-                for (GameFigure f : Main.gameData.terrainFigures) {
-                    f.render(g2);
-                }
+                }                
                 break;
             case Quit:
                 break;
