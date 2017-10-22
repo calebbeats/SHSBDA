@@ -8,7 +8,6 @@ import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
-import model.GameFigure;
 import static model.GameFigure.STATE_ALIVE;
 
 
@@ -31,13 +30,13 @@ public class BlinkMage extends GameFigure {
         super(x, y);
         super.state = STATE_ALIVE;
         try {
-            blinkMage0 = ImageIO.read(getClass().getResource("mage1.png"));
-            blinkMage1 = ImageIO.read(getClass().getResource("mage2.png"));
-            blinkMage2 = ImageIO.read(getClass().getResource("mage1.png"));
-            blinkMage3 = ImageIO.read(getClass().getResource("mage2.png"));
-            deadMage0 = ImageIO.read(getClass().getResource("blinkmagedeath0.png"));
-            deadMage1 = ImageIO.read(getClass().getResource("blinkmagedeath1.png"));
-            deadMage2 = ImageIO.read(getClass().getResource("blinkmagedeath2.png"));
+            blinkMage0 = ImageIO.read(getClass().getResource("/resources/mage1.png"));
+            blinkMage1 = ImageIO.read(getClass().getResource("/resources/mage2.png"));
+            blinkMage2 = ImageIO.read(getClass().getResource("/resources/mage1.png"));
+            blinkMage3 = ImageIO.read(getClass().getResource("/resources/mage2.png"));
+            deadMage0 = ImageIO.read(getClass().getResource("/resources/fire1.png"));
+            deadMage1 = ImageIO.read(getClass().getResource("/resources/fire2.png"));
+            deadMage2 = ImageIO.read(getClass().getResource("/resources/fire3.png"));
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");
            System.exit(-1);
@@ -104,7 +103,7 @@ public class BlinkMage extends GameFigure {
             {
                 float intendedX = (float) Math.random()*450;
                 float intendedY = (float) Math.random()*520;
-                GameFigure mageToMove = new BlinkMage(intendedX, intendedY);
+                BasicCollisionBox mageToMove = new BasicCollisionBox(intendedX, intendedY, 20, 25);
                 
                 for(GameFigure t : Main.gameData.terrainFigures){
                     if(!(mageToMove.getCollisionBox().intersects(t.getCollisionBox()))){
@@ -118,8 +117,7 @@ public class BlinkMage extends GameFigure {
                         super.y = intendedY;
                     }
                 }
-                //super.x = (float) Math.random()*450;
-                //super.y = (float) Math.random()*520;
+                mageToMove = null;
                 timer = 0;
             }
             if(shootTimer < 20)

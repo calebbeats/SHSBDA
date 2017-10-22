@@ -18,15 +18,17 @@ import javax.swing.JOptionPane;
  */
 public class BlockTerrain extends GameFigure {
 
-    public static final int TERRAIN_WIDTH = 50, TERRAIN_HEIGHT = 50;
+    public int terrainWidth = 50, terrainHeight = 50;
     
     private Image blockImage;
 
-    public BlockTerrain(float x, float y) {
+    public BlockTerrain(float x, float y, int width, int height) {
         super(x, y);
+        this.terrainWidth = width;
+        this.terrainHeight = height;
         super.state = STATE_ALIVE;
         try {
-            blockImage = ImageIO.read(getClass().getResource("BlockTerrain.png"));
+            blockImage = ImageIO.read(getClass().getResource("/resources/BlockTerrain.png"));
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open BlockTerrain.png");
             System.exit(-1);
@@ -42,7 +44,7 @@ public class BlockTerrain extends GameFigure {
     public void render(Graphics2D g) {
         if (state == STATE_ALIVE) {
             g.drawImage(blockImage, (int) super.x, (int) super.y,
-                    TERRAIN_WIDTH, TERRAIN_HEIGHT, null);
+                    terrainWidth, terrainHeight, null);
         }
     }
 
@@ -53,6 +55,6 @@ public class BlockTerrain extends GameFigure {
 
     @Override
     public Rectangle2D getCollisionBox() {
-        return new Rectangle2D.Double(this.x, this.y, 50, 50);
+        return new Rectangle2D.Double(this.x, this.y, terrainWidth, terrainHeight);
     }
 }

@@ -15,13 +15,12 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import static model.GameFigure.STATE_ALIVE;
-import static model.GameFigure.STATE_DONE;
 import static model.GameFigure.STATE_DYING;
 
 public class EnemyMissile extends GameFigure {
 
     // missile size
-    private static final int SIZE = 10;
+    private static final int SIZE = 30;
     private static final int MAX_EXPLOSION_SIZE = 3;
     private float dx; // displacement at each frame
     private float dy; // displacement at each frame
@@ -77,11 +76,11 @@ public class EnemyMissile extends GameFigure {
         
         try {
            
-            launcherImage = ImageIO.read(getClass().getResource("enemyMissile0.png"));
-            launcherImage2 = ImageIO.read(getClass().getResource("enemyMissile1.png"));
-            explosion1 = ImageIO.read(getClass().getResource("explosion0.png"));
-            explosion2 = ImageIO.read(getClass().getResource("explosion1.png"));
-            explosion3 = ImageIO.read(getClass().getResource("explosion2.png"));
+            launcherImage = ImageIO.read(getClass().getResource("/resources/enemyMissile0.png"));
+            launcherImage2 = ImageIO.read(getClass().getResource("/resources/enemyMissile1.png"));
+            explosion1 = ImageIO.read(getClass().getResource("/resources/explosion0.png"));
+            explosion2 = ImageIO.read(getClass().getResource("/resources/explosion1.png"));
+            explosion3 = ImageIO.read(getClass().getResource("/resources/explosion2.png"));
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");
            System.exit(-1);
@@ -97,12 +96,12 @@ public class EnemyMissile extends GameFigure {
         {
             if(animationCheck == 0){
                 g.drawImage(launcherImage, (int)super.x, (int)super.y, 
-                30, 30, null);
+                SIZE, SIZE, null);
                 animationCheck = 1;
             }
             else{
                 g.drawImage(launcherImage2, (int)super.x, (int)super.y, 
-                30, 30, null);
+                SIZE, SIZE, null);
                 animationCheck = 0;
             }
         }
@@ -110,17 +109,17 @@ public class EnemyMissile extends GameFigure {
             if(explosionCounter ==0)
             {
                  g.drawImage(explosion1, (int)super.x, (int)super.y, 
-                30, 30, null);
+                SIZE, SIZE, null);
             }
             if(explosionCounter ==1)
             {
                 g.drawImage(explosion2, (int)super.x, (int)super.y, 
-                30, 30, null);
+                SIZE, SIZE, null);
             }
             if(explosionCounter ==2)
             {
                 g.drawImage(explosion3, (int)super.x, (int)super.y, 
-                30, 30, null);
+                SIZE, SIZE, null);
             }
          
         }
@@ -151,7 +150,7 @@ public class EnemyMissile extends GameFigure {
         if (state == STATE_ALIVE) {
             double distance = target.distance(super.x, super.y);
             boolean targetReached = distance <= 2.0;
-            if (targetReached) {
+            if (targetReached || (super.x > Main.WIN_WIDTH || super.y > Main.WIN_HEIGHT)) {
                 this.goNextState();
             }
         } else if (state == STATE_DYING) {
@@ -163,7 +162,7 @@ public class EnemyMissile extends GameFigure {
 
     @Override
     public Rectangle2D getCollisionBox() {
-        return new Rectangle2D.Double(this.x - SIZE , this.y - SIZE, SIZE * 0.9D, SIZE * 0.9D);
+        return new Rectangle2D.Double(this.x, this.y, SIZE * 0.9D, SIZE * 0.9D);
     }
 
     @Override
