@@ -26,66 +26,52 @@ import view.MainWindow;
 
 public class Animator implements Runnable {
 
-    public boolean running = false;
     private final int FRAMES_PER_SECOND = 50;
 
     @Override
     public void run() {
+        while (true) {
+            switch (Main.gameState) {
+                case Start:
+                case Pause:
+                case GameOver:
+                case LevelComplete:
+                case Shop:
+                    gamePanelRender();
+                    break;
+                case Run:
+                    long startTime = System.currentTimeMillis();
 
-        while (running) {
-            if (!Main.isPaused) {//as long as game is not paused, update everything
-                long startTime = System.currentTimeMillis();
+                    processCollisions();
 
-                processCollisions();
-
-                try {
-                    Main.gameData.update();
-                } catch (UnsupportedAudioFileException | IOException ex) {
-                    Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                try {
-                    Main.gamePanel.gameRender();
-                } catch (IOException | UnsupportedAudioFileException | LineUnavailableException | InterruptedException ex) {
-                    Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                Main.gamePanel.printScreen();
-
-                long endTime = System.currentTimeMillis();
-                int sleepTime = (int) (1.0 / FRAMES_PER_SECOND * 1000)
-                        - (int) (endTime - startTime);
-
-                if (sleepTime > 0) {
                     try {
-                        TimeUnit.MILLISECONDS.sleep(sleepTime);
-                    } catch (InterruptedException e) {
-
+                        Main.gameData.update();
+                    } catch (UnsupportedAudioFileException | IOException ex) {
+                        Logger.getLogger(Animator.class.getName())
+                                .log(Level.SEVERE, null, ex);
                     }
-                }
-            } else {
-//                MainWindow.resumeGame.setEnabled(true);
-                long startTime = System.currentTimeMillis();
-                long endTime = System.currentTimeMillis();
-                int sleepTime = (int) (1.0 / FRAMES_PER_SECOND * 1000)
-                        - (int) (endTime - startTime);
 
-                if (sleepTime > 0) {
-                    try {
-                        TimeUnit.MILLISECONDS.sleep(sleepTime);
-                    } catch (InterruptedException e) {
+                    gamePanelRender();
 
+                    long endTime = System.currentTimeMillis();
+                    int sleepTime = (int) (1.0 / FRAMES_PER_SECOND * 1000)
+                            - (int) (endTime - startTime);
+
+                    if (sleepTime > 0) {
+                        try {
+                            TimeUnit.MILLISECONDS.sleep(sleepTime);
+                        } catch (InterruptedException e) {
+                            Logger.getLogger(Animator.class.getName())
+                                    .log(Level.SEVERE, null, e);
+                        }
                     }
-                }
-                //bring up pause menu here
-                //Main.gameData.update();
+                    break;
+                case Quit:
+                    gamePanelRender();
+                    Thread.currentThread().interrupt();
+                    System.exit(0);
+                    break;
             }
-        }
-
-        try {
-            Thread.sleep(1500);
-            Thread.currentThread().interrupt();
-            System.exit(0);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Animator.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -94,48 +80,54 @@ public class Animator implements Runnable {
         // if detected, mark it as STATE_DONE, so that
         // they can be removed at update() method
         for (GameFigure s : Main.gameData.enemyFigures) {
-            if (Main.gameData.shooter.getCollisionBox().intersects(s.getCollisionBox()) && s.state != s.STATE_DYING) { //if shooter intersects any enemyfigure do this
+            if (Main.gameData.shooter.getCollisionBox().intersects(s
+                    .getCollisionBox()) && s.state != s.STATE_DYING) { //if shooter intersects any enemyfigure do this
                 if (s instanceof EnemyMissile) {//this is if a hurtful enemy missile happens
                     s.goNextState();
                     GameData.multiplier = 0;
                     GameData.shooter.takeDamage(20);
-                }else if (s instanceof SuicideEnemy) {//do the enemy slow missile stuff here
+                } else if (s instanceof SuicideEnemy) {//do the enemy slow missile stuff here
                     s.goNextState();
                     GameData.multiplier = 0;
                     GameData.shooter.takeDamage(100);
-                }else if (s instanceof EnemyMissileSlow) {//do the enemy slow missile stuff here
+                } else if (s instanceof EnemyMissileSlow) {//do the enemy slow missile stuff here
                     s.goNextState();
                     GameData.shooter.takeDamage(1);
-                     for(int i=0; i<5; i++){
+                    for (int i = 0; i < 5; i++) {
                         GameData.shooter.isSprint(FALSE);
-                        System.out.println("Couter = " + i);                      
+                        System.out.println("Couter = " + i);
                     }
-                    if(GameData.shooter.isSprint()==FALSE){
+                    if (GameData.shooter.isSprint() == FALSE) {
                         System.out.println("Sprint is off");
                     }
-                }else if (s instanceof MeleeEnemyAttack){//this is where the enemy melee attacks would go
+                } else if (s instanceof MeleeEnemyAttack) {//this is where the enemy melee attacks would go
                     s.goNextState();
                     GameData.multiplier = 0;
                     GameData.shooter.takeDamage(20);
-                }                
+                }
             }
 
             for (GameFigure f : Main.gameData.friendFigures) { //only process gamefigure collisionboxes if they are weapon or missile
                 if (f instanceof Missile || f instanceof Melee || f instanceof MyBullet) {
                     if (f.getCollisionBox().intersects(s.getCollisionBox()) /*&& f.state != f.STATE_DYING && s.state != s.STATE_DYING **/
-                            && f.state != f.STATE_DONE && s.state != s.STATE_DONE) {
+                            && f.state != f.STATE_DONE
+                            && s.state != s.STATE_DONE) {
                         f.goNextState();
                         s.goNextState();
                         MainWindow.score += 5;
-                        MainWindow.scoreText.setText("Score: " + MainWindow.score + " || Coins: " + MainWindow.coins);
+                        MainWindow.scoreText.setText("Score: "
+                                + MainWindow.score + " || Coins: "
+                                + MainWindow.coins);
                     }
                 }
             }
 
             //detection for enemy attacks hitting terrain
             for (GameFigure t : Main.gameData.terrainFigures) {
-                if (s.getCollisionBox().intersects(t.getCollisionBox()) 
-                        && !((s instanceof BlinkMage) || (s instanceof SuicideEnemy) || (s instanceof MeleeEnemy) || (s instanceof SlowMage)) 
+                if (s.getCollisionBox().intersects(t.getCollisionBox())
+                        && !((s instanceof BlinkMage)
+                        || (s instanceof SuicideEnemy)
+                        || (s instanceof MeleeEnemy) || (s instanceof SlowMage))
                         && (t instanceof BlockTerrain)) {
                     s.goNextState();
                 }
@@ -145,12 +137,22 @@ public class Animator implements Runnable {
         for (GameFigure m : Main.gameData.friendFigures) {
             for (GameFigure t : Main.gameData.terrainFigures) {
                 if (m.getCollisionBox().intersects(t.getCollisionBox())) {
-                    if(!(m instanceof Shooter) && (t instanceof BlockTerrain)){
+                    if (!(m instanceof Shooter) && (t instanceof BlockTerrain)) {
                         m.goNextState();
                     }
-                    
                 }
             }
         }
+    }
+
+    private void gamePanelRender() {
+        try {
+            Main.gamePanel.gameRender();
+        } catch (IOException | UnsupportedAudioFileException
+                | LineUnavailableException | InterruptedException ex) {
+            Logger.getLogger(Animator.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
+        Main.gamePanel.printScreen();
     }
 }

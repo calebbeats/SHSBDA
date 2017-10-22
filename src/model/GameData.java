@@ -1,6 +1,5 @@
 package model;
 
-import controller.ButtonListener;
 import controller.Main;
 import java.awt.Image;
 import java.io.IOException;
@@ -62,7 +61,7 @@ public class GameData {
             enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
             enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
             enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
-            
+
         }
     }
 
@@ -76,32 +75,28 @@ public class GameData {
         GameFigure f;
         for (int i = 0; i < enemyFigures.size(); i++) {
             f = enemyFigures.get(i);
-            if (f.state == GameFigureState.STATE_DONE && f instanceof EnemyMissile) {
+            if (f.state == GameFigureState.STATE_DONE
+                    && f instanceof EnemyMissile) {
                 removeEnemies.add(f);
             } else if (f.state == GameFigureState.STATE_DONE) {
                 multiplier += 1;
                 MainWindow.coins += multiplier;
-                MainWindow.scoreText.setText("Score: " + MainWindow.score + " || Coins: " + MainWindow.coins);
+                MainWindow.scoreText.setText("Score: "
+                        + MainWindow.score + " || Coins: " + MainWindow.coins);
                 removeEnemies.add(f);
                 try {
                     audio();
-                } catch (LineUnavailableException ex) {
-                    Logger.getLogger(GameData.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(GameData.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (LineUnavailableException | InterruptedException ex) {
+                    Logger.getLogger(GameData.class.getName())
+                            .log(Level.SEVERE, null, ex);
                 }
             }
         }
         enemyFigures.removeAll(removeEnemies);
         
         if (enemyFigures.isEmpty()) { //if enemies are dead set shop button enabled
-            if (playerDead == false) {
-                disableShop();
-            }
             levelComplete = true;
             levelCheck();
-        } else {
-            MainWindow.shopButton.setEnabled(false);
         }
 
         for (GameFigure g : enemyFigures) {
@@ -155,14 +150,6 @@ public class GameData {
         }
     }
 
-    private void disableShop() {
-        if (ButtonListener.shop.isVisible()) {
-            MainWindow.shopButton.setEnabled(false);
-        } else {
-            MainWindow.shopButton.setEnabled(true);
-        }
-    }
-
     private void levelCheck() {
         //if current level is complete
         //increment level counter
@@ -170,13 +157,8 @@ public class GameData {
         //display message at top indicating level complete and how many coins aquired
         if (levelComplete) {
             if (playerDead) {
-                level = 1;
-                friendFigures.clear();
-                terrainFigures.clear();
-                enemyFigures.clear();
-                MainWindow.scoreText.setText("GAME OVER!! YOU HAVE DIED!!");
-                //Main.animator.running = false;
-                //MainWindow.startGame.setEnabled(true);
+                Main.gameInitialize();
+                Main.gameState = Main.GameState.GameOver;
             } else {
                 level++;
                 GameFigure f;
@@ -189,8 +171,7 @@ public class GameData {
                 }
                 friendFigures.removeAll(removePowerUps);
                 terrainFigures.clear();
-                MainWindow.scoreText.setText("Level complete! You have "
-                        + MainWindow.coins + " coins to spend at the shop.");
+                Main.gameState = Main.GameState.LevelComplete;
             }
         }
     }
