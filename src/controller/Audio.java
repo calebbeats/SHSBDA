@@ -21,6 +21,7 @@ public class Audio {
             if (s.equals("/resources/chugchug.wav")) {
                 c = AudioSystem.getClip();
                 c.open(stream);
+                c.loop(Clip.LOOP_CONTINUOUSLY);
                 c.start();
             } else {
                 Clip clip = AudioSystem.getClip();
