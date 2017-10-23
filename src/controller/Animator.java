@@ -97,7 +97,7 @@ public class Animator implements Runnable {
                     GameData.shooter.takeDamage(1);
                     for (int i = 0; i < 5; i++) {
                         GameData.shooter.isSprint(FALSE);
-                        System.out.println("Couter = " + i);
+                        System.out.println("Counter = " + i);
                     }
                     if (GameData.shooter.isSprint() == FALSE) {
                         System.out.println("Sprint is off");

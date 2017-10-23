@@ -55,16 +55,24 @@ public class GameData {
         if (level == 1) {
             terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 125, 125));
             friendFigures.add(shooter);
-            //friendFigures.add(p)
-            friendFigures.add(p);
-            //enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) Math.random() * 200));
-            //enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
-            //enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
-            //enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+            
+            //Normal Enemy Test
+            //------------------------------
+            enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+            
+            //Warlock Test
+            //------------------------------
             //enemyFigures.add(new BossWarlock((int) (Math.random() * 500), (int) Math.random() * 200));                  
-            enemyFigures.add(new BossWarlockPet((int) (Math.random() * 500), (int) Math.random() * 200));                  
-
+            //enemyFigures.add(new BossWarlockPet((int) (Math.random() * 500), (int) Math.random() * 200));                  
         }
+        /*
+        if((level % 4) == 0){
+            enemyFigures.add(new BossWarlock((int) (Math.random() * 500), (int) Math.random() * 200));                  
+        }
+        */
     }
 
     public void update() throws UnsupportedAudioFileException, IOException {
@@ -104,7 +112,17 @@ public class GameData {
         for (GameFigure g : enemyFigures) {
             g.update();
         }
-
+        
+        /* * * * * * * * * * * * * * * * * 
+        *  __  __ _         _ _            *
+        * |  \/  (_)       (_) |           *
+        * | \  / |_ ___ ___ _| | ___  ___  *
+        * | |\/| | / __/ __| | |/ _ \/ __| *
+        * | |  | | \__ \__ \ | |  __/\__ \ *
+        * |_|  |_|_|___/___/_|_|\___||___/ *
+        *                                  *
+        * * * * * * * * * * * * * * * * * */
+                                          
         //Blink Mage
         //-----------------------------------
         for (Iterator<GameFigure> it = enemyFigures.iterator(); it.hasNext();) {
@@ -140,15 +158,15 @@ public class GameData {
                 enemyFigures.add(new EnemyMissileBoss(g.x, g.y));
             } 
             
-            if(g.summonTimer == 25) {
-                BossWarlock.summon();
-            }
-            
             if (g.petSwingTimer == 20) {
                 enemyFigures.add(new BossWarlockPetAttack(g.x, g.y));
             }
-        }       
-
+        }
+        
+        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+        * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */ 
+        
+        
         // attacks and shooter removed if STATE_DONE
         ArrayList<GameFigure> removeFriends = new ArrayList<>();
         for (int i = 0; i < friendFigures.size(); i++) {

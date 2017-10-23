@@ -39,7 +39,7 @@ public class EnemyMissileSlow extends GameFigure {
     
     //Missile Speed
     //------------------------------
-    private static final int UNIT_TRAVEL_DISTANCE = 10;
+    private static final int UNIT_TRAVEL_DISTANCE = 5;
 
     private int animationCheck=0;
 
