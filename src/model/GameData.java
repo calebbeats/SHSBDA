@@ -57,10 +57,12 @@ public class GameData {
             friendFigures.add(shooter);
             //friendFigures.add(p)
             friendFigures.add(p);
-            enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) Math.random() * 200));
-            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
-            enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
-            enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+            //enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) Math.random() * 200));
+            //enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+            //enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
+            //enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+            //enemyFigures.add(new BossWarlock((int) (Math.random() * 500), (int) Math.random() * 200));                  
+            enemyFigures.add(new BossWarlockPet((int) (Math.random() * 500), (int) Math.random() * 200));                  
 
         }
     }
@@ -129,6 +131,23 @@ public class GameData {
                 enemyFigures.add(new MeleeEnemyAttack(swing.x, swing.y));
             }
         }
+
+        //Warlock
+        //-----------------------------------
+        for (Iterator<GameFigure> it = enemyFigures.iterator(); it.hasNext();) {
+            GameFigure g = it.next();
+            if (g.bossTimer == 50) {
+                enemyFigures.add(new EnemyMissileBoss(g.x, g.y));
+            } 
+            
+            if(g.summonTimer == 25) {
+                BossWarlock.summon();
+            }
+            
+            if (g.petSwingTimer == 20) {
+                enemyFigures.add(new BossWarlockPetAttack(g.x, g.y));
+            }
+        }       
 
         // attacks and shooter removed if STATE_DONE
         ArrayList<GameFigure> removeFriends = new ArrayList<>();

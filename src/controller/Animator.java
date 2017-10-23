@@ -11,7 +11,9 @@ import model.GameFigure;
 import model.Shooter;
 import model.BlinkMage;
 import model.BlockTerrain;
+import model.BossWarlockPetAttack;
 import model.EnemyMissile;
+import model.EnemyMissileBoss;
 import model.EnemyMissileSlow;
 import model.SuicideEnemy;
 import model.MeleeEnemy;
@@ -104,6 +106,13 @@ public class Animator implements Runnable {
                     s.goNextState();
                     GameData.multiplier = 0;
                     GameData.shooter.takeDamage(20);
+                } else if (s instanceof EnemyMissileBoss) {
+                    s.goNextState();
+                    GameData.multiplier =0;
+                    GameData.shooter.takeDamage(100);                    
+                } else if (s instanceof BossWarlockPetAttack){
+                    GameData.multiplier =0;
+                    GameData.shooter.takeDamage(20);                     
                 }
             }
 
