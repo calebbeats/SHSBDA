@@ -23,6 +23,8 @@ public class BossWarlock extends GameFigure {
     private Image death2;
     private Image death3;
     
+    public static int summonTime = 0;
+    
     public FigureState eState;
     
     private int direction = 1; // +1: to the right; -1 to the left
@@ -141,7 +143,12 @@ public class BossWarlock extends GameFigure {
     }
     
     public static void summon(){
-        BossWarlockPet pet = new BossWarlockPet((int) (Math.random() * 500), (int) Math.random() * 200);
+        if(summonTime < 50)  {
+            summonTime++;
+        }
+        else    {
+            summonTime = 0;
+        }
     }
 
     @Override

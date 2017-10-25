@@ -58,14 +58,14 @@ public class GameData {
             
             //Normal Enemy Test
             //------------------------------
-            enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) Math.random() * 200));
-            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
-            enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
-            enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+            //enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) Math.random() * 200));
+            //enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+            //enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
+            //enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
             
             //Warlock Test
             //------------------------------
-            //enemyFigures.add(new BossWarlock((int) (Math.random() * 500), (int) Math.random() * 200));                  
+            enemyFigures.add(new BossWarlock((int) (Math.random() * 500), (int) Math.random() * 200));                  
             //enemyFigures.add(new BossWarlockPet((int) (Math.random() * 500), (int) Math.random() * 200));                  
         }
         /*
@@ -86,7 +86,8 @@ public class GameData {
         for (int i = 0; i < enemyFigures.size(); i++) {
             f = enemyFigures.get(i);
             if (f.state == GameFigureState.STATE_DONE
-                    && f instanceof EnemyMissile) {
+                    && f instanceof EnemyMissile && f instanceof EnemyMissileSlow 
+                    && f instanceof MeleeEnemyAttack && f instanceof BossWarlockPetAttack) {
                 removeEnemies.add(f);
             } else if (f.state == GameFigureState.STATE_DONE) {
                 multiplier += 1;
@@ -148,6 +149,10 @@ public class GameData {
             if (swing.swingTimer == 20) {
                 enemyFigures.add(new MeleeEnemyAttack(swing.x, swing.y));
             }
+            
+            if (swing.petSwingTimer == 20){
+                enemyFigures.add(new BossWarlockPetAttack(swing.x, swing.y));
+            }
         }
 
         //Warlock
@@ -158,9 +163,13 @@ public class GameData {
                 enemyFigures.add(new EnemyMissileBoss(g.x, g.y));
             } 
             
-            if (g.petSwingTimer == 20) {
-                enemyFigures.add(new BossWarlockPetAttack(g.x, g.y));
+            //Summon Pet
+            //---------------------------------
+            if (g.bossTimer == 20) {
+                enemyFigures.add(new BossWarlockPet(g.x, g.y));
             }
+            
+            
         }
         
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 

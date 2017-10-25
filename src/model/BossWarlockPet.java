@@ -119,7 +119,7 @@ public class BossWarlockPet extends GameFigure {
             {
                 g.drawImage(alive2, (int)super.x, (int)super.y, 
                 SIZE, SIZE, null);
-            } else if (aniTimer == 100){
+            } else {
                 aniTimer=0;
             }
         }
