@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
 import static model.GameFigure.STATE_ALIVE;
 import static model.GameFigure.STATE_DYING;
 
-public class EnemyMissileBoss extends GameFigure {
+public class EnemyMissileWarlock extends GameFigure {
 
     // missile size
     private static final int SIZE = 50;
@@ -49,7 +49,7 @@ public class EnemyMissileBoss extends GameFigure {
      * @param ty target y of the missile
      * @param color color of the missile
      */
-    public EnemyMissileBoss(float sx, float sy) {
+    public EnemyMissileWarlock(float sx, float sy) {
         super(sx, sy);
         
         float tx = Main.gameData.shooter.x + 10;

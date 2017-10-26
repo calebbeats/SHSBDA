@@ -160,12 +160,12 @@ public class GameData {
         for (Iterator<GameFigure> it = enemyFigures.iterator(); it.hasNext();) {
             GameFigure g = it.next();
             if (g.bossTimer == 50) {
-                enemyFigures.add(new EnemyMissileBoss(g.x, g.y));
+                enemyFigures.add(new EnemyMissileWarlock(g.x, g.y));
             } 
             
             //BOSS -> Summon Pet
             //---------------------------------
-            if (g.bossTimer == 20) {
+            if (g.bossTimer == 25 || g.bossTimer == 75) {
                 enemyFigures.add(new BossWarlockPet(g.x, g.y));
             }          
         }
