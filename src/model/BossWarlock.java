@@ -104,7 +104,7 @@ public class BossWarlock extends GameFigure {
             {
                 float intendedX = (float) Math.random()*450;
                 float intendedY = (float) Math.random()*520;
-                GameFigure mageToMove = new BossWarlock(intendedX, intendedY);
+                GameFigure mageToMove = new BasicCollisionBox(intendedX, intendedY, SIZE, SIZE);
                 
                 for(GameFigure t : Main.gameData.terrainFigures){
                     if(!(mageToMove.getCollisionBox().intersects(t.getCollisionBox()))){

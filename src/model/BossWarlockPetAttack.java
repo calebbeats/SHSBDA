@@ -139,7 +139,7 @@ public class BossWarlockPetAttack extends GameFigure {
 
     @Override
     public Rectangle2D getCollisionBox() {
-        return new Rectangle2D.Double(this.x - SIZE, this.y - SIZE, SIZE * 0.9D, SIZE * 0.9D);
+        return new Rectangle2D.Double(this.x, this.y, SIZE * 0.9D, SIZE * 0.9D);
     }
 
     @Override

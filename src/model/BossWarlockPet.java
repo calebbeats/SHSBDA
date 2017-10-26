@@ -150,7 +150,7 @@ public class BossWarlockPet extends GameFigure {
     }
 
     public void updateLocation() {
-        GameFigure enemyToMove = new BossWarlockPet(super.x + dx, super.y +dy);        
+        GameFigure enemyToMove = new BasicCollisionBox(super.x + dx, super.y +dy, SIZE, SIZE);        
         
         for(GameFigure t : Main.gameData.terrainFigures){
             if(!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox()))){
@@ -266,7 +266,7 @@ public class BossWarlockPet extends GameFigure {
 
     @Override
     public Rectangle2D getCollisionBox() {
-        return new Rectangle2D.Double(this.x - SIZE, this.y - SIZE, SIZE * 0.9D, SIZE * 0.9D);
+        return new Rectangle2D.Double(this.x, this.y, SIZE * 0.9D, SIZE * 0.9D);
     }
 
     @Override
