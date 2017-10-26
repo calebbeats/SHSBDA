@@ -157,20 +157,18 @@ public class GameData {
 
         //Warlock
         //-----------------------------------
-        for (Iterator<GameFigure> it = enemyFigures.iterator(); it.hasNext();) {
-            GameFigure g = it.next();
-            if (g.bossTimer == 50) {
-                enemyFigures.add(new EnemyMissileBoss(g.x, g.y));
-            } 
-            
-            //Summon Pet
-            //---------------------------------
-            if (g.bossTimer == 20) {
-                enemyFigures.add(new BossWarlockPet(g.x, g.y));
-            }
-            
-            
-        }
+//        for (Iterator<GameFigure> it = enemyFigures.iterator(); it.hasNext();) {
+//            GameFigure g = it.next();
+//            if (g.bossTimer == 50) {
+//                enemyFigures.add(new EnemyMissileBoss(g.x, g.y));
+//            } 
+//            
+//            //Summon Pet
+//            //---------------------------------
+//            if (g.bossTimer == 20) {
+//                enemyFigures.add(new BossWarlockPet(g.x, g.y));
+//            }          
+//        }
         
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
         * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */ 

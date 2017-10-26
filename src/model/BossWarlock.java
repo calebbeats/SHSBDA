@@ -1,35 +1,54 @@
-
 package model;
 
 import controller.Main;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
+import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import static model.GameFigure.STATE_ALIVE;
+import static model.GameFigure.STATE_DYING;
 
 
 public class BossWarlock extends GameFigure {
     
     private static final int SIZE = 50;
    
+    //Timers
+    //------------------------------
     private int timer = 0;
     private int deadTimer = 0;
+    public static int summonTime = 0;
+
+    
+    //Enemy Information
+    //------------------------------
+    private int health;
+    private int maxHealth;
+    Random rand = new Random();         
+    private int  NAME_GEN = rand.nextInt(5) + 1;
+
+    //Images
+    //------------------------------
     private Image warlock1;
     private Image warlock2;
     private Image death1;
     private Image death2;
     private Image death3;
-    
-    public static int summonTime = 0;
-    
+  
     public FigureState eState;
     
     private int direction = 1; // +1: to the right; -1 to the left
     public BossWarlock(float x, float y) {
         super(x, y);
+        
+        health = 250;
+        maxHealth = health;
+        
         super.state = STATE_ALIVE;
         try {
             warlock1 = ImageIO.read(getClass().getResource("/resources/warlock1.png"));
@@ -48,6 +67,7 @@ public class BossWarlock extends GameFigure {
 
     @Override
     public void render(Graphics2D g) {
+        
         if(state == STATE_ALIVE)
         {
             if(timer < 25)
@@ -70,6 +90,31 @@ public class BossWarlock extends GameFigure {
                 g.drawImage(warlock2, (int)super.x, (int)super.y, 
                 SIZE, SIZE, null);
             }
+            
+            //Health Bar
+            //------------------------------
+            g.setColor(Color.red);
+            g.fillRect(170, 20, health, 20);
+            g.setColor(Color.white);
+            g.drawRect(170, 20, maxHealth, 20);
+                                    
+            Font boss_font = new Font("Century Schoolbook"/*g.getFont().getFontName()*/,Font.PLAIN, 16);
+            g.setFont(boss_font);
+            g.setColor(Color.white);          
+ 
+            if(NAME_GEN==1){
+                g.drawString("Y'Dren, The Insane", 170, 16);
+            } else if(NAME_GEN==2){
+                g.drawString("Yatharion, of the Void", 170, 16);
+            } else if (NAME_GEN==3){
+                g.drawString("Fawen, of the Nightfall ", 170, 16);
+            } else if (NAME_GEN==4){
+                g.drawString("Nyledris, Keeper of the Rift", 170, 16);
+            } else {
+                g.drawString("Teleport Fireball Summoner Guy", 170, 16);
+            }
+
+
         }
         if(state == STATE_DYING)
         {
@@ -159,6 +204,14 @@ public class BossWarlock extends GameFigure {
     @Override
     public void shoot() {
         System.out.println("Blink Mage Shoots");
+    }
+    
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
     }
 }
 
