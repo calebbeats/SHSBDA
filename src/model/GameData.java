@@ -56,17 +56,17 @@ public class GameData {
             terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 125, 125));
             friendFigures.add(shooter);
             
-            //Normal Enemy Test
+            //TEST BLOCK FOR NORMAL
             //------------------------------
-            //enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) Math.random() * 200));
-            //enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
-            //enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
-            //enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+                //enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) Math.random() * 200));
+                //enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+                //enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
+                //enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
             
-            //Warlock Test
+            //TEST BLOCK FOR BOSS
             //------------------------------
-            enemyFigures.add(new BossWarlock((int) (Math.random() * 500), (int) Math.random() * 200));                  
-            //enemyFigures.add(new BossWarlockPet((int) (Math.random() * 500), (int) Math.random() * 200));                  
+                enemyFigures.add(new BossWarlock((int) (Math.random() * 500), (int) Math.random() * 200));                  
+                //enemyFigures.add(new BossWarlockPet((int) (Math.random() * 500), (int) Math.random() * 200));                  
         }
         /*
         if((level % 4) == 0){
@@ -124,7 +124,7 @@ public class GameData {
         *                                  *
         * * * * * * * * * * * * * * * * * */
                                           
-        //Blink Mage
+        //NORMAL -> Blink Mage
         //-----------------------------------
         for (Iterator<GameFigure> it = enemyFigures.iterator(); it.hasNext();) {
             GameFigure g = it.next();
@@ -133,7 +133,7 @@ public class GameData {
             }
         }
 
-        //Slow Mage
+        //NORMAL -> Slow Mage
         //-----------------------------------
         for (Iterator<GameFigure> it = enemyFigures.iterator(); it.hasNext();) {
             GameFigure slow = it.next();
@@ -142,7 +142,7 @@ public class GameData {
             }
         }
 
-        //Melee Enemy
+        // NORMAL -> Melee
         //------------------------------
         for (Iterator<GameFigure> it = enemyFigures.iterator(); it.hasNext();) {
             GameFigure swing = it.next();
@@ -155,20 +155,20 @@ public class GameData {
             }
         }
 
-        //Warlock
+        //BOSS -> Warlock
         //-----------------------------------
-//        for (Iterator<GameFigure> it = enemyFigures.iterator(); it.hasNext();) {
-//            GameFigure g = it.next();
-//            if (g.bossTimer == 50) {
-//                enemyFigures.add(new EnemyMissileBoss(g.x, g.y));
-//            } 
-//            
-//            //Summon Pet
-//            //---------------------------------
-//            if (g.bossTimer == 20) {
-//                enemyFigures.add(new BossWarlockPet(g.x, g.y));
-//            }          
-//        }
+        for (Iterator<GameFigure> it = enemyFigures.iterator(); it.hasNext();) {
+            GameFigure g = it.next();
+            if (g.bossTimer == 50) {
+                enemyFigures.add(new EnemyMissileBoss(g.x, g.y));
+            } 
+            
+            //BOSS -> Summon Pet
+            //---------------------------------
+            if (g.bossTimer == 20) {
+                enemyFigures.add(new BossWarlockPet(g.x, g.y));
+            }          
+        }
         
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
         * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */ 
