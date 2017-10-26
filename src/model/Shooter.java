@@ -29,6 +29,7 @@ public class Shooter extends GameFigure {
     private int mana;
     private int maxMana;
     private int maxHealth;
+    private static int weaponPower; //when we implement weapons use this to decide damage amount
 
     int tempCounter = 0;
     int tempRemovalCounter;
@@ -69,6 +70,7 @@ public class Shooter extends GameFigure {
         mana = 100;
         maxHealth = health;
         maxMana = mana;
+        weaponPower = 1;
 //        inventory = new Item[4];
 
         // Tests for items and equipment
@@ -96,6 +98,7 @@ public class Shooter extends GameFigure {
             JOptionPane.showMessageDialog(null, "Error: Cannot open Player Image");
             System.exit(-1);
         }
+        
     }
 
     @Override
@@ -261,6 +264,15 @@ public class Shooter extends GameFigure {
     @Override
     public void shoot() {
         System.out.println("Shooter Shoots");
+    }
+    
+    //use these to determine and set weapon damage
+    public void setWeaponPower(int w){
+        this.weaponPower = w;
+    }
+    
+    public static int getWeaponPower(){
+        return Shooter.weaponPower;
     }
 
     //Temporary method to test healing items.

@@ -112,8 +112,33 @@ public class Animator implements Runnable {
                     if (f.getCollisionBox().intersects(s.getCollisionBox()) /*&& f.state != f.STATE_DYING && s.state != s.STATE_DYING **/
                             && f.state != f.STATE_DONE
                             && s.state != s.STATE_DONE) {
+                        if(s instanceof SuicideEnemy){
+                            ((SuicideEnemy) s).takeDamage(Shooter.getWeaponPower());
+                            if(((SuicideEnemy) s).getHealth() <= 0){
+                                s.goNextState();
+                            }
+                        } else if (s instanceof MeleeEnemy){
+                            ((MeleeEnemy) s).takeDamage(Shooter.getWeaponPower());
+                            if(((MeleeEnemy) s).getHealth() <= 0){
+                                s.goNextState();
+                            }
+                        } else if (s instanceof SlowMage){
+                            ((SlowMage) s).takeDamage(Shooter.getWeaponPower());
+                            System.out.println(((SlowMage) s).getHealth());
+                            if(((SlowMage) s).getHealth() <= 0){ //if health goes to 0, it dies
+                                s.goNextState();
+                            }
+                        } else if (s instanceof BlinkMage){
+                            ((BlinkMage) s).takeDamage(Shooter.getWeaponPower());
+                            if(((BlinkMage) s).getHealth() <= 0){
+                                s.goNextState();
+                            }
+                        }
+                        else{
+                            s.goNextState();
+                        }
                         f.goNextState();
-                        s.goNextState();
+                        //s.goNextState();
                         MainWindow.score += 5;
                         MainWindow.scoreText.setText("Score: "
                                 + MainWindow.score + " || Coins: "
