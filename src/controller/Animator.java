@@ -117,14 +117,16 @@ public class Animator implements Runnable {
                             if(((SuicideEnemy) s).getHealth() <= 0){
                                 s.goNextState();
                             }
+                            MainWindow.score += 5;
                         } else if (s instanceof MeleeEnemy){
                             ((MeleeEnemy) s).takeDamage(Shooter.getWeaponPower());
                             if(((MeleeEnemy) s).getHealth() <= 0){
                                 s.goNextState();
                             }
+                            MainWindow.score += 5;
                         } else if (s instanceof SlowMage){
                             ((SlowMage) s).takeDamage(Shooter.getWeaponPower());
-                            System.out.println(((SlowMage) s).getHealth());
+//                            System.out.println(((SlowMage) s).getHealth());
                             if(((SlowMage) s).getHealth() <= 0){ //if health goes to 0, it dies
                                 s.goNextState();
                             }
@@ -133,13 +135,13 @@ public class Animator implements Runnable {
                             if(((BlinkMage) s).getHealth() <= 0){
                                 s.goNextState();
                             }
+                            MainWindow.score += 5;
                         }
                         else{
                             s.goNextState();
                         }
                         f.goNextState();
-                        //s.goNextState();
-                        MainWindow.score += 5;
+                        //s.goNextState();                        
                         MainWindow.scoreText.setText("Score: "
                                 + MainWindow.score + " || Coins: "
                                 + MainWindow.coins);
