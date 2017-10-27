@@ -87,7 +87,8 @@ public class GameData {
             f = enemyFigures.get(i);
             if (f.state == GameFigureState.STATE_DONE
                     && f instanceof EnemyMissile && f instanceof EnemyMissileSlow 
-                    && f instanceof MeleeEnemyAttack && f instanceof BossWarlockPetAttack) {
+                    && f instanceof MeleeEnemyAttack && f instanceof BossWarlockPetAttack
+                    && f instanceof EnemyMissileWarlock) {
                 removeEnemies.add(f);
             } else if (f.state == GameFigureState.STATE_DONE) {
                 multiplier += 1;
