@@ -29,6 +29,9 @@ public class MeleeEnemy extends GameFigure {
     private static int deathCounter=0;
     private static int attackCounter=0;
     
+    private int health;
+    private int maxHealth;
+    
     private float dx; // displacement at each frame
     private float dy; // displacement at each frame
     private int animationCheck=0;
@@ -46,7 +49,7 @@ public class MeleeEnemy extends GameFigure {
     private Image alive;
     private Image attack1;
     private Image attack2;
-    private Image death;
+    private Image death;    
 
     /**
      *
@@ -58,6 +61,8 @@ public class MeleeEnemy extends GameFigure {
      */
     public MeleeEnemy(float sx, float sy) {
         super(sx, sy);
+        health = 5;
+        maxHealth = health;
         
         swingTimer=0;
         
@@ -265,6 +270,26 @@ public class MeleeEnemy extends GameFigure {
                 this.goNextState();
             }
         }
+    }
+    
+    public void takeDamage(int i) {
+        health = health - i;
+    }
+    
+    public int getHealth() {
+        return health;
+    }
+    
+    public void setHealth(int health) {
+        this.health = health;
+    }
+    
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
     }
 
     @Override

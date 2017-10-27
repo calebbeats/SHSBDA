@@ -18,6 +18,8 @@ public class SlowMage extends GameFigure {
     private Image slowMage2;
     public FigureState eState;
     private int direction = 1; // +1: to the right; -1 to the left
+    private int health;
+    private int maxHealth;
     
     public SlowMage(float x, float y) {
         super(x, y);
@@ -31,6 +33,8 @@ public class SlowMage extends GameFigure {
         }
         slowTimer=0;
         timer=0;
+        health = 10;
+        maxHealth = health;
     }
 
     @Override
@@ -89,6 +93,26 @@ public class SlowMage extends GameFigure {
                 this.goNextState();
             }
         }   
+    }
+    
+    public void takeDamage(int i) {
+        health = health - i;
+    }
+    
+    public int getHealth() {
+        return health;
+    }
+    
+    public void setHealth(int health) {
+        this.health = health;
+    }
+    
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
     }
 
     @Override
