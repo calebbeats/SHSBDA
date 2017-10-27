@@ -14,7 +14,7 @@ import static model.GameFigure.STATE_ALIVE;
 import static model.GameFigure.STATE_DYING;
 
 
-public class BossWarlock extends GameFigure {
+public class BossSummon extends GameFigure {
     
     private static final int SIZE = 50;
    
@@ -43,7 +43,7 @@ public class BossWarlock extends GameFigure {
     public FigureState eState;
     
     private int direction = 1; // +1: to the right; -1 to the left
-    public BossWarlock(float x, float y) {
+    public BossSummon(float x, float y) {
         super(x, y);
         
         health = 250;
@@ -206,12 +206,24 @@ public class BossWarlock extends GameFigure {
         System.out.println("Blink Mage Shoots");
     }
     
+    public void takeDamage(int i) {
+        health = health - i;
+    }
+    
     public int getHealth() {
         return health;
     }
-
+    
     public void setHealth(int health) {
         this.health = health;
+    }
+    
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
     }
 }
 

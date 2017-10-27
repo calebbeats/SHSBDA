@@ -59,13 +59,13 @@ public class GameData {
             //TEST BLOCK FOR NORMAL
             //------------------------------
                 enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) Math.random() * 200));
-                enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
-                enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
-                enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+//                enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+//                enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
+//                enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
             
             //TEST BLOCK FOR BOSS
             //------------------------------
-//                enemyFigures.add(new BossWarlock((int) (Math.random() * 500), (int) Math.random() * 200));                  
+//                enemyFigures.add(new BossSummon((int) (Math.random() * 500), (int) Math.random() * 200));                  
 //                enemyFigures.add(new BossWarlockPet((int) (Math.random() * 500), (int) Math.random() * 200));                  
         }
         /*
@@ -87,7 +87,7 @@ public class GameData {
             f = enemyFigures.get(i);
             if (f.state == GameFigureState.STATE_DONE
                     && f instanceof EnemyMissile && f instanceof EnemyMissileSlow 
-                    && f instanceof MeleeEnemyAttack && f instanceof BossWarlockPetAttack
+                    && f instanceof EnemyMissileMelee && f instanceof EnemyMissileSummonPet
                     && f instanceof EnemyMissileWarlock) {
                 removeEnemies.add(f);
             } else if (f.state == GameFigureState.STATE_DONE) {
@@ -148,11 +148,11 @@ public class GameData {
         for (Iterator<GameFigure> it = enemyFigures.iterator(); it.hasNext();) {
             GameFigure swing = it.next();
             if (swing.swingTimer == 20) {
-                enemyFigures.add(new MeleeEnemyAttack(swing.x, swing.y));
+                enemyFigures.add(new EnemyMissileMelee(swing.x, swing.y));
             }
             
             if (swing.petSwingTimer == 20){
-                enemyFigures.add(new BossWarlockPetAttack(swing.x, swing.y));
+                enemyFigures.add(new EnemyMissileSummonPet(swing.x, swing.y));
             }
         }
 
@@ -167,7 +167,7 @@ public class GameData {
             //BOSS -> Summon Pet
             //---------------------------------
             if (g.bossTimer == 25 || g.bossTimer == 75) {
-                enemyFigures.add(new BossWarlockPet(g.x, g.y));
+                enemyFigures.add(new BossSummonPet(g.x, g.y));
             }          
         }
         

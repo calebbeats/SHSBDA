@@ -11,12 +11,13 @@ import java.awt.Image;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
+import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import static model.GameFigure.STATE_ALIVE;
 import static model.GameFigure.STATE_DYING;
 
-public class BossWarlockPet extends GameFigure {
+public class BossSummonPet extends GameFigure {
 
     // missile size
     private static final int SIZE = 40;
@@ -29,7 +30,11 @@ public class BossWarlockPet extends GameFigure {
     private static int deathCounter=0;
     private static int attackCounter=0;
     private static int aniTimer=0;
-
+    
+    //Enemy Information
+    //------------------------------
+    private int health;
+    private int maxHealth;
     
     private float dx; // displacement at each frame
     private float dy; // displacement at each frame
@@ -57,10 +62,11 @@ public class BossWarlockPet extends GameFigure {
      * @param ty target y of the missile
      * @param color color of the missile
      */
-    public BossWarlockPet(float sx, float sy) {
+    public BossSummonPet(float sx, float sy) {
         super(sx, sy);
         
         petSwingTimer=0;
+        health=5;
         
         tx = Main.gameData.shooter.x + 10;
         ty = Main.gameData.shooter.y + 10;
@@ -180,13 +186,13 @@ public class BossWarlockPet extends GameFigure {
                 }
                 System.out.println("Dx Dy" + dx + " " + dy);
                 
-                enemyToMove = new BossWarlockPet(super.x + dx, super.y);
+                enemyToMove = new BossSummonPet(super.x + dx, super.y);
                 if (!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox()))) {
                     super.x += dx;
                     super.y -= 2*dy;
                 }
                 else{
-                    enemyToMove = new BossWarlockPet(super.x, super.y + dy);
+                    enemyToMove = new BossSummonPet(super.x, super.y + dy);
                     if (!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox()))) {
                         super.y += dy;
                         super.x -= 2*dx;
@@ -195,7 +201,7 @@ public class BossWarlockPet extends GameFigure {
                 
                 return;
             }
-            enemyToMove = new BossWarlockPet(super.x + dx, super.y +dy);
+            enemyToMove = new BossSummonPet(super.x + dx, super.y +dy);
         }
         enemyToMove = null;        
     }
@@ -272,6 +278,26 @@ public class BossWarlockPet extends GameFigure {
     @Override
     public void shoot() {
        System.out.println("Enemy Missiles Shoots");
+    }
+    
+    public void takeDamage(int i) {
+        health = health - i;
+    }
+    
+    public int getHealth() {
+        return health;
+    }
+    
+    public void setHealth(int health) {
+        this.health = health;
+    }
+    
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
     }
 
 }

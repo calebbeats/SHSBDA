@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 import static model.GameFigure.STATE_ALIVE;
 import static model.GameFigure.STATE_DYING;
 
-public class BossWarlockPetAttack extends GameFigure {
+public class EnemyMissileSummonPet extends GameFigure {
 
     private static final int SIZE = 15;
     private static final int MAX_SWING_SIZE = 4;
@@ -38,7 +38,7 @@ public class BossWarlockPetAttack extends GameFigure {
      * @param ty target y of the missile
      * @param color color of the missile
      */
-    public BossWarlockPetAttack(float sx, float sy) {
+    public EnemyMissileSummonPet(float sx, float sy) {
         
         super(sx, sy);
         
