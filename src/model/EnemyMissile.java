@@ -14,7 +14,6 @@ import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
-import static model.GameData.shooter;
 import static model.GameFigure.STATE_ALIVE;
 import static model.GameFigure.STATE_DYING;
 
@@ -25,7 +24,7 @@ public class EnemyMissile extends GameFigure {
         //Private
         private static final int SIZE = 30; //Image Size
         private static final int MAX_EXPLOSION_SIZE = 3; //Max explosion size
-        private static final int UNIT_TRAVEL_DISTANCE = 4; // Frame Movement
+        private static final int UNIT_TRAVEL_DISTANCE = 4; //Frame Movement
         private int explosionCounter = 0; //Update explosion size
         private float dx; // displacement at each frame
         private float dy; // displacement at each frame

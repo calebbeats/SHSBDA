@@ -94,7 +94,7 @@ public class Animator implements Runnable {
             *                                          *
             * * * * * * * * * * * * * * * * * * * * * */
             
-            //Shooter Damage
+            //Shooter Takes Damage
             //------------------------------
             if (Main.gameData.shooter.getCollisionBox().intersects(s
                     .getCollisionBox()) && s.state != s.STATE_DYING) { //if shooter intersects any enemyfigure do this
@@ -106,10 +106,11 @@ public class Animator implements Runnable {
                 } else if (s instanceof SuicideEnemy) {//do the enemy slow missile stuff here
                     s.goNextState();
                     GameData.multiplier = 0;
-                    GameData.shooter.takeDamage(100);
+                    SuicideEnemy.dealDamage();
+                    
                 } else if (s instanceof EnemyMissileSlow) {//do the enemy slow missile stuff here
                     s.goNextState();
-                    GameData.shooter.takeDamage(1);
+                    EnemyMissileSlow.dealDamage();
                     for (int i = 0; i < 5; i++) {
                         GameData.shooter.isSprint(FALSE);
                         System.out.println("Counter = " + i);
@@ -117,17 +118,20 @@ public class Animator implements Runnable {
                     if (GameData.shooter.isSprint() == FALSE) {
                         System.out.println("Sprint is off");
                     }
+                    
                 } else if (s instanceof EnemyMissileMelee) {//this is where the enemy melee attacks would go
                     s.goNextState();
                     GameData.multiplier = 0;
-                    GameData.shooter.takeDamage(20);
+                    EnemyMissileMelee.dealDamage();
+                    
                 } else if (s instanceof EnemyMissileWarlock) {
                     s.goNextState();
                     GameData.multiplier =0;
-                    GameData.shooter.takeDamage(100);                    
+                    EnemyMissileWarlock.dealDamage();
+                    
                 } else if (s instanceof EnemyMissileSummonPet){
                     GameData.multiplier =0;
-                    GameData.shooter.takeDamage(20);                     
+                    EnemyMissileSummonPet.dealDamage();
                 }
             }
             
@@ -140,7 +144,7 @@ public class Animator implements Runnable {
            *                               |___/    *
             * * * * * * * * * * * * * * * * * * * * */
             
-            //Enemy Damage
+            //Enemy Takes Damage
             //------------------------------
             for (GameFigure f : Main.gameData.friendFigures) { //only process gamefigure collisionboxes if they are weapon or missile
                 if (f instanceof Missile || f instanceof Melee || f instanceof MyBullet) {

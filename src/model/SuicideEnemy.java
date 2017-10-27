@@ -49,6 +49,7 @@ public class SuicideEnemy extends GameFigure {
     // Public -> Target
     //------------------------------
     public Point2D.Float target;
+    public static int DAMAGE = 250;
 
     //Sprite
     //------------------------------
@@ -239,6 +240,10 @@ public class SuicideEnemy extends GameFigure {
                 this.goNextState();
             }
         }
+    }
+    
+    public static void dealDamage(){
+        GameData.shooter.takeDamage(DAMAGE);
     }
     
     public void takeDamage(int i) {
