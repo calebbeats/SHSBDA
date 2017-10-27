@@ -23,11 +23,15 @@ public class BlinkMage extends GameFigure {
     private Image deadMage1;
     private Image deadMage2;
     public FigureState eState;
+    private int health;
+    private int maxHealth;
     
     private int direction = 1; // +1: to the right; -1 to the left
     
     public BlinkMage(float x, float y) {
         super(x, y);
+        health = 3;
+        maxHealth = health;
         super.state = STATE_ALIVE;
         try {
             blinkMage0 = ImageIO.read(getClass().getResource("/resources/mage1.png"));
@@ -138,6 +142,26 @@ public class BlinkMage extends GameFigure {
                 this.goNextState();
             }
         }   
+    }
+    
+    public void takeDamage(int i) {
+        health = health - i;
+    }
+    
+    public int getHealth() {
+        return health;
+    }
+    
+    public void setHealth(int health) {
+        this.health = health;
+    }
+    
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
     }
 
     @Override
