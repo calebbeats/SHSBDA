@@ -58,15 +58,15 @@ public class GameData {
             
             //TEST BLOCK FOR NORMAL
             //------------------------------
-                //enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) Math.random() * 200));
-                //enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
-                //enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
-                //enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+                enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) Math.random() * 200));
+                enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+                enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
+                enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
             
             //TEST BLOCK FOR BOSS
             //------------------------------
-                enemyFigures.add(new BossWarlock((int) (Math.random() * 500), (int) Math.random() * 200));                  
-                //enemyFigures.add(new BossWarlockPet((int) (Math.random() * 500), (int) Math.random() * 200));                  
+//                enemyFigures.add(new BossWarlock((int) (Math.random() * 500), (int) Math.random() * 200));                  
+//                enemyFigures.add(new BossWarlockPet((int) (Math.random() * 500), (int) Math.random() * 200));                  
         }
         /*
         if((level % 4) == 0){
