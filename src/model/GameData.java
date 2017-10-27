@@ -59,9 +59,9 @@ public class GameData {
             //TEST BLOCK FOR NORMAL
             //------------------------------
                 enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) Math.random() * 200));
-//                enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
-//                enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
-//                enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+                enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+                enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
+                enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
             
             //TEST BLOCK FOR BOSS
             //------------------------------
@@ -164,11 +164,11 @@ public class GameData {
                 enemyFigures.add(new EnemyMissileWarlock(g.x, g.y));
             } 
             
-            //BOSS -> Summon Pet
-            //---------------------------------
-            if (g.bossTimer == 25 || g.bossTimer == 75) {
-                enemyFigures.add(new BossSummonPet(g.x, g.y));
-            }          
+//            //BOSS -> Summon Pet
+//            //---------------------------------
+//            if (g.bossTimer == 25 || g.bossTimer == 75) {
+//                enemyFigures.add(new BossSummonPet(g.x, g.y));
+//            }          
         }
         
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 

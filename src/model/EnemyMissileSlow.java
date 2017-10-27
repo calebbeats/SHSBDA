@@ -47,6 +47,7 @@ public class EnemyMissileSlow extends GameFigure {
     //------------------------------
     public Color color;
     public Point2D.Float target;
+    public static int DAMAGE = 5; //Damage Dealt on collision
 
     private Image missile1;
     private Image missile2;
@@ -77,35 +78,29 @@ public class EnemyMissileSlow extends GameFigure {
         missile1 = null;
         missile2 = null;
         
-        try {
-           
+        try {           
             missile1 = ImageIO.read(getClass().getResource("/resources/slowMissile.png"));
             missile2 = ImageIO.read(getClass().getResource("/resources/slowMissile2.png"));
-
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");
            System.exit(-1);
-        }
-        
+        }        
     }
 
     @Override
     public void render(Graphics2D g) {
-        if(state == STATE_ALIVE)
-        {
+        if(state == STATE_ALIVE){
             if(animationCheck == 0){
                 g.drawImage(missile1, (int)super.x, (int)super.y, 
                 SIZE, SIZE, null);
                 animationCheck = 1;
-            }
-            else{
+            }else{
                 g.drawImage(missile2, (int)super.x, (int)super.y, 
                 SIZE, SIZE, null);
                 animationCheck = 0;
             }
         }
         if(state == STATE_DYING){
-
             //Create animation of player for "Slow Effect"
             //-----------------------------------
         }
@@ -138,6 +133,10 @@ public class EnemyMissileSlow extends GameFigure {
         } else if (state == STATE_DYING) {
                 this.goNextState();
         }
+    }
+    
+    public static void dealDamage(){
+        GameData.shooter.takeDamage(DAMAGE);
     }
 
     @Override

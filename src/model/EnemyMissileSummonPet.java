@@ -1,7 +1,6 @@
 package model;
 
 import controller.Main;
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.Point2D;
@@ -14,21 +13,27 @@ import static model.GameFigure.STATE_DYING;
 
 public class EnemyMissileSummonPet extends GameFigure {
 
-    private static final int SIZE = 15;
-    private static final int MAX_SWING_SIZE = 4;
-    private float dx; // displacement at each frame
-    private float dy; // displacement at each frame
+    //Properties
+    //------------------------------
 
-    // public properties for quick access
-    public Point2D.Float target;
+        //Private
+        private static final int SIZE = 15; //Image Size
+        private static final int MAX_SWING_SIZE = 4; //Max Swing Count
+        private static final int UNIT_TRAVEL_DISTANCE = 15; //Frame Movement
+        private float dx; // displacement at each frame
+        private float dy; // displacement at each frame
 
-    private static final int UNIT_TRAVEL_DISTANCE = 15; // per frame move
+        //Public
+        public Point2D.Float target;
+        public static int DAMAGE = 20;
 
+    //Images
+    //------------------------------
     private int swingCounter = 0;
-    private Image swordUp;
-    private Image swordDown;
-    private Image swordRight;
-    private Image swordLeft;
+    private Image attackU;
+    private Image attackD;
+    private Image attackR;
+    private Image attackL;
 
     /**
      *
@@ -50,22 +55,25 @@ public class EnemyMissileSummonPet extends GameFigure {
         dx = (float) (UNIT_TRAVEL_DISTANCE * Math.cos(angle));
         dy = (float) (UNIT_TRAVEL_DISTANCE * Math.sin(angle));
         
-        if (tx > sx && ty < sy) { // target is upper-right side
-            dy = -dy; // dx > 0, dx < 0
-        } else if (tx < sx && ty < sy) { // target is upper-left side
+        if (tx > sx && ty < sy) {       // target is upper-right side
+            dy = -dy;                   // dx > 0, dx < 0
+        } 
+        else if (tx < sx && ty < sy) {  // target is upper-left side
             dx = -dx;
             dy = -dy;
-        } else if (tx < sx && ty > sy) { // target is lower-left side
+        }
+        else if (tx < sx && ty > sy) {  // target is lower-left side
             dx = -dx;
-        } else { // target is lower-right side
-            // dx > 0 , dy > 0
+        }
+        else {                          // target is lower-right side
+                                        // dx > 0 , dy > 0
         }
 
         try {
-            swordUp = ImageIO.read(getClass().getResource("/resources/petAttack.png"));
-            swordDown = ImageIO.read(getClass().getResource("/resources/petAttack.png"));
-            swordRight = ImageIO.read(getClass().getResource("/resources/petAttack.png"));
-            swordLeft = ImageIO.read(getClass().getResource("/resources/petAttack.png"));
+            attackU = ImageIO.read(getClass().getResource("/resources/petAttack.png"));
+            attackD = ImageIO.read(getClass().getResource("/resources/petAttack.png"));
+            attackR = ImageIO.read(getClass().getResource("/resources/petAttack.png"));
+            attackL = ImageIO.read(getClass().getResource("/resources/petAttack.png"));
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open image.");
             System.exit(-1);
@@ -77,26 +85,26 @@ public class EnemyMissileSummonPet extends GameFigure {
     public void render(Graphics2D g) {
         //Initially, sword is in the upright position for first animation
         if (state == STATE_ALIVE) {
-            g.drawImage(swordUp, (int) super.x, (int) super.y,
+            g.drawImage(attackU, (int) super.x, (int) super.y,
                     30, 30, null);
         }
         //draw animation based on direction of mouse click
         if (state == STATE_DYING) {
 
             if (swingCounter < 1) {
-                g.drawImage(swordUp, (int) super.x, (int) super.y,
+                g.drawImage(attackU, (int) super.x, (int) super.y,
                         30, 30, null);
             }
             if (swingCounter < 2) {
-                g.drawImage(swordLeft, (int) super.x, (int) super.y,
+                g.drawImage(attackL, (int) super.x, (int) super.y,
                         30, 30, null);
             }
             if (swingCounter < 3) {
-                g.drawImage(swordDown, (int) super.x, (int) super.y,
+                g.drawImage(attackD, (int) super.x, (int) super.y,
                         30, 30, null);
             }
             if (swingCounter < 4) {
-                g.drawImage(swordRight, (int) super.x, (int) super.y,
+                g.drawImage(attackR, (int) super.x, (int) super.y,
                         30, 30, null);
             }
 
@@ -105,10 +113,8 @@ public class EnemyMissileSummonPet extends GameFigure {
 
     @Override
     public void update() {
-        //updateState();
         if (state == STATE_ALIVE) {
             updateLocation();
-            //  distanceTraveled++;
         } else if (state == STATE_DYING) {
             updateSize();
         }
@@ -116,15 +122,12 @@ public class EnemyMissileSummonPet extends GameFigure {
     }
 
     public void updateLocation() {
-        //when button clicked this happens
         super.x += dx;
         super.y += dy;
-
     }
 
     public void updateSize() {
         swingCounter++;
-
     }
 
     public void updateState() {
@@ -136,6 +139,10 @@ public class EnemyMissileSummonPet extends GameFigure {
             }
         }
     }
+    
+    public static void dealDamage(){
+        GameData.shooter.takeDamage(DAMAGE);
+    }
 
     @Override
     public Rectangle2D getCollisionBox() {
@@ -146,5 +153,4 @@ public class EnemyMissileSummonPet extends GameFigure {
     public void shoot() {
         System.out.println(" Melee Attack!!");
     }
-
 }
