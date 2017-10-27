@@ -17,41 +17,39 @@ import javax.swing.JOptionPane;
 import static model.GameFigure.STATE_ALIVE;
 import static model.GameFigure.STATE_DYING;
 
-/**
- *
- * @author Kodo
- */
-public class EnemyMissileSlow extends GameFigure {
-    
-    //Size
-    //------------------------------
-    private static final int SIZE = 30;
-    
-    //Displace per Frame
-    //------------------------------
-    private float dx; 
-    private float dy; 
-    
-    //Target X and Y
-    //------------------------------
-    private float ty;
-    private float tx;
-    
-    //Missile Speed
-    //------------------------------
-    private static final int UNIT_TRAVEL_DISTANCE = 5;
+public class EnemyMissileWarlock extends GameFigure {
 
+    // missile size
+    private static final int SIZE = 50;
+    private static final int MAX_EXPLOSION_SIZE = 3;
+    private float dx; // displacement at each frame
+    private float dy; // displacement at each frame
     private int animationCheck=0;
 
-    //Public Prop
-    //------------------------------
+    // public properties for quick access
     public Color color;
     public Point2D.Float target;
 
-    private Image missile1;
-    private Image missile2;
+    private static final int UNIT_TRAVEL_DISTANCE = 2; // per frame move
 
-    public EnemyMissileSlow(float sx, float sy) {
+    private int explosionCounter = 0;
+    
+    private Image launcherImage;
+    private Image launcherImage2;
+    private Image explosion1;
+    private Image explosion2;
+    private Image explosion3;
+    
+
+    /**
+     *
+     * @param sx start x of the missile
+     * @param sy start y of the missile
+     * @param tx target x of the missile
+     * @param ty target y of the missile
+     * @param color color of the missile
+     */
+    public EnemyMissileWarlock(float sx, float sy) {
         super(sx, sy);
         
         float tx = Main.gameData.shooter.x + 10;
@@ -74,14 +72,15 @@ public class EnemyMissileSlow extends GameFigure {
             // dx > 0 , dy > 0
         }
         
-        missile1 = null;
-        missile2 = null;
+        launcherImage = null;
         
         try {
            
-            missile1 = ImageIO.read(getClass().getResource("/resources/slowMissile.png"));
-            missile2 = ImageIO.read(getClass().getResource("/resources/slowMissile2.png"));
-
+            launcherImage = ImageIO.read(getClass().getResource("/resources/enemyMissile0.png"));
+            launcherImage2 = ImageIO.read(getClass().getResource("/resources/enemyMissile1.png"));
+            explosion1 = ImageIO.read(getClass().getResource("/resources/explosion0.png"));
+            explosion2 = ImageIO.read(getClass().getResource("/resources/explosion1.png"));
+            explosion3 = ImageIO.read(getClass().getResource("/resources/explosion2.png"));
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");
            System.exit(-1);
@@ -89,25 +88,40 @@ public class EnemyMissileSlow extends GameFigure {
         
     }
 
+    
+
     @Override
     public void render(Graphics2D g) {
         if(state == STATE_ALIVE)
         {
             if(animationCheck == 0){
-                g.drawImage(missile1, (int)super.x, (int)super.y, 
+                g.drawImage(launcherImage, (int)super.x, (int)super.y, 
                 SIZE, SIZE, null);
                 animationCheck = 1;
             }
             else{
-                g.drawImage(missile2, (int)super.x, (int)super.y, 
+                g.drawImage(launcherImage2, (int)super.x, (int)super.y, 
                 SIZE, SIZE, null);
                 animationCheck = 0;
             }
         }
         if(state == STATE_DYING){
-
-            //Create animation of player for "Slow Effect"
-            //-----------------------------------
+            if(explosionCounter ==0)
+            {
+                 g.drawImage(explosion1, (int)super.x, (int)super.y, 
+                SIZE, SIZE, null);
+            }
+            if(explosionCounter ==1)
+            {
+                g.drawImage(explosion2, (int)super.x, (int)super.y, 
+                SIZE, SIZE, null);
+            }
+            if(explosionCounter ==2)
+            {
+                g.drawImage(explosion3, (int)super.x, (int)super.y, 
+                SIZE, SIZE, null);
+            }
+         
         }
     }
 
@@ -121,22 +135,28 @@ public class EnemyMissileSlow extends GameFigure {
         }
     }
 
-    public void updateLocation() {        
+    public void updateLocation() {
+        
         super.x += dx;
         super.y += dy;
     }
 
-    public void updateSize() {}
+    public void updateSize() {
+        explosionCounter++;
+         
+    }
 
     public void updateState() {
         if (state == STATE_ALIVE) {
             double distance = target.distance(super.x, super.y);
             boolean targetReached = distance <= 2.0;
-            if (targetReached || (super.x > Main.WIN_WIDTH || super.y > Main.WIN_HEIGHT)) {
+            if (targetReached) {
                 this.goNextState();
             }
         } else if (state == STATE_DYING) {
+            if (explosionCounter >= MAX_EXPLOSION_SIZE) {
                 this.goNextState();
+            }
         }
     }
 
@@ -149,4 +169,5 @@ public class EnemyMissileSlow extends GameFigure {
     public void shoot() {
        System.out.println("Enemy Missiles Shoots");
     }
+
 }

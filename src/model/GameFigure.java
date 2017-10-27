@@ -26,6 +26,12 @@ public abstract class GameFigure implements CollisionBox {
     //Melee 
     //-----------------------------------
     public int swingTimer = 0;
+
+    //Warlock
+    //-----------------------------------
+    public int bossTimer = 0;
+    public int summonTimer = 0;
+    public int petSwingTimer = 0;
     
     public GameFigure(float x, float y) {
         this.x = x;
