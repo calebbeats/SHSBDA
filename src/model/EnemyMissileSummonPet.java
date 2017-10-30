@@ -47,6 +47,10 @@ public class EnemyMissileSummonPet extends GameFigure {
         
         super(sx, sy);
         
+        //Damage
+        //Go-To method @ Line 147
+        DAMAGE = 20;
+        
         float tx = GameData.shooter.x + 10;
         float ty = Main.gameData.shooter.y + 10;
         this.target = new Point2D.Float(tx, ty);

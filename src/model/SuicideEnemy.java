@@ -49,7 +49,6 @@ public class SuicideEnemy extends GameFigure {
     // Public -> Target
     //------------------------------
     public Point2D.Float target;
-    public static int DAMAGE = 250;
 
     //Sprite
     //------------------------------
@@ -61,9 +60,14 @@ public class SuicideEnemy extends GameFigure {
     private Image explosion3;
 
     public SuicideEnemy(float sx, float sy) {
+        
         super(sx, sy);
         health = 1;
         maxHealth = health;
+        
+        //Damage
+        //Go-To method @ Line 166
+        DAMAGE = 250;
         
         tx = Main.gameData.shooter.x + 10;
         ty = Main.gameData.shooter.y + 10;

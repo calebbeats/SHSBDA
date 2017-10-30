@@ -27,11 +27,16 @@ public abstract class GameFigure implements CollisionBox {
     //-----------------------------------
     public int swingTimer = 0;
 
-    //Warlock
+    //Boss Summon
     //-----------------------------------
     public int bossTimer = 0;
     public int summonTimer = 0;
     public int petSwingTimer = 0;
+    
+    //Enemy Missile Damage
+    //Used in all Missile Classes and Suicide Enemy
+    //-----------------------------------
+    public static int DAMAGE;
     
     public GameFigure(float x, float y) {
         this.x = x;

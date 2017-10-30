@@ -47,13 +47,17 @@ public class EnemyMissileSlow extends GameFigure {
     //------------------------------
     public Color color;
     public Point2D.Float target;
-    public static int DAMAGE = 5; //Damage Dealt on collision
 
     private Image missile1;
     private Image missile2;
 
     public EnemyMissileSlow(float sx, float sy) {
+        
         super(sx, sy);
+        
+        //Damage
+        //Go-To method @ Line 143
+        DAMAGE = 5;
         
         float tx = Main.gameData.shooter.x + 10;
         float ty = Main.gameData.shooter.y + 10;

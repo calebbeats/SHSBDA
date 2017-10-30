@@ -34,7 +34,6 @@ public class EnemyMissileWarlock extends GameFigure {
         //Public
         public Color color;
         public Point2D.Float target; //Target (Shooter)
-        public static int DAMAGE = 100; //Damage Dealth
     
     //Image
     //------------------------------
@@ -55,6 +54,10 @@ public class EnemyMissileWarlock extends GameFigure {
     public EnemyMissileWarlock(float sx, float sy) {
         
         super(sx, sy);
+        
+        //Damage
+        //Go-To method @ Line 158
+        DAMAGE = 100;
         
         float tx = Main.gameData.shooter.x + 10;
         float ty = Main.gameData.shooter.y + 10;
