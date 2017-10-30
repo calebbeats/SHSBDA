@@ -31,7 +31,6 @@ public class EnemyMissile extends GameFigure {
         private int animationCheck=0; //Check for movement aniamtion
 
         //Public
-        public static int DAMAGE = 20; //Damage Dealt on collision
         public Color color; //color (???)
         public Point2D.Float target; //Shooters location
     
@@ -52,7 +51,12 @@ public class EnemyMissile extends GameFigure {
      * @param color color of the missile
      */
     public EnemyMissile(float sx, float sy) {
+        
         super(sx, sy);
+        
+        //Damage
+        //Go-To method @ Line 166
+        DAMAGE = 20;
         
         float tx = Main.gameData.shooter.x + 10;
         float ty = Main.gameData.shooter.y + 10;

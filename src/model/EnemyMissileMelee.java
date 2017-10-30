@@ -26,7 +26,6 @@ public class EnemyMissileMelee extends GameFigure {
 
         //Public
         public Point2D.Float target; //Target
-        public static int DAMAGE = 20; //Damage Dealth
         
     //Images
     //------------------------------
@@ -46,6 +45,10 @@ public class EnemyMissileMelee extends GameFigure {
     public EnemyMissileMelee(float sx, float sy) {
         
         super(sx, sy);
+        
+        //Damage
+        //Go-To method @ Line 147
+        DAMAGE = 20;
         
         float tx = GameData.shooter.x + 10;
         float ty = Main.gameData.shooter.y + 10;
