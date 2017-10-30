@@ -73,10 +73,10 @@ public class EnemyMissileMelee extends GameFigure {
         }
 
         try {
-            swordUp = ImageIO.read(getClass().getResource("/resources/swordUp.png"));
-            swordDown = ImageIO.read(getClass().getResource("/resources/swordDown.png"));
-            swordRight = ImageIO.read(getClass().getResource("/resources/swordRight.png"));
-            swordLeft = ImageIO.read(getClass().getResource("/resources/swordLeft.png"));
+            swordUp = ImageIO.read(getClass().getResource("/resources/eMeleeAttackRight.png"));
+            swordDown = ImageIO.read(getClass().getResource("/resources/eMeleeAttackLeft.png"));
+            swordRight = ImageIO.read(getClass().getResource("/resources/eMeleeAttackRight.png"));
+            swordLeft = ImageIO.read(getClass().getResource("/resources/eMeleeAttackLeft.png"));
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open image.");
             System.exit(-1);
