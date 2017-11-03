@@ -123,7 +123,7 @@ public class Shooter extends GameFigure {
         g.drawRect(110, 460, 20, 20);
         for (int i = 0; i < 4; i++) {
             if (inventory[i] != null) {
-                g.drawImage(inventory[i].getIcon(), 20 + i * 30, 420, 20, 20, null);
+                g.drawImage(inventory[i].getIcon(), 20 + i * 30, 460, 20, 20, null);
             }
         }
     }
@@ -149,6 +149,10 @@ public class Shooter extends GameFigure {
             if (!sliding) {
                 slidingVelocityX = velocityX;
                 slidingVelocityY = velocityY;
+            }
+            if(mana<maxMana)
+            {
+                mana++;
             }
             calculateAngleOfView();
 
@@ -428,12 +432,9 @@ public class Shooter extends GameFigure {
 
     public void testItem() {
         System.out.println("Adding mana augment");
-        equipItem(new GemOfMana(1), tempCounter);
-        tempCounter++;
-        tempRemovalCounter++;
-        if (tempCounter == 3) {
-            tempCounter = 0;
-        }
+        inventory[0] = new DefensivePulse(2);
+        inventory[1] = new FireNovaItem(3);
+        inventory[2] = new TeleportStone(4);
     }
 
     public void testRemoval() {

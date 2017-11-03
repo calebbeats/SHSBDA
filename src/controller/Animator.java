@@ -26,6 +26,7 @@ import model.Melee;
 import model.EnemyMissileMelee;
 import model.Missile;
 import model.MyBullet;
+import model.Shield;
 import view.MainWindow;
 
 public class Animator implements Runnable {
@@ -147,7 +148,7 @@ public class Animator implements Runnable {
             //Enemy Takes Damage
             //------------------------------
             for (GameFigure f : Main.gameData.friendFigures) { //only process gamefigure collisionboxes if they are weapon or missile
-                if (f instanceof Missile || f instanceof Melee || f instanceof MyBullet) {
+                if (f instanceof Missile || f instanceof Melee || f instanceof MyBullet || f instanceof Shield) {
                     if (f.getCollisionBox().intersects(s.getCollisionBox()) /*&& f.state != f.STATE_DYING && s.state != s.STATE_DYING **/
                             && f.state != f.STATE_DONE
                             && s.state != s.STATE_DONE) {

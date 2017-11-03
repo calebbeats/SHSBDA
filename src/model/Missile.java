@@ -59,7 +59,19 @@ public class Missile extends GameFigure {
             dy = -dy;
         } else if (tx < sx && ty > sy) { // target is lower-left side
             dx = -dx;
-        } else { // target is lower-right side
+        } 
+        else if(sx == tx)
+        {
+            dx = dx;
+            dy= dy;
+                  
+        }
+        else if(sy == ty)
+        {
+            dx = dx;
+            dy= dy;
+        }
+        else { // target is lower-right side
             // dx > 0 , dy > 0
         }
 

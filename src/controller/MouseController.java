@@ -1,5 +1,7 @@
 package controller;
 
+import java.awt.MouseInfo;
+import java.awt.PointerInfo;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -78,9 +80,10 @@ public class MouseController extends MouseAdapter {
                     Main.gameData.friendFigures.add(m);
                 }
                 if (me.getButton() == MouseEvent.BUTTON3 && !shooter.isSprint()) {
-                    if (KeyController.chooseMissile == false) {
+                    if (KeyController.chooseMissile == false && shooter.getMana() > 9) {
                         //Right click detected, initiate ranged attack
                         //shoot a missle at the mouse press location
+                        shooter.setMana(shooter.getMana()-10);
                         a.playAudio("/resources/shooterFBwoosh.wav");
                         Missile m = new Missile(
                                 shooter.getXofMissileShoot(),
@@ -173,4 +176,6 @@ public class MouseController extends MouseAdapter {
         }
         return false;
     }
+    
+    
 }

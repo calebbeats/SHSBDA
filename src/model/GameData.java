@@ -308,6 +308,10 @@ public class GameData {
             }
         }
     }
+    public void addFriendlyFigure(GameFigure g)
+    {
+        friendFigures.add(g);
+    }
 
     public void audio() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
 
