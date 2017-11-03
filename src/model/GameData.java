@@ -52,21 +52,110 @@ public class GameData {
         shooter = new Shooter(Main.WIN_WIDTH / 2, Main.WIN_HEIGHT / 2);
 
         //load enemies, terrain, and powerups based on current level
+        level = Main.gameLevel;        
         if (level == 1) {
-            terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 125, 125));
+            terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 0, 0));
             friendFigures.add(shooter);
             
             //TEST BLOCK FOR NORMAL
             //------------------------------
-                enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) Math.random() * 200));
+            //    enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) Math.random() * 200));
                 enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
-                enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
-                enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+                enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+                enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+            //    enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
+            //    enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
             
             //TEST BLOCK FOR BOSS
             //------------------------------
 //                enemyFigures.add(new BossSummon((int) (Math.random() * 500), (int) Math.random() * 200));                  
 //                enemyFigures.add(new BossWarlockPet((int) (Math.random() * 500), (int) Math.random() * 200));                  
+        } else if (level == 2){            
+            terrainFigures.add(new BlockTerrain(Main.WIN_WIDTH/4 , Main.WIN_HEIGHT/4  , 125, 125));
+            friendFigures.add(shooter);
+            enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+        } else if (level == 3){
+            shooter.setXY(Main.WIN_WIDTH/2, Main.WIN_HEIGHT - 125);
+            terrainFigures.add(new IceTerrain(Main.WIN_WIDTH/4, Main.WIN_HEIGHT/4, 200, 200));
+            friendFigures.add(shooter);
+            enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+        } else if(level == 4){
+            //THIS WILL BE A BOSS LEVEL, CHANGE!
+            terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 0, 0));
+            shooter.setXY(Main.WIN_WIDTH/2, Main.WIN_HEIGHT - 125);
+            friendFigures.add(shooter);
+            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+        } else if(level == 5){
+            terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 0, 0));
+            shooter.setXY(Main.WIN_WIDTH/2, Main.WIN_HEIGHT - 125);
+            friendFigures.add(shooter);
+            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+        } else if(level == 6){
+            terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 0, 0));
+            shooter.setXY(Main.WIN_WIDTH/2, Main.WIN_HEIGHT - 125);
+            friendFigures.add(shooter);
+            enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) Math.random() * 200));
+        } else if(level == 7){
+            terrainFigures.add(new BlockTerrain(Main.WIN_WIDTH/3 , Main.WIN_HEIGHT/4, 125, 125));
+            shooter.setXY(Main.WIN_WIDTH/2, Main.WIN_HEIGHT - 125);
+            friendFigures.add(shooter);
+            enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+        } else if(level == 8){
+            //BOSS LEVEL, CHANGE
+            terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 0, 0));
+            shooter.setXY(Main.WIN_WIDTH/2, Main.WIN_HEIGHT - 125);
+            friendFigures.add(shooter);
+            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+        } else if(level == 9){
+             terrainFigures.add(new BlockTerrain(Main.WIN_WIDTH/3 , Main.WIN_HEIGHT/4, 125, 125));
+            shooter.setXY(Main.WIN_WIDTH/2, Main.WIN_HEIGHT - 125);
+            friendFigures.add(shooter);
+            enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
+        } else if(level == 10){            
+            terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 0, 0));
+            shooter.setXY(Main.WIN_WIDTH/2, Main.WIN_HEIGHT - 125);
+            friendFigures.add(shooter);
+            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) Math.random() * 200));
+        } else if(level == 11){
+            terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 0, 0));
+            shooter.setXY(Main.WIN_WIDTH/2, Main.WIN_HEIGHT - 125);
+            friendFigures.add(shooter);
+            enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+             enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
+        } else if(level == 12){
+            //BOSS LEVEL CHANGE
+            terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 0, 0));
+            shooter.setXY(Main.WIN_WIDTH/2, Main.WIN_HEIGHT - 125);
+            friendFigures.add(shooter);
+            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
         }
         /*
         if((level % 4) == 0){
@@ -205,7 +294,6 @@ public class GameData {
                 Main.gameInitialize();
                 Main.gameState = Main.GameState.GameOver;
             } else {
-                level++;
                 GameFigure f;
                 ArrayList<GameFigure> removePowerUps = new ArrayList<>();
                 for (int i = 0; i < friendFigures.size(); i++) {

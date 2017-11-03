@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.GameData;
 import model.MediumPotion;
 import model.Melee;
 import model.Missile;
@@ -97,15 +98,28 @@ public class MouseController extends MouseAdapter {
                 }
                 break;
             case LevelComplete:
-                if (a.getC() != null) {
-                    a.getC().stop();
-                }
+//                if (a.getC() != null) {
+//                    a.getC().stop();
+//                }
                 if (px > Main.gamePanel.shopGameButton.x
                         && px < Main.gamePanel.shopGameButton.getMaxX()
                         && py > Main.gamePanel.shopGameButton.y
                         && py < Main.gamePanel.shopGameButton.getMaxY()) {
                     Main.gameState = Main.GameState.Shop;
+                }else if (px > Main.gamePanel.continueLevelButton.x
+                        && px < Main.gamePanel.continueLevelButton.getMaxX()
+                        && py > Main.gamePanel.continueLevelButton.y
+                        && py < Main.gamePanel.continueLevelButton.getMaxY()) {
+                    if(Main.gameLevel < 12){
+                        Main.gameLevel++;
+                        Main.gameData = new GameData();
+                        Main.animator = new Animator();
+                        Main.gameState = Main.GameState.Run;
+                    }else{
+                        Main.gameState = Main.GameState.Start;
+                    }
                 }
+                
                 break;
             case Shop:
                 if (px > Main.gamePanel.weakPotionButton.x

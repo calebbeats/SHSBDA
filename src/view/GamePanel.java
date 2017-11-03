@@ -28,7 +28,7 @@ public class GamePanel extends JPanel {
     public Graphics2D g2;
     public Rectangle startGameButton, highScoreButton, quitGameButton,
             shopGameButton, weakPotionButton, mediumPotionButton,
-            strongPotionButton, backButton;
+            strongPotionButton, backButton, continueLevelButton;
     private Image dbImage = null // double buffer image
             , startBackground, startForeground;
     private int rectangleBoxWidth, rectangleBoxHeight;
@@ -66,6 +66,10 @@ public class GamePanel extends JPanel {
         if (Main.gameState.equals(Main.GameState.LevelComplete)) {
             shopGameButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
                     50 + rectangleBoxHeight / 2,
+                    rectangleBoxWidth, rectangleBoxHeight);
+            
+            continueLevelButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
+                    (int) shopGameButton.getMaxY() + rectangleBoxHeight / 2,
                     rectangleBoxWidth, rectangleBoxHeight);
         }
         if (Main.gameState.equals(Main.GameState.Shop)) {
@@ -199,6 +203,9 @@ public class GamePanel extends JPanel {
                 g2.draw(shopGameButton);
                 g2.drawString("Shop Items", shopGameButton.x + 30,
                         shopGameButton.y + 30);
+                g2.draw(continueLevelButton);
+                g2.drawString("Continue", continueLevelButton.x + 30,
+                        continueLevelButton.y + 30);
                 break;
         }
     }
