@@ -72,20 +72,21 @@ public class GamePanel extends JPanel {
                     (int) shopGameButton.getMaxY() + rectangleBoxHeight / 2,
                     rectangleBoxWidth, rectangleBoxHeight);
         }
-        if (Main.gameState.equals(Main.GameState.Shop)) {
-            weakPotionButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
-                    50 + rectangleBoxHeight / 2,
-                    rectangleBoxWidth, rectangleBoxHeight);
-            mediumPotionButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
-                    (int) weakPotionButton.getMaxY() + rectangleBoxHeight / 2,
-                    rectangleBoxWidth, rectangleBoxHeight);
-            strongPotionButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
-                    (int) mediumPotionButton.getMaxY() + rectangleBoxHeight / 2,
-                    rectangleBoxWidth, rectangleBoxHeight);
-            backButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
-                    (int) strongPotionButton.getMaxY() + rectangleBoxHeight / 2,
-                    rectangleBoxWidth, rectangleBoxHeight);
-        }
+        //moved next if block to switch statement area to stop bug from being thrown
+//        if (Main.gameState.equals(Main.GameState.Shop)) {
+//            weakPotionButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
+//                    50 + rectangleBoxHeight / 2,
+//                    rectangleBoxWidth, rectangleBoxHeight);
+//            mediumPotionButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
+//                    (int) weakPotionButton.getMaxY() + rectangleBoxHeight / 2,
+//                    rectangleBoxWidth, rectangleBoxHeight);
+//            strongPotionButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
+//                    (int) mediumPotionButton.getMaxY() + rectangleBoxHeight / 2,
+//                    rectangleBoxWidth, rectangleBoxHeight);
+//            backButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
+//                    (int) strongPotionButton.getMaxY() + rectangleBoxHeight / 2,
+//                    rectangleBoxWidth, rectangleBoxHeight);
+//        }
         quitGameButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
                 startGameButton == null // Set the Y coordinate base game's state
                         ? height / 2 + rectangleBoxHeight / 2 + 25
@@ -154,6 +155,18 @@ public class GamePanel extends JPanel {
             case Quit:
                 break;
             case Shop:
+                weakPotionButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
+                    50 + rectangleBoxHeight / 2,
+                        rectangleBoxWidth, rectangleBoxHeight);
+                mediumPotionButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
+                        (int) weakPotionButton.getMaxY() + rectangleBoxHeight / 2,
+                        rectangleBoxWidth, rectangleBoxHeight);
+                strongPotionButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
+                        (int) mediumPotionButton.getMaxY() + rectangleBoxHeight / 2,
+                        rectangleBoxWidth, rectangleBoxHeight);
+                backButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
+                        (int) strongPotionButton.getMaxY() + rectangleBoxHeight / 2,
+                        rectangleBoxWidth, rectangleBoxHeight);
                 g2.setColor(Color.RED);
                 g2.setBackground(Color.BLACK);
                 g2.drawString("Items Shop", 250, 30);
