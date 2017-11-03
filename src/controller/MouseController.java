@@ -105,7 +105,13 @@ public class MouseController extends MouseAdapter {
                         && py > Main.gamePanel.shopGameButton.y
                         && py < Main.gamePanel.shopGameButton.getMaxY()) {
                     Main.gameState = Main.GameState.Shop;
+                }else if (px > Main.gamePanel.continueLevelButton.x
+                        && px < Main.gamePanel.continueLevelButton.getMaxX()
+                        && py > Main.gamePanel.continueLevelButton.y
+                        && py < Main.gamePanel.continueLevelButton.getMaxY()) {
+                    Main.gameState = Main.GameState.Run;
                 }
+                
                 break;
             case Shop:
                 if (px > Main.gamePanel.weakPotionButton.x

@@ -53,21 +53,22 @@ public class GameData {
 
         //load enemies, terrain, and powerups based on current level
         if (level == 1) {
-            terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 125, 125));
+            //terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 125, 125));
             friendFigures.add(shooter);
             
             //TEST BLOCK FOR NORMAL
             //------------------------------
-                enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) Math.random() * 200));
+            //    enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) Math.random() * 200));
                 enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
-                enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
-                enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+               // enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
+               // enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
             
             //TEST BLOCK FOR BOSS
             //------------------------------
 //                enemyFigures.add(new BossSummon((int) (Math.random() * 500), (int) Math.random() * 200));                  
 //                enemyFigures.add(new BossWarlockPet((int) (Math.random() * 500), (int) Math.random() * 200));                  
         }
+        
         /*
         if((level % 4) == 0){
             enemyFigures.add(new BossWarlock((int) (Math.random() * 500), (int) Math.random() * 200));                  
@@ -81,6 +82,8 @@ public class GameData {
         // since collision detection is not implemented yet.
         // However, if collision detected, simply set
         // f.state = GameFigure.STATE_DONE
+        
+        
         ArrayList<GameFigure> removeEnemies = new ArrayList<>();
         GameFigure f;
         for (int i = 0; i < enemyFigures.size(); i++) {
@@ -217,6 +220,13 @@ public class GameData {
                 friendFigures.removeAll(removePowerUps);
                 terrainFigures.clear();
                 Main.gameState = Main.GameState.LevelComplete;
+                
+                switch(level){
+                case 2:
+                    enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
+                    levelComplete = false;
+                    break;
+                }   
             }
         }
     }
@@ -236,4 +246,13 @@ public class GameData {
         }
 
     }
+
+    public boolean isLevelComplete() {
+        return levelComplete;
+    }
+
+    public void setLevelComplete(boolean levelComplete) {
+        this.levelComplete = levelComplete;
+    }
+     
 }
