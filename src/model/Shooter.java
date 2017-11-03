@@ -441,4 +441,9 @@ public class Shooter extends GameFigure {
         unequipItem(tempRemovalCounter);
         tempRemovalCounter--;
     }
+    
+    public void setXY(float x, float y){
+        this.x = x;
+        this.y = y;
+    }
 }

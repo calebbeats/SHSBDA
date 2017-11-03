@@ -26,6 +26,8 @@ public class Main {
     public static int WIN_WIDTH = 600;
     public static int WIN_HEIGHT = 600;
     public static JLabel posterScreen;
+    
+    public static int gameLevel = 1;
 
     public static void main(String[] args) {
         gameInitialize();
