@@ -88,7 +88,7 @@ public class GameData {
             terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 0, 0));
             shooter.setXY(Main.WIN_WIDTH / 2, Main.WIN_HEIGHT - 125);
             friendFigures.add(shooter);
-            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
+            enemyFigures.add(new BossSummon((int) (Math.random() * 500), (int) Math.random() * 200));
         } else if (level == 5) {
             terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 0, 0));
             shooter.setXY(Main.WIN_WIDTH / 2, Main.WIN_HEIGHT - 125);
@@ -251,11 +251,11 @@ public class GameData {
                 enemyFigures.add(new EnemyMissileWarlock(g.x, g.y));
             }
 
-//            //BOSS -> Summon Pet
-//            //---------------------------------
-//            if (g.bossTimer == 25 || g.bossTimer == 75) {
-//                enemyFigures.add(new BossSummonPet(g.x, g.y));
-//            }          
+            //BOSS -> Summon Pet
+            //---------------------------------
+            if (g.bossTimer == 25 || g.bossTimer == 75) {
+                enemyFigures.add(new BossSummonPet(g.x, g.y));
+            }          
         }
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
