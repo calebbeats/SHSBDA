@@ -16,6 +16,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import static view.HighScore.checkScore;
 
 public class GameData {
 
@@ -182,8 +183,6 @@ public class GameData {
             } else if (f.state == GameFigureState.STATE_DONE) {
                 multiplier += 1;
                 MainWindow.coins += multiplier;
-                MainWindow.scoreText.setText("Score: "
-                        + MainWindow.score + " || Coins: " + MainWindow.coins);
                 removeEnemies.add(f);
                 try {
                     audio();
@@ -281,16 +280,23 @@ public class GameData {
         }
     }
 
-    private void levelCheck() {
+    private void levelCheck() throws IOException {
         //if current level is complete
         //increment level counter
         //clear powerups and all terrain from the screen
         //display message at top indicating level complete and how many coins aquired
         if (levelComplete) {
-            if (playerDead) {
+            if (playerDead || level == 13) {
                 Main.gameInitialize();
-                Main.gameState = Main.GameState.GameOver;
-            } else {
+                if (playerDead) {
+                    Main.gameState = Main.GameState.GameOver;
+                }
+                else
+                    Main.gameState = Main.GameState.Winner;
+                Main.gameLevel = 1;
+                checkScore();
+            }
+            else {
                 GameFigure f;
                 ArrayList<GameFigure> removePowerUps = new ArrayList<>();
                 for (int i = 0; i < friendFigures.size(); i++) {
