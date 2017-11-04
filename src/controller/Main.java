@@ -16,7 +16,7 @@ import view.MainWindow;
 public class Main {
 
     public static enum GameState {
-        Start, Run, Pause, Quit, LevelComplete, GameOver, Shop
+        Start, Run, Pause, Quit, LevelComplete, GameOver, Shop, Winner
     }
 
     public static GamePanel gamePanel;
