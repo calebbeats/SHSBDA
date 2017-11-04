@@ -324,4 +324,8 @@ public class GameData {
         }
 
     }
+
+    void addFriendlyFigure(GameFigure g) {
+        friendFigures.add(g);
+    }
 }
