@@ -44,6 +44,7 @@ public class Animator implements Runnable {
             switch (Main.gameState) {
                 case Start:
                 case Pause:
+                case Winner:
                 case GameOver:
                 case LevelComplete:
                 case Shop:
@@ -237,9 +238,8 @@ public class Animator implements Runnable {
                     }
                     friendFigure.goNextState();
                     //collidableFigure.goNextState();                        
-                    MainWindow.scoreText.setText("Score: "
-                            + MainWindow.score + " || Coins: "
-                            + MainWindow.coins);
+                   
+
                 }
             });
         });

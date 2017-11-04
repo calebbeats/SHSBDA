@@ -36,6 +36,34 @@ public class MouseController extends MouseAdapter {
         switch (Main.gameState) {
             case Start:
             case Pause:
+            case Winner:
+                if (!Main.gameState.equals(Main.GameState.Pause)
+                        && px > Main.gamePanel.startGameButton.x
+                        && px < Main.gamePanel.startGameButton.getMaxX()
+                        && py > Main.gamePanel.startGameButton.y
+                        && py < Main.gamePanel.startGameButton.getMaxY()) {
+                    if (a.getC() != null) {
+                        a.getC().stop();
+                    }
+                    a.playAudio("/resources/chugchug.wav");
+                    Main.gameState = Main.GameState.Run;
+                } else if (px > Main.gamePanel.quitGameButton.x
+                        && px < Main.gamePanel.quitGameButton.getMaxX()
+                        && py > Main.gamePanel.quitGameButton.y
+                        && py < Main.gamePanel.quitGameButton.getMaxY()) {
+                    System.exit(0);
+                } else if (px > Main.gamePanel.highScoreButton.x
+                        && px < Main.gamePanel.highScoreButton.getMaxX()
+                        && py > Main.gamePanel.highScoreButton.y
+                        && py < Main.gamePanel.highScoreButton.getMaxY()) {
+                    try {
+                        HighScore.createFrame();
+                    } catch (IOException ex) {
+                        Logger.getLogger(MouseController.class.getName())
+                                .log(Level.SEVERE, null, ex);
+                    }
+                }
+                break;
             case GameOver:
                 if (!Main.gameState.equals(Main.GameState.Pause)
                         && px > Main.gamePanel.startGameButton.x
@@ -122,8 +150,6 @@ public class MouseController extends MouseAdapter {
                         && py < Main.gamePanel.weakPotionButton.getMaxY()
                         && inventoryCapacityCheck() && MainWindow.coins >= 1) {
                     MainWindow.coins -= 1;
-                    MainWindow.scoreText.setText("Score: " + MainWindow.score
-                            + " || Coins: " + MainWindow.coins);
                     Shooter.inventory[index] = new WeakPotion(1);
                 } else if (px > Main.gamePanel.mediumPotionButton.x
                         && px < Main.gamePanel.mediumPotionButton.getMaxX()
@@ -131,8 +157,6 @@ public class MouseController extends MouseAdapter {
                         && py < Main.gamePanel.mediumPotionButton.getMaxY()
                         && inventoryCapacityCheck() && MainWindow.coins >= 2) {
                     MainWindow.coins -= 2;
-                    MainWindow.scoreText.setText("Score: " + MainWindow.score
-                            + " || Coins: " + MainWindow.coins);
                     Shooter.inventory[index] = new MediumPotion(1);
                 } else if (px > Main.gamePanel.strongPotionButton.x
                         && px < Main.gamePanel.strongPotionButton.getMaxX()
@@ -140,8 +164,6 @@ public class MouseController extends MouseAdapter {
                         && py < Main.gamePanel.strongPotionButton.getMaxY()
                         && inventoryCapacityCheck() && MainWindow.coins >= 3) {
                     MainWindow.coins -= 3;
-                    MainWindow.scoreText.setText("Score: " + MainWindow.score
-                            + " || Coins: " + MainWindow.coins);
                     Shooter.inventory[index] = new StrongPotion(1);
                 } else if (px > Main.gamePanel.backButton.x
                         && px < Main.gamePanel.backButton.getMaxX()
