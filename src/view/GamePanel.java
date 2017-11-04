@@ -140,6 +140,7 @@ public class GamePanel extends JPanel {
                         highScoreButton.y + 30);
                 break;
             case Run:
+                Main.quatree.render(g2);
                 g2.setBackground(Color.BLACK);
                 for (GameFigure f : Main.gameData.terrainFigures) {
                     f.render(g2);
