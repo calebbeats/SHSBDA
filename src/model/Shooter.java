@@ -78,7 +78,7 @@ public class Shooter extends GameFigure {
         maxHealth = health;
         maxMana = mana;
         weaponPower = 1;
-        lowHealthValue = 25;
+        lowHealthValue = 100;
         lowHealth = false;
 //        inventory = new Item[4];
 
@@ -122,10 +122,10 @@ public class Shooter extends GameFigure {
             float thickness = lowHealthCounter;
             Stroke oldStroke = g.getStroke();
             g.setStroke(new BasicStroke(thickness));
-            int alpha = 100; // 50% transparent
+            int alpha = 127; // 50% transparent
             Color myColor = new Color(255, 0, 0, alpha);
             g.setColor(myColor);
-            g.drawRect(0, 0, Main.WIN_WIDTH - 5, Main.WIN_HEIGHT - 50);
+            g.drawRect(0, 0, Main.WIN_WIDTH - 8, Main.WIN_HEIGHT - 30);
             g.setStroke(oldStroke);
             if (lowHealthPhase == 1 && lowHealthMovement == 1) {
                 lowHealthCounter++;
