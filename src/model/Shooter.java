@@ -78,7 +78,7 @@ public class Shooter extends GameFigure {
         maxHealth = health;
         maxMana = mana;
         weaponPower = 1;
-        lowHealthValue = 100;
+        lowHealthValue = 30;
         lowHealth = false;
 //        inventory = new Item[4];
 
