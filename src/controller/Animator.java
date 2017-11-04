@@ -93,10 +93,29 @@ public class Animator implements Runnable {
         Main.gameData.friendFigures.forEach(friendFigure -> {
             Main.quatree.insert(friendFigure);
         });
-        Main.gameData.enemyFigures.forEach(friendFigure -> {
-            Main.quatree.insert(friendFigure);
+        Main.gameData.enemyFigures.forEach(enemyFigure -> {
+            Main.quatree.insert(enemyFigure);
+        });
+        Main.gameData.terrainFigures.forEach(terrainFigure -> {
+            Main.quatree.insert(terrainFigure);
         });
         List<GameFigure> returnCollidableFigures = new ArrayList<>();
+        Main.gameData.terrainFigures.forEach(terrainFigure -> {
+            Main.quatree.retrieve(returnCollidableFigures, terrainFigure);
+            
+            // detection for enemy attacks and friendly attacks hitting terrain
+            returnCollidableFigures.forEach(collidableFigure -> {
+                if (collidableFigure.getCollisionBox().intersects(terrainFigure.getCollisionBox())) {
+                    if (!(collidableFigure instanceof Shooter || collidableFigure instanceof BlinkMage
+                        || collidableFigure instanceof SuicideEnemy
+                        || collidableFigure instanceof MeleeEnemy || (collidableFigure instanceof SlowMage))
+                            && terrainFigure instanceof BlockTerrain) {
+                        collidableFigure.goNextState();
+                    }
+                }
+            });
+        });
+        returnCollidableFigures.clear();
         Main.gameData.friendFigures.forEach(friendFigure -> {
             Main.quatree.retrieve(returnCollidableFigures, friendFigure);
 
@@ -113,8 +132,9 @@ public class Animator implements Runnable {
                 //Shooter Takes Damage
                 //------------------------------
                 if (Main.gameData.shooter.getCollisionBox().intersects(collidableFigure
-                        .getCollisionBox()) && collidableFigure.state != collidableFigure.STATE_DYING) { //if shooter intersects any enemyfigure do this
+                        .getCollisionBox()) && collidableFigure.state != collidableFigure.STATE_DYING && collidableFigure.state != collidableFigure.STATE_DONE) { //if shooter intersects any enemyfigure do this
                     if (collidableFigure instanceof EnemyMissile) {//this is if a hurtful enemy missile happens
+                        collidableFigure.goNextState();
                         collidableFigure.goNextState();
                         GameData.multiplier = 0;
                         EnemyMissile.dealDamage();
@@ -220,6 +240,7 @@ public class Animator implements Runnable {
                     MainWindow.scoreText.setText("Score: "
                             + MainWindow.score + " || Coins: "
                             + MainWindow.coins);
+
                     //detection for enemy attacks hitting terrain
                     for (GameFigure t : Main.gameData.terrainFigures) {
                         if (collidableFigure.getCollisionBox().intersects(t.getCollisionBox())
@@ -233,18 +254,156 @@ public class Animator implements Runnable {
                 }
             });
         });
-
-        //detection for freindly attacks hitting terrain
-        for (GameFigure m : Main.gameData.friendFigures) {
-            for (GameFigure t : Main.gameData.terrainFigures) {
-                if (m.getCollisionBox().intersects(t.getCollisionBox())) {
-                    if (!(m instanceof Shooter) && (t instanceof BlockTerrain)) {
-                        m.goNextState();
-                    }
-                }
-            }
-        }
-
+//        // detect collisions between friendFigure and enemyFigures
+//        // if detected, mark it as STATE_DONE, so that
+//        // they can be removed at update() method
+//        for (GameFigure s : Main.gameData.enemyFigures) {            
+//                    
+//            /* * * * * * * * * * * * * * * * * * * * * *         
+//            *   ____  _                 _              *
+//            *  / ___|| |__   ___   ___ | |_ ___ _ __   *
+//            *  \___ \| '_ \ / _ \ / _ \| __/ _ \ '__|  *
+//            *   ___) | | | | (_) | (_) | ||  __/ |     *
+//            *  |____/|_| |_|\___/ \___/ \__\___|_|     *                                       
+//            *                                          *
+//            * * * * * * * * * * * * * * * * * * * * * */
+//            
+//            //Shooter Takes Damage
+//            //------------------------------
+//            if (Main.gameData.shooter.getCollisionBox().intersects(s
+//                    .getCollisionBox()) && s.state != s.STATE_DYING) { //if shooter intersects any enemyfigure do this
+//                if (s instanceof EnemyMissile) {//this is if a hurtful enemy missile happens
+//                    s.goNextState();
+//                    GameData.multiplier = 0;
+//                    EnemyMissile.dealDamage();
+//                    
+//                } else if (s instanceof SuicideEnemy) {//do the enemy slow missile stuff here
+//                    s.goNextState();
+//                    GameData.multiplier = 0;
+//                    SuicideEnemy.dealDamage();
+//                    
+//                } else if (s instanceof EnemyMissileSlow) {//do the enemy slow missile stuff here
+//                    s.goNextState();
+//                    EnemyMissileSlow.dealDamage();
+//                    for (int i = 0; i < 5; i++) {
+//                        GameData.shooter.isSprint(FALSE);
+//                        System.out.println("Counter = " + i);
+//                    }
+//                    if (GameData.shooter.isSprint() == FALSE) {
+//                        System.out.println("Sprint is off");
+//                    }
+//                    
+//                } else if (s instanceof EnemyMissileMelee) {//this is where the enemy melee attacks would go
+//                    s.goNextState();
+//                    GameData.multiplier = 0;
+//                    EnemyMissileMelee.dealDamage();
+//                    
+//                } else if (s instanceof EnemyMissileWarlock) {
+//                    s.goNextState();
+//                    GameData.multiplier =0;
+//                    EnemyMissileWarlock.dealDamage();
+//                    
+//                } else if (s instanceof EnemyMissileSummonPet){
+//                    GameData.multiplier =0;
+//                    EnemyMissileSummonPet.dealDamage();
+//                }
+//            }
+//            
+//           /* * * * * * * * * * * * * * * * * * * * *          
+//           *    _____                               * 
+//           *   | ____|_ __   ___ _ __ ___  _   _    *
+//           *   |  _| | '_ \ / _ \ '_ ` _ \| | | |   *
+//           *   | |___| | | |  __/ | | | | | |_| |   *
+//           *   |_____|_| |_|\___|_| |_| |_|\__, |   *
+//           *                               |___/    *
+//            * * * * * * * * * * * * * * * * * * * * */
+//            
+//            //Enemy Takes Damage
+//            //------------------------------
+//            for (GameFigure f : Main.gameData.friendFigures) { //only process gamefigure collisionboxes if they are weapon or missile
+//                if (f instanceof Missile || f instanceof Melee || f instanceof MyBullet || f instanceof Shield) {
+//                    if (f.getCollisionBox().intersects(s.getCollisionBox()) /*&& f.state != f.STATE_DYING && s.state != s.STATE_DYING **/
+//                            && f.state != f.STATE_DONE
+//                            && s.state != s.STATE_DONE) {
+//                        
+//                        //Enemy -> SuicideEnemy
+//                        //------------------------------
+//                        if(s instanceof SuicideEnemy){
+//                            ((SuicideEnemy) s).takeDamage(Shooter.getWeaponPower());
+//                            if(((SuicideEnemy) s).getHealth() <= 0){
+//                                s.goNextState();
+//                            }
+//                            MainWindow.score += 5;
+//                        } else if (s instanceof MeleeEnemy){
+//                          //Enemy -> MeleeEnemy
+//                          //------------------------------
+//                            ((MeleeEnemy) s).takeDamage(Shooter.getWeaponPower());
+//                            if(((MeleeEnemy) s).getHealth() <= 0){
+//                                s.goNextState();
+//                            }
+//                            MainWindow.score += 5;
+//                        } else if (s instanceof SlowMage){
+//                          //Enemy -> SlowMage
+//                          //------------------------------
+//                            ((SlowMage) s).takeDamage(Shooter.getWeaponPower());
+//                            if(((SlowMage) s).getHealth() <= 0){ //if health goes to 0, it dies
+//                                s.goNextState();
+//                            }
+//                        } else if (s instanceof BlinkMage){
+//                          //Enemy -> BlinkMage
+//                          //------------------------------
+//                            ((BlinkMage) s).takeDamage(Shooter.getWeaponPower());
+//                            if(((BlinkMage) s).getHealth() <= 0){
+//                                s.goNextState();
+//                            }
+//                            MainWindow.score += 5;
+//                        } else if (s instanceof BossSummon) {
+//                          //Boss -> BossWarlock
+//                          //------------------------------
+//                            ((BossSummon) s).takeDamage(5);
+//                            if(((BossSummon)s).getHealth() <= 0){
+//                                s.goNextState();
+//                            }
+//                        } else if (s instanceof BossSummon) {
+//                          //Boss -> BossWarlockPet
+//                          //------------------------------
+//                            ((BossSummonPet) s).takeDamage(5);
+//                            if(((BossSummonPet)s).getHealth() <= 0){
+//                                s.goNextState();
+//                            }
+//                        } else{
+//                            s.goNextState();
+//                        }
+//                        f.goNextState();
+//                        //s.goNextState();                        
+//                        MainWindow.scoreText.setText("Score: "
+//                                + MainWindow.score + " || Coins: "
+//                                + MainWindow.coins);
+//                    }
+//                }
+//            }
+//
+//            //detection for enemy attacks hitting terrain
+//            for (GameFigure t : Main.gameData.terrainFigures) {
+//                if (s.getCollisionBox().intersects(t.getCollisionBox())
+//                        && !((s instanceof BlinkMage)
+//                        || (s instanceof SuicideEnemy)
+//                        || (s instanceof MeleeEnemy) || (s instanceof SlowMage))
+//                        && (t instanceof BlockTerrain)) {
+//                    s.goNextState();
+//                }
+//            }
+//        }
+//        //detection for freindly attacks hitting terrain
+//        for (GameFigure m : Main.gameData.friendFigures) {
+//            for (GameFigure t : Main.gameData.terrainFigures) {
+//                if (m.getCollisionBox().intersects(t.getCollisionBox())) {
+//                    if (!(m instanceof Shooter) && (t instanceof BlockTerrain)) {
+//                        m.goNextState();
+//                    }
+//                }
+//            }
+//        }
     }
 
     private void gamePanelRender() {

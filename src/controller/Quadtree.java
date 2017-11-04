@@ -5,8 +5,19 @@ import java.util.List;
 import java.util.ArrayList;
 import model.GameFigure;
 
+/**
+ * Quadtree is implemented with the help from this tutorial with some
+ * modifications
+ * https://gamedevelopment.tutsplus.com/tutorials/quick-tip-use-quadtrees-to-detect-likely-collisions-in-2d-space--gamedev-374
+ *
+ * @author hungt
+ */
 public class Quadtree {
 
+    /**
+     * MAX_LEVELS defines how many levels can quadtree be divided MAX_OBJECTS
+     * defines how many objects a node can hold before splitting
+     */
     private final static int MAX_LEVELS = 5, MAX_OBJECTS = 5;
 
     private final int level;
@@ -21,14 +32,25 @@ public class Quadtree {
         gameFigureList = new ArrayList<>();
     }
 
+    /**
+     * Clear the nodeList for new insertion
+     */
     public synchronized void clear() {
         gameFigureList.clear();
         nodeList.clear();
     }
 
+    /**
+     * Insert objects into appropriate node
+     *
+     * @param gameFigure
+     */
     public synchronized void insert(GameFigure gameFigure) {
+
+        // Get the quadrant of the node where the gameFigure should be inserted
         if (!nodeList.isEmpty()) {
-            int index = getIndex(gameFigure.object);
+            int index = getIndex(new Point((int) gameFigure.x,
+                    (int) gameFigure.y));
 
             if (index != -1) {
                 nodeList.get(index).insert(gameFigure);
@@ -38,6 +60,7 @@ public class Quadtree {
 
         gameFigureList.add(gameFigure);
 
+        // Insert all possible gameFigures into the node specified by the index
         if (gameFigureList.size() > MAX_OBJECTS && level < MAX_LEVELS) {
             if (nodeList.isEmpty()) {
                 split();
@@ -45,7 +68,9 @@ public class Quadtree {
 
             int i = 0;
             while (i < gameFigureList.size()) {
-                int index = getIndex(gameFigureList.get(i).object);
+                Point point = new Point((int) gameFigureList.get(i).x,
+                        (int) gameFigureList.get(i).y);
+                int index = getIndex(point);
                 if (index != -1) {
                     nodeList.get(index).insert(gameFigureList.remove(i));
                 } else {
@@ -55,9 +80,18 @@ public class Quadtree {
         }
     }
 
+    /**
+     * Determines collidable objects based on location of gameFigure
+     *
+     * @param collidableObjectList
+     * @param gameFigure
+     * @return List of collidableObjectList
+     */
     public synchronized List retrieve(List collidableObjectList, GameFigure gameFigure) {
-        int index = getIndex(gameFigure.object);
+        // Get the index of the node that gameFigure may be collide with other objects
+        int index = getIndex(new Point((int) gameFigure.x, (int) gameFigure.y));
 
+        // Get all the objects in the node specified by the index
         if (index != -1 && !nodeList.isEmpty()) {
             nodeList.get(index).retrieve(collidableObjectList, gameFigure);
         }
@@ -67,6 +101,11 @@ public class Quadtree {
         return collidableObjectList;
     }
 
+    /**
+     * Render the grid on canvas to show how quadtree works
+     *
+     * @param g2
+     */
     public synchronized void render(Graphics2D g2) {
         g2.draw(node);
 
@@ -75,6 +114,9 @@ public class Quadtree {
         });
     }
 
+    /**
+     * Split current node into four subnodes
+     */
     private synchronized void split() {
         int subWidth = (int) node.getWidth() / 2, subHeight = (int) node.getHeight() / 2;
 
@@ -85,7 +127,13 @@ public class Quadtree {
                 subHeight)));
     }
 
-    private synchronized int getIndex(Rectangle object) {
+    /**
+     * Determines the index of the subnode that object is in
+     *
+     * @param object
+     * @return Index of the subnode
+     */
+    private synchronized int getIndex(Point object) {
         boolean topQuadrant = (new Rectangle(node.x, node.y, (int) node.getWidth(), (int) node.getHeight() / 2))
                 .contains(object),
                 bottomQuadrant = (new Rectangle(node.x, (int) node.getCenterY(), (int) node.getWidth(),
