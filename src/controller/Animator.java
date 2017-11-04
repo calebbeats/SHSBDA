@@ -240,17 +240,6 @@ public class Animator implements Runnable {
                     MainWindow.scoreText.setText("Score: "
                             + MainWindow.score + " || Coins: "
                             + MainWindow.coins);
-
-                    //detection for enemy attacks hitting terrain
-                    for (GameFigure t : Main.gameData.terrainFigures) {
-                        if (collidableFigure.getCollisionBox().intersects(t.getCollisionBox())
-                                && !((collidableFigure instanceof BlinkMage)
-                                || (collidableFigure instanceof SuicideEnemy)
-                                || (collidableFigure instanceof MeleeEnemy) || (collidableFigure instanceof SlowMage))
-                                && (t instanceof BlockTerrain)) {
-                            collidableFigure.goNextState();
-                        }
-                    }
                 }
             });
         });
