@@ -32,6 +32,7 @@ public class Shooter extends GameFigure {
 
     int tempCounter = 0;
     int tempRemovalCounter;
+    static float x, y;
 
     //made static so shop can access invo
     public static Item[] inventory = new Item[4];

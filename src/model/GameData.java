@@ -16,6 +16,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import view.GamePanel;
 
 public class GameData {
 
@@ -31,6 +32,13 @@ public class GameData {
     private boolean playerDead = false;
     private Image levelCompleteImage;
     private int level = 1;
+    private static PHASE phase;
+    public static int MAXHEALTH = 5;
+
+    enum PHASE {
+
+        ONE, TWO, THREE
+    };
 
     public GameData() {
         enemyFigures = new CopyOnWriteArrayList<>();
@@ -61,6 +69,8 @@ public class GameData {
             enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
             enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
             enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new Boss(GamePanel.PWIDTH - 400, GamePanel.PHEIGHT / 2, 2 * 81, 2 * 81, 9));
+            
 
         }
     }
@@ -93,7 +103,7 @@ public class GameData {
             }
         }
         enemyFigures.removeAll(removeEnemies);
-        
+
         if (enemyFigures.isEmpty()) { //if enemies are dead set shop button enabled
             levelComplete = true;
             levelCheck();
@@ -174,6 +184,14 @@ public class GameData {
                 Main.gameState = Main.GameState.LevelComplete;
             }
         }
+    }
+
+    public static PHASE getphase() {
+        return phase;
+    }
+
+    public static void setphase(PHASE p) {
+        phase = p;
     }
 
     public void audio() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
