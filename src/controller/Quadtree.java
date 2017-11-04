@@ -7,7 +7,7 @@ import model.GameFigure;
 
 public class Quadtree {
 
-    private final static int MAX_LEVELS = 5, MAX_OBJECTS = 10;
+    private final static int MAX_LEVELS = 5, MAX_OBJECTS = 5;
 
     private final int level;
     private final Rectangle node;
