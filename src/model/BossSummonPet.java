@@ -186,13 +186,13 @@ public class BossSummonPet extends GameFigure {
                 }
                 System.out.println("Dx Dy" + dx + " " + dy);
                 
-                enemyToMove = new BossSummonPet(super.x + dx, super.y);
+                enemyToMove = new BasicCollisionBox(super.x + dx, super.y, SIZE, SIZE);
                 if (!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox()))) {
                     super.x += dx;
                     super.y -= 2*dy;
                 }
                 else{
-                    enemyToMove = new BossSummonPet(super.x, super.y + dy);
+                    enemyToMove = new BasicCollisionBox(super.x, super.y + dy, SIZE, SIZE);
                     if (!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox()))) {
                         super.y += dy;
                         super.x -= 2*dx;
@@ -201,7 +201,7 @@ public class BossSummonPet extends GameFigure {
                 
                 return;
             }
-            enemyToMove = new BossSummonPet(super.x + dx, super.y +dy);
+            enemyToMove = new BasicCollisionBox(super.x + dx, super.y +dy, SIZE, SIZE);
         }
         enemyToMove = null;        
     }
