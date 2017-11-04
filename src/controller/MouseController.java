@@ -77,7 +77,7 @@ public class MouseController extends MouseAdapter {
                     );
                     Main.gameData.friendFigures.add(m);
                 }
-                if (me.getButton() == MouseEvent.BUTTON3 && !shooter.isSprint()) {
+                if (me.getButton() == MouseEvent.BUTTON3 && !shooter.isSprint() && shooter.getMana()>9) {
                     if (KeyController.chooseMissile == false) {
                         //Right click detected, initiate ranged attack
                         //shoot a missle at the mouse press location
@@ -87,6 +87,7 @@ public class MouseController extends MouseAdapter {
                                 shooter.getYofMissileShoot(),
                                 px, py // target location where the missile explodes
                         );
+                        shooter.setMana(shooter.getMana()-10);
                         Main.gameData.friendFigures.add(m);
                     }
 
