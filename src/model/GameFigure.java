@@ -1,12 +1,14 @@
 package model;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 public abstract class GameFigure implements CollisionBox {
     // public for a faster access during animation
 
     public float x;
     public float y;
+    public Rectangle object;
 
     public int state;
     public FigureState fState;
@@ -41,6 +43,7 @@ public abstract class GameFigure implements CollisionBox {
     public GameFigure(float x, float y) {
         this.x = x;
         this.y = y;
+        object = new Rectangle((int) x, (int) y, 30, 30);
         this.fState = new FigureAlive(this);
     }
 

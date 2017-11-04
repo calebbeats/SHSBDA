@@ -87,15 +87,8 @@ public class MouseController extends MouseAdapter {
                                 shooter.getYofMissileShoot(),
                                 px, py // target location where the missile explodes
                         );
-                        shooter.setMana(shooter.getMana()-10);
                         Main.gameData.friendFigures.add(m);
                     }
-
-                    //Right click detected, initiate ranged attack
-                    //shoot a missle at the mouse press location
-                    a.playAudio("/resources/shooterFBwoosh.wav");
-                    Missile m = shooter.shootRanged(px, py, Shooter.getRangedWeapon());
-                    Main.gameData.friendFigures.add(m);
                 }
                 break;
             case LevelComplete:
