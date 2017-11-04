@@ -16,7 +16,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import static model.GameFigure.STATE_ALIVE;
 import static model.GameFigure.STATE_DYING;
-
+//hello
 public class Shooter extends GameFigure {
 
     public static final int PLAYER_WIDTH = 30, PLAYER_HEIGHT = 30;
