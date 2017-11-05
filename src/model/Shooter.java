@@ -39,6 +39,7 @@ public class Shooter extends GameFigure {
 
     int tempCounter = 0;
     int tempRemovalCounter;
+    static float stx, sty;
 
     //made static so shop can access invo
     public static Item[] inventory = new Item[4];
@@ -263,6 +264,8 @@ public class Shooter extends GameFigure {
                 return;
             }
         }
+        //to make Boss work
+        stx = this.x;
     }
 
     private void moveY() {
@@ -290,6 +293,8 @@ public class Shooter extends GameFigure {
                 return;
             }
         }
+        //to make Boss work
+        sty=this.y;
     }
 
     // Missile shoot location: adjut x and y to the image
@@ -489,4 +494,22 @@ public class Shooter extends GameFigure {
         this.x = x;
         this.y = y;
     }
+
+    public float getX() {
+        return x;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+    
+    
 }

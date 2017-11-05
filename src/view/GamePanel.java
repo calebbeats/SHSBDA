@@ -23,6 +23,8 @@ public class GamePanel extends JPanel {
     // size of the canvas - determined at runtime once rendered
     public static int width;
     public static int height;
+    public static final int PWIDTH = 1275; // size of the game panel
+    public static final int PHEIGHT = 587;
 
     // off screen rendering
     public Graphics2D g2;

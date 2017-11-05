@@ -16,6 +16,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import view.GamePanel;
 import static view.HighScore.checkScore;
 
 public class GameData {
@@ -32,6 +33,13 @@ public class GameData {
     private boolean playerDead = false;
     private Image levelCompleteImage;
     private int level = 1;
+    private static PHASE phase;
+    public static int MAXHEALTH = 5;
+
+    enum PHASE {
+
+        ONE, TWO, THREE
+    };
 
     public GameData() {
         enemyFigures = new CopyOnWriteArrayList<>();
@@ -57,7 +65,9 @@ public class GameData {
         if (level == 1) {
             terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 0, 0));
             friendFigures.add(shooter);
-
+            //friendFigures.add(p)
+            friendFigures.add(p);
+            
             //TEST BLOCK FOR NORMAL
             //------------------------------
             //    enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) Math.random() * 200));
@@ -72,12 +82,12 @@ public class GameData {
 //                enemyFigures.add(new BossSummon((int) (Math.random() * 500), (int) Math.random() * 200));                  
 //                enemyFigures.add(new BossWarlockPet((int) (Math.random() * 500), (int) Math.random() * 200));                  
         } else if (level == 2) {
-            terrainFigures.add(new BlockTerrain(Main.WIN_WIDTH / 4, Main.WIN_HEIGHT / 4, 125, 125));
+            terrainFigures.add(new BlockTerrain(Main.WIN_WIDTH / 4, Main.WIN_HEIGHT / 4, 0, 0));
             friendFigures.add(shooter);
             enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
         } else if (level == 3) {
             shooter.setXY(Main.WIN_WIDTH / 2, Main.WIN_HEIGHT - 125);
-            terrainFigures.add(new IceTerrain(Main.WIN_WIDTH / 4, Main.WIN_HEIGHT / 4, 200, 200));
+            terrainFigures.add(new IceTerrain(Main.WIN_WIDTH / 4, Main.WIN_HEIGHT / 4, 0, 0));
             friendFigures.add(shooter);
             enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
             enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
@@ -90,9 +100,11 @@ public class GameData {
             friendFigures.add(shooter);
             enemyFigures.add(new BossSummon((int) (Math.random() * 500), (int) Math.random() * 200));
         } else if (level == 5) {
+            //this is only a boss level temporarily 
             terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 0, 0));
             shooter.setXY(Main.WIN_WIDTH / 2, Main.WIN_HEIGHT - 125);
             friendFigures.add(shooter);
+            enemyFigures.add(new Boss(GamePanel.PWIDTH - 400, GamePanel.PHEIGHT / 2, 2 * 81, 2 * 81, 9));
             enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
         } else if (level == 6) {
             terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 0, 0));
@@ -100,7 +112,7 @@ public class GameData {
             friendFigures.add(shooter);
             enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) (Math.random() * 200)));
         } else if (level == 7) {
-            terrainFigures.add(new BlockTerrain(Main.WIN_WIDTH / 3, Main.WIN_HEIGHT / 4, 125, 125));
+            terrainFigures.add(new BlockTerrain(Main.WIN_WIDTH / 3, Main.WIN_HEIGHT / 4, 0, 0));
             shooter.setXY(Main.WIN_WIDTH / 2, Main.WIN_HEIGHT - 125);
             friendFigures.add(shooter);
             enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) (Math.random() * 200)));
@@ -111,9 +123,10 @@ public class GameData {
             terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 0, 0));
             shooter.setXY(Main.WIN_WIDTH / 2, Main.WIN_HEIGHT - 125);
             friendFigures.add(shooter);
+            //enemyFigures.add(new Boss(GamePanel.PWIDTH - 400, GamePanel.PHEIGHT / 2, 2 * 81, 2 * 81, 9));
             enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
         } else if (level == 9) {
-            terrainFigures.add(new BlockTerrain(Main.WIN_WIDTH / 3, Main.WIN_HEIGHT / 4, 125, 125));
+            terrainFigures.add(new BlockTerrain(Main.WIN_WIDTH / 3, Main.WIN_HEIGHT / 4, 0, 0));
             shooter.setXY(Main.WIN_WIDTH / 2, Main.WIN_HEIGHT - 125);
             friendFigures.add(shooter);
             enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
@@ -310,6 +323,14 @@ public class GameData {
                 Main.gameState = Main.GameState.LevelComplete;
             }
         }
+    }
+
+    public static PHASE getphase() {
+        return phase;
+    }
+
+    public static void setphase(PHASE p) {
+        phase = p;
     }
 
     public void audio() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
