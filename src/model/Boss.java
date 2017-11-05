@@ -27,8 +27,8 @@ public class Boss extends GameFigure {
     public PHASE phase;
     private OPERATION cando = OPERATION.FLY;
     private int damage;
-    float dx;
-    float dy;
+    public float dx;
+    public float dy;
     float length;
     //SoundPlayer soundPlayerFX;
 
@@ -140,8 +140,8 @@ public class Boss extends GameFigure {
                 break;
             }
             default: {
-                dx = Shooter.x + 200 - this.x;
-                dy = Shooter.y + 12 - this.y;
+                dx = Shooter.stx + 200 - this.x;
+                dy = Shooter.sty + 12 - this.y;
                 length = (float) Math.sqrt(dx * dx + dy * dy);
                 dx /= length;
                 dy /= length;
