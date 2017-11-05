@@ -17,30 +17,31 @@ import javax.swing.JOptionPane;
 import static model.GameFigure.STATE_ALIVE;
 import static model.GameFigure.STATE_DYING;
 
-public class EnemyMissile extends GameFigure {
+public class EnemyMissileWarlock extends GameFigure {
 
-    // Properties
+    //Properties
     //------------------------------
+    
         //Private
-        private static final int SIZE = 30; //Image Size
+        private static final int SIZE = 50; //Image Size
         private static final int MAX_EXPLOSION_SIZE = 3; //Max explosion size
-        private static final int UNIT_TRAVEL_DISTANCE = 4; //Frame Movement
+        private static final int UNIT_TRAVEL_DISTANCE = 2; //Frame Movement
         private int explosionCounter = 0; //Update explosion size
         private float dx; // displacement at each frame
         private float dy; // displacement at each frame
         private int animationCheck=0; //Check for movement aniamtion
 
         //Public
-        public Color color; //color (???)
-        public Point2D.Float target; //Shooters location
+        public Color color;
+        public Point2D.Float target; //Target (Shooter)
     
-    //Images
+    //Image
     //------------------------------
     private Image launcherImage;
     private Image launcherImage2;
     private Image explosion1;
     private Image explosion2;
-    private Image explosion3;   
+    private Image explosion3;    
 
     /**
      *
@@ -50,13 +51,13 @@ public class EnemyMissile extends GameFigure {
      * @param ty target y of the missile
      * @param color color of the missile
      */
-    public EnemyMissile(float sx, float sy) {
+    public EnemyMissileWarlock(float sx, float sy) {
         
         super(sx, sy);
         
         //Damage
-        //Go-To method @ Line 166
-        DAMAGE = 20;
+        //Go-To method @ Line 158
+        DAMAGE = 100;
         
         float tx = Main.gameData.shooter.x + 10;
         float ty = Main.gameData.shooter.y + 10;
@@ -67,22 +68,19 @@ public class EnemyMissile extends GameFigure {
         dx = (float) (UNIT_TRAVEL_DISTANCE * Math.cos(angle));
         dy = (float) (UNIT_TRAVEL_DISTANCE * Math.sin(angle));
         
-        if (tx > sx && ty < sy) {      // target is upper-right side
-            dy = -dy;                  // dx > 0, dx < 0
-        }        
-        else if (tx < sx && ty < sy) { // target is upper-left side
+        if (tx > sx && ty < sy) {           // target is upper-right side
+            dy = -dy;                       // dx > 0, dx < 0
+        } else if (tx < sx && ty < sy) {    // target is upper-left side
             dx = -dx;
             dy = -dy;
-        }        
-        else if (tx < sx && ty > sy) { // target is lower-left side
+        } else if (tx < sx && ty > sy) {    // target is lower-left side
             dx = -dx;
-        }        
-        else {                         // target is lower-right side
-                                       // dx > 0 , dy > 0
+        } else {                            // target is lower-right side
+                                            // dx > 0 , dy > 0
         }        
         launcherImage = null;
         
-        try {          
+        try {           
             launcherImage = ImageIO.read(getClass().getResource("/resources/enemyMissile0.png"));
             launcherImage2 = ImageIO.read(getClass().getResource("/resources/enemyMissile1.png"));
             explosion1 = ImageIO.read(getClass().getResource("/resources/explosion0.png"));
@@ -91,14 +89,12 @@ public class EnemyMissile extends GameFigure {
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");
            System.exit(-1);
-        }
-        
-    } 
+        }        
+    }   
 
     @Override
     public void render(Graphics2D g) {
-        if(state == STATE_ALIVE)
-        {
+        if(state == STATE_ALIVE){
             if(animationCheck == 0){
                 g.drawImage(launcherImage, (int)super.x, (int)super.y, 
                 SIZE, SIZE, null);
@@ -111,18 +107,15 @@ public class EnemyMissile extends GameFigure {
             }
         }
         if(state == STATE_DYING){
-            if(explosionCounter ==0)
-            {
+            if(explosionCounter ==0){
                  g.drawImage(explosion1, (int)super.x, (int)super.y, 
                 SIZE, SIZE, null);
             }
-            if(explosionCounter ==1)
-            {
+            if(explosionCounter ==1){
                 g.drawImage(explosion2, (int)super.x, (int)super.y, 
                 SIZE, SIZE, null);
             }
-            if(explosionCounter ==2)
-            {
+            if(explosionCounter ==2){
                 g.drawImage(explosion3, (int)super.x, (int)super.y, 
                 SIZE, SIZE, null);
             }         
@@ -145,15 +138,14 @@ public class EnemyMissile extends GameFigure {
     }
 
     public void updateSize() {
-        explosionCounter++;
-         
+        explosionCounter++;         
     }
 
     public void updateState() {
         if (state == STATE_ALIVE) {
             double distance = target.distance(super.x, super.y);
             boolean targetReached = distance <= 2.0;
-            if (targetReached || (super.x > Main.WIN_WIDTH || super.y > Main.WIN_HEIGHT)) {
+            if (targetReached) {
                 this.goNextState();
             }
         } else if (state == STATE_DYING) {
@@ -176,5 +168,4 @@ public class EnemyMissile extends GameFigure {
     public void shoot() {
        System.out.println("Enemy Missiles Shoots");
     }
-
 }

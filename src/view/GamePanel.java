@@ -30,7 +30,7 @@ public class GamePanel extends JPanel {
     public Graphics2D g2;
     public Rectangle startGameButton, highScoreButton, quitGameButton,
             shopGameButton, weakPotionButton, mediumPotionButton,
-            strongPotionButton, backButton;
+            strongPotionButton, backButton, continueLevelButton;
     private Image dbImage = null // double buffer image
             , startBackground, startForeground;
     private int rectangleBoxWidth, rectangleBoxHeight;
@@ -54,10 +54,11 @@ public class GamePanel extends JPanel {
             LineUnavailableException, InterruptedException {
         width = getSize().width;
         height = getSize().height;
+        Image img1 = Toolkit.getDefaultToolkit().getImage("02coin.png");
 
         // Creating rectangle buttons to be drawn on screen
         if (Main.gameState.equals(Main.GameState.Start)
-                || Main.gameState.equals(Main.GameState.GameOver)) {
+                || Main.gameState.equals(Main.GameState.GameOver) || (Main.gameState.equals(Main.GameState.Winner))) {
             startGameButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
                     height / 2 + rectangleBoxHeight / 2 + 25,
                     rectangleBoxWidth, rectangleBoxHeight);
@@ -69,21 +70,26 @@ public class GamePanel extends JPanel {
             shopGameButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
                     50 + rectangleBoxHeight / 2,
                     rectangleBoxWidth, rectangleBoxHeight);
-        }
-        if (Main.gameState.equals(Main.GameState.Shop)) {
-            weakPotionButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
-                    50 + rectangleBoxHeight / 2,
-                    rectangleBoxWidth, rectangleBoxHeight);
-            mediumPotionButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
-                    (int) weakPotionButton.getMaxY() + rectangleBoxHeight / 2,
-                    rectangleBoxWidth, rectangleBoxHeight);
-            strongPotionButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
-                    (int) mediumPotionButton.getMaxY() + rectangleBoxHeight / 2,
-                    rectangleBoxWidth, rectangleBoxHeight);
-            backButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
-                    (int) strongPotionButton.getMaxY() + rectangleBoxHeight / 2,
+            
+            continueLevelButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
+                    (int) shopGameButton.getMaxY() + rectangleBoxHeight / 2,
                     rectangleBoxWidth, rectangleBoxHeight);
         }
+        //moved next if block to switch statement area to stop bug from being thrown
+//        if (Main.gameState.equals(Main.GameState.Shop)) {
+//            weakPotionButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
+//                    50 + rectangleBoxHeight / 2,
+//                    rectangleBoxWidth, rectangleBoxHeight);
+//            mediumPotionButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
+//                    (int) weakPotionButton.getMaxY() + rectangleBoxHeight / 2,
+//                    rectangleBoxWidth, rectangleBoxHeight);
+//            strongPotionButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
+//                    (int) mediumPotionButton.getMaxY() + rectangleBoxHeight / 2,
+//                    rectangleBoxWidth, rectangleBoxHeight);
+//            backButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
+//                    (int) strongPotionButton.getMaxY() + rectangleBoxHeight / 2,
+//                    rectangleBoxWidth, rectangleBoxHeight);
+//        }
         quitGameButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
                 startGameButton == null // Set the Y coordinate base game's state
                         ? height / 2 + rectangleBoxHeight / 2 + 25
@@ -108,9 +114,10 @@ public class GamePanel extends JPanel {
         switch (Main.gameState) {
             case Start:
             case Pause:
+            case Winner:
             case GameOver:
                 // Draw System Menu buttons when the game just run
-                g2.setFont(new Font("Times New Roman", Font.ITALIC, 22));
+                g2.setFont(new Font("Times New Roman", Font.BOLD, 22));
                 g2.setColor(Color.RED);
                 g2.drawImage(startBackground, 0, 0, width, height, null);
                 g2.drawImage(startForeground, 0, 0, width, height / 2, null);
@@ -122,6 +129,9 @@ public class GamePanel extends JPanel {
                             235, height / 2 + 25);
                 } else if (Main.gameState.equals(Main.GameState.GameOver)) {
                     g2.drawString("Game Over!!! You Have Died!!!",
+                            150, height / 2 + 25);
+                } else if (Main.gameState.equals(Main.GameState.Winner)) {
+                    g2.drawString("Winner!",
                             150, height / 2 + 25);
                 }
                 if (startGameButton != null) {
@@ -137,21 +147,38 @@ public class GamePanel extends JPanel {
                         highScoreButton.y + 30);
                 break;
             case Run:
+                Main.quatree.render(g2);
                 g2.setBackground(Color.BLACK);
+                g2.drawImage(img1, 0, 0, this);
+                g2.drawString("x " + MainWindow.coins,
+                            40, 25);
+                g2.drawString("Score: " + MainWindow.score, 250, 25);
+                for (GameFigure f : Main.gameData.terrainFigures) {
+                    f.render(g2);
+                }
                 for (GameFigure f : Main.gameData.enemyFigures) {
                     f.render(g2);
                 }
 
                 for (GameFigure f : Main.gameData.friendFigures) {
                     f.render(g2);
-                }
-                for (GameFigure f : Main.gameData.terrainFigures) {
-                    f.render(g2);
-                }
+                }                
                 break;
             case Quit:
                 break;
             case Shop:
+                weakPotionButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
+                    50 + rectangleBoxHeight / 2,
+                        rectangleBoxWidth, rectangleBoxHeight);
+                mediumPotionButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
+                        (int) weakPotionButton.getMaxY() + rectangleBoxHeight / 2,
+                        rectangleBoxWidth, rectangleBoxHeight);
+                strongPotionButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
+                        (int) mediumPotionButton.getMaxY() + rectangleBoxHeight / 2,
+                        rectangleBoxWidth, rectangleBoxHeight);
+                backButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
+                        (int) strongPotionButton.getMaxY() + rectangleBoxHeight / 2,
+                        rectangleBoxWidth, rectangleBoxHeight);
                 g2.setColor(Color.RED);
                 g2.setBackground(Color.BLACK);
                 g2.drawString("Items Shop", 250, 30);
@@ -201,6 +228,9 @@ public class GamePanel extends JPanel {
                 g2.draw(shopGameButton);
                 g2.drawString("Shop Items", shopGameButton.x + 30,
                         shopGameButton.y + 30);
+                g2.draw(continueLevelButton);
+                g2.drawString("Continue", continueLevelButton.x + 30,
+                        continueLevelButton.y + 30);
                 break;
         }
     }

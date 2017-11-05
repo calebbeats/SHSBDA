@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -100,6 +101,7 @@ public class HighScore extends JFrame {
                         count++;
                     }
                     fileReader.close();
+                    bufferedReader.close();
                     }
                 catch (IOException ex) {
                     Logger.getLogger(HighScore.class.getName()).log(Level.SEVERE, null, ex);
@@ -111,7 +113,63 @@ public class HighScore extends JFrame {
         });
     }
     
-    public static void checkScore() throws FileNotFoundException, IOException{
+    	static void modifyFile(String oldString, String newString)
+	{
+		File fileToBeModified = new File("scores.txt");
+		
+		String oldContent = "";
+		
+		BufferedReader reader = null;
+		
+		FileWriter writer = null;
+		
+		try 
+		{
+			reader = new BufferedReader(new FileReader(fileToBeModified));
+			
+			//Reading all the lines of input text file into oldContent
+			
+			String line = reader.readLine();
+			
+			while (line != null) 
+			{
+				oldContent = oldContent + line + System.lineSeparator();
+				
+				line = reader.readLine();
+			}
+			
+			//Replacing oldString with newString in the oldContent
+			
+			String newContent = oldContent.replaceAll(oldString, newString);
+			
+			//Rewriting the input text file with newContent
+			
+			writer = new FileWriter(fileToBeModified);
+			
+			writer.write(newContent);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			try 
+			{
+				//Closing the resources
+				
+				reader.close();
+				
+				writer.close();
+			} 
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+			}
+                }
+        }
+    
+public static void checkScore() throws FileNotFoundException, IOException{
         FileReader fileReader = new FileReader("scores.txt");
                     BufferedReader bufferedReader = new BufferedReader(fileReader);
                     int count = 0;
@@ -121,21 +179,28 @@ public class HighScore extends JFrame {
                     while ((line = bufferedReader.readLine()) != null){
                         String[] player = line.split(" ");
                         scoreNumber = Integer.parseInt(player[1]);
-                        players[count] = new HighScore(player[0], scoreNumber);
+                        //players[count] = new HighScore(player[0], scoreNumber);
                         if(MainWindow.score > scoreNumber){
-                            for (int i2 = 0; i2 > 5; i2++){
+                         /**   for (int i2 = 0; i2 > 5; i2++){
                             players[count] = new HighScore("USER INPUT", MainWindow.score);
                             BufferedWriter bufferedWriter;
                             bufferedWriter = new BufferedWriter(new FileWriter("score.txt", false));
-                         //   bufferedWriter.write(players[0].scoreName);
+                            bufferedWriter.write(players[0].scoreName);
                             bufferedWriter.close();
-                            }
+                            } **/
+                         String name= JOptionPane.showInputDialog("Please enter your name: ");
+                         String newScore = name + " " + MainWindow.score;
+                         fileReader.close();
+                         bufferedReader.close();
+                         modifyFile(line, newScore);
+                         
+                MainWindow.score = 0;
+                MainWindow.coins = 0;
+                break;
                         }
-                        count++;
+                        //count++;
                     }
-                    fileReader.close();
+                    //fileReader.close();
                     }
-    
-    
     
 }

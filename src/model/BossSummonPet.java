@@ -11,68 +11,67 @@ import java.awt.Image;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
+import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import static model.GameFigure.STATE_ALIVE;
 import static model.GameFigure.STATE_DYING;
 
-public class SuicideEnemy extends GameFigure {
+public class BossSummonPet extends GameFigure {
 
-    // Size
-    //------------------------------
-    private static final int SIZE = 30;
+    // missile size
+    private static final int SIZE = 40;
     
-    //MAX EXPLOSION SIZE
-    //Explosion Counter
+    //Final Despawn Counter
+    //Go-to "render() -> STATE_DYING"
     //------------------------------
-    private static final int MAX_EXPLOSION_SIZE = 50;
-    private int explosionCounter = 0;
+    private static final int MAX_DEATH_DESPAWN = 20;
+    private static final int MAX_ATTK_TIME = 10;
+    private static int deathCounter=0;
+    private static int attackCounter=0;
+    private static int aniTimer=0;
     
-    //Movespeed
+    //Enemy Information
     //------------------------------
-    private static final int UNIT_TRAVEL_DISTANCE = 2;
-    
-    //health
     private int health;
     private int maxHealth;
     
-    //Displacement per Frame
-    //------------------------------
-    private float dx; 
-    private float dy; 
+    private float dx; // displacement at each frame
+    private float dy; // displacement at each frame
+    private int animationCheck=0;
     
     private float ox;
     private float oy;
     private float ty;
     private float tx;
 
-    // Public -> Target
-    //------------------------------
+    // public properties for quick access
     public Point2D.Float target;
 
-    //Sprite
-    //------------------------------
-    private Image right;
-    private Image left;
-    private Image back;
-    private Image explosion1;
-    private Image explosion2;
-    private Image explosion3;
+    private static final int UNIT_TRAVEL_DISTANCE = 1; // per frame move
+  
+    private Image alive;
+    private Image alive2;   
+    private Image death;
 
-    public SuicideEnemy(float sx, float sy) {
-        
+    /**
+     *
+     * @param sx start x of the missile
+     * @param sy start y of the missile
+     * @param tx target x of the missile
+     * @param ty target y of the missile
+     * @param color color of the missile
+     */
+    public BossSummonPet(float sx, float sy) {
         super(sx, sy);
-        health = 1;
-        maxHealth = health;
         
-        //Damage
-        //Go-To method @ Line 166
-        DAMAGE = 250;
+        petSwingTimer=0;
+        health=5;
         
         tx = Main.gameData.shooter.x + 10;
         ty = Main.gameData.shooter.y + 10;
-        this.target = new Point2D.Float(tx, ty);        
-        
+        this.target = new Point2D.Float(tx, ty);
+               
         double angle = Math.atan2(Math.abs(ty - sy), Math.abs(tx - sx));
         dx = (float) (UNIT_TRAVEL_DISTANCE * Math.cos(angle));
         dy = (float) (UNIT_TRAVEL_DISTANCE * Math.sin(angle));
@@ -88,60 +87,59 @@ public class SuicideEnemy extends GameFigure {
             // dx > 0 , dy > 0
         }
         
-        right = null;
-        left = null;
-        back = null;
-                       
-        try {           
-            right = ImageIO.read(getClass().getResource("/resources/suicideRight.png"));
-            left = ImageIO.read(getClass().getResource("/resources/suicideLeft.png"));
-            back = ImageIO.read(getClass().getResource("/resources/suicideBack.png"));
-            explosion1 = ImageIO.read(getClass().getResource("/resources/nuke1.png"));
-            explosion2 = ImageIO.read(getClass().getResource("/resources/nuke2.png"));
-            explosion3 = ImageIO.read(getClass().getResource("/resources/nuke3.png"));
+        alive = null;
+        alive2 = null;      
+        death = null;
+        
+        try {
+            alive = ImageIO.read(getClass().getResource("/resources/warlockPet1.png"));
+            alive2 = ImageIO.read(getClass().getResource("/resources/warlockPet2.png"));
+            death = ImageIO.read(getClass().getResource("/resources/warlockPetDead.png"));
+      
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");
-            System.exit(-1);
-        }      
+           System.exit(-1);
+        }
+        
     }
 
     @Override
     public void render(Graphics2D g) {
-        if(state == STATE_ALIVE) {
-            
-            //Suicide Enemy Sprite
-            //------------------------------
-            g.drawImage(left, (int)super.x, (int)super.y, 
-            SIZE, SIZE, null);
-            
-            /************************************************
-            if(animationCheck == 0){
-                g.drawImage(right, (int)super.x, (int)super.y, 
-                30, 30, null);
-                animationCheck = 1;
+        if(state == STATE_ALIVE)    {
+            if(aniTimer < 25)
+            {
+                g.drawImage(alive, (int)super.x, (int)super.y, 
+                SIZE, SIZE, null);
             }
-           
-            else{
-                g.drawImage(left, (int)super.x, (int)super.y, 
-                30, 30, null);
-                animationCheck = 0;
+            if(aniTimer >= 25 && aniTimer <50)
+            {
+                g.drawImage(alive2, (int)super.x, (int)super.y, 
+                SIZE, SIZE, null);
             }
-            ************************************************/
+            if(aniTimer >= 50 && aniTimer < 75)
+            {
+                g.drawImage(alive, (int)super.x, (int)super.y, 
+                SIZE, SIZE, null);
+            }
+            if(aniTimer >= 75 && aniTimer < 100)
+            {
+                g.drawImage(alive2, (int)super.x, (int)super.y, 
+                SIZE, SIZE, null);
+            } else {
+                aniTimer=0;
+            }
         }
-        
         if(state == STATE_DYING)    {
             
-            //Explosion 3 Part Animation
+            //Death Counter = 20
+            //Time to show dead sprite
             //------------------------------
-            if(explosionCounter<9){
-                g.drawImage(explosion1, (int)super.x, (int)super.y, SIZE, SIZE, null);   
-            }
-            if(explosionCounter>8 && explosionCounter<18)   {
-                g.drawImage(explosion2, (int)super.x, (int)super.y, SIZE, SIZE, null);
-            }
-            if(explosionCounter>17 && explosionCounter<27)  {
-                g.drawImage(explosion3, (int)super.x, (int)super.y, SIZE, SIZE, null);
-            }
+            if ((deathCounter & 1)==0)  {
+                g.drawImage(death, (int)super.x, (int)super.y, 
+                SIZE, SIZE, null); 
+            } else 
+                g.drawImage(death, (int)super.x, (int)super.y, 
+                SIZE, SIZE, null);           
         }
     }
 
@@ -150,16 +148,18 @@ public class SuicideEnemy extends GameFigure {
         updateState();
         if (state == STATE_ALIVE) {
             updateLocation();
+            updateSwing();
+            aniTimer++;            
         } else if (state == STATE_DYING) {
             updateSize();
         }
     }
 
     public void updateLocation() {
-        BasicCollisionBox enemyToMove = new BasicCollisionBox(super.x + dx, super.y +dy, SIZE, SIZE);        
+        GameFigure enemyToMove = new BasicCollisionBox(super.x + dx, super.y +dy, SIZE, SIZE);        
         
         for(GameFigure t : Main.gameData.terrainFigures){
-            if(!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox())) || t instanceof IceTerrain){
+            if(!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox()))){
                 super.x += dx;
                 super.y += dy;
             }
@@ -207,7 +207,26 @@ public class SuicideEnemy extends GameFigure {
     }
 
     public void updateSize() {
-        explosionCounter++;         
+        deathCounter++;         
+    }
+    
+    public void updateAttack(){
+        attackCounter++;
+    }
+    
+    public void updateSwing(){
+        double distance = target.distance(super.x, super.y);
+        boolean attackRange = distance <= 10.0;
+        if (attackRange) {
+            //Attack Speed of Melee
+            //-----------------------------------
+            if(petSwingTimer < 50)  {
+                    petSwingTimer++;
+            }
+            else    {
+                petSwingTimer = 0;
+            }
+        }
     }
 
     public void updateState() {
@@ -215,6 +234,7 @@ public class SuicideEnemy extends GameFigure {
             double distance = target.distance(super.x, super.y);
             boolean targetReached = distance <= 10.0;
             if (targetReached) {
+     
                 ox = tx;
                 oy = ty;
                
@@ -239,15 +259,25 @@ public class SuicideEnemy extends GameFigure {
                 }
                 System.out.println("Dx Dy" + dx + " " + dy);
             }
-        } else if (state == STATE_DYING) {
-            if (explosionCounter >= MAX_EXPLOSION_SIZE) {
+        } 
+        //If Dead (Counter = MAX)
+        //goNextState
+        //------------------------------
+        else if (state == STATE_DYING) {
+            if(deathCounter >= MAX_DEATH_DESPAWN){
                 this.goNextState();
             }
         }
     }
-    
-    public static void dealDamage(){
-        GameData.shooter.takeDamage(DAMAGE);
+
+    @Override
+    public Rectangle2D getCollisionBox() {
+        return new Rectangle2D.Double(this.x, this.y, SIZE * 0.9D, SIZE * 0.9D);
+    }
+
+    @Override
+    public void shoot() {
+       System.out.println("Enemy Missiles Shoots");
     }
     
     public void takeDamage(int i) {
@@ -270,13 +300,4 @@ public class SuicideEnemy extends GameFigure {
         this.maxHealth = maxHealth;
     }
 
-    @Override
-    public Rectangle2D getCollisionBox() {
-        return new Rectangle2D.Double(this.x, this.y, SIZE * 0.9D, SIZE * 0.9D);
-    }
-
-    @Override
-    public void shoot() {
-       System.out.println("Enemy Missiles Shoots");
-    }
 }

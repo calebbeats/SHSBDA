@@ -1,9 +1,11 @@
 package model;
 
 import controller.Main;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Stroke;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
@@ -29,6 +31,11 @@ public class Shooter extends GameFigure {
     private int mana;
     private int maxMana;
     private int maxHealth;
+    private int lowHealthValue;
+    int lowHealthCounter = 1;
+    int lowHealthPhase = 1;
+    int lowHealthMovement = 1;
+    private static int weaponPower; //when we implement weapons use this to decide damage amount
 
     int tempCounter = 0;
     int tempRemovalCounter;
@@ -49,6 +56,7 @@ public class Shooter extends GameFigure {
     public static Missile rangedWeapon;
     public static Melee meleeWeapon;
     public WeaponComponent weapon;
+    public boolean lowHealth;
     int deadTimer = 0;
     // ----------------------------------
 
@@ -70,6 +78,9 @@ public class Shooter extends GameFigure {
         mana = 100;
         maxHealth = health;
         maxMana = mana;
+        weaponPower = 1;
+        lowHealthValue = 30;
+        lowHealth = false;
 //        inventory = new Item[4];
 
         // Tests for items and equipment
@@ -97,6 +108,7 @@ public class Shooter extends GameFigure {
             JOptionPane.showMessageDialog(null, "Error: Cannot open Player Image");
             System.exit(-1);
         }
+
     }
 
     @Override
@@ -106,6 +118,33 @@ public class Shooter extends GameFigure {
                 ? updatePlayerImage("Sprint")
                 : updatePlayerImage("Walk");
         g.drawImage(playerImage, (int) super.x, (int) super.y, PLAYER_WIDTH, PLAYER_HEIGHT, null);
+
+        if (lowHealth) {
+            float thickness = lowHealthCounter;
+            Stroke oldStroke = g.getStroke();
+            g.setStroke(new BasicStroke(thickness));
+            int alpha = 127; // 50% transparent
+            Color myColor = new Color(255, 0, 0, alpha);
+            g.setColor(myColor);
+            g.drawRect(0, 0, Main.WIN_WIDTH - 8, Main.WIN_HEIGHT - 30);
+            g.setStroke(oldStroke);
+            if (lowHealthPhase == 1 && lowHealthMovement == 1) {
+                lowHealthCounter++;
+                if (lowHealthCounter == 40) {
+                    lowHealthPhase = 2;
+                }
+            } else if (lowHealthPhase == 2 && lowHealthMovement == 1) {
+                lowHealthCounter--;
+                if (lowHealthCounter == 1) {
+                    lowHealthPhase = 1;
+                }
+            }
+            if (lowHealthMovement == 1) {
+                lowHealthMovement = 0;
+            } else {
+                lowHealthMovement = 1;
+            }
+        }
 
         g.setColor(Color.red);
         g.fillRect(20, 490, health, 20);
@@ -121,7 +160,7 @@ public class Shooter extends GameFigure {
         g.drawRect(110, 460, 20, 20);
         for (int i = 0; i < 4; i++) {
             if (inventory[i] != null) {
-                g.drawImage(inventory[i].getIcon(), 20 + i * 30, 420, 20, 20, null);
+                g.drawImage(inventory[i].getIcon(), 20 + i * 30, 460, 20, 20, null);
             }
         }
     }
@@ -138,7 +177,12 @@ public class Shooter extends GameFigure {
         } else {
 
             if (health <= 0) {
-                state = STATE_DYING;
+                this.goNextState();
+            }
+            if (health <= lowHealthValue) {
+                lowHealth = true;
+            } else {
+                lowHealth = false;
             }
             velocitySprint = isSprint ? 2 : 0;
 
@@ -149,6 +193,10 @@ public class Shooter extends GameFigure {
                 slidingVelocityY = velocityY;
             }
             calculateAngleOfView();
+
+            if (mana < maxMana) {
+                mana++;
+            }
 
             // Window boundary
             if (super.x <= 0) {
@@ -262,6 +310,15 @@ public class Shooter extends GameFigure {
     @Override
     public void shoot() {
         System.out.println("Shooter Shoots");
+    }
+
+    //use these to determine and set weapon damage
+    public void setWeaponPower(int w) {
+        this.weaponPower = w;
+    }
+
+    public static int getWeaponPower() {
+        return Shooter.weaponPower;
     }
 
     //Temporary method to test healing items.
@@ -417,17 +474,20 @@ public class Shooter extends GameFigure {
 
     public void testItem() {
         System.out.println("Adding mana augment");
-        equipItem(new GemOfMana(1), tempCounter);
-        tempCounter++;
-        tempRemovalCounter++;
-        if (tempCounter == 3) {
-            tempCounter = 0;
-        }
+        inventory[0] = new DefensivePulse(1);
+        inventory[1] = new FireNova(2);
+        inventory[2] = new TeleportStone(3);
+
     }
 
     public void testRemoval() {
         System.out.println("Removing mana augment");
         unequipItem(tempRemovalCounter);
         tempRemovalCounter--;
+    }
+
+    public void setXY(float x, float y) {
+        this.x = x;
+        this.y = y;
     }
 }
