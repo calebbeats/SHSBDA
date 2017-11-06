@@ -94,24 +94,24 @@ public class BossSummon extends GameFigure {
             //Health Bar
             //------------------------------
             g.setColor(Color.red);
-            g.fillRect(170, 20, health, 20);
+            g.fillRect(170, 44, health, 20);
             g.setColor(Color.white);
-            g.drawRect(170, 20, maxHealth, 20);
+            g.drawRect(170, 44, maxHealth, 20);
                                     
-            Font boss_font = new Font("Century Schoolbook"/*g.getFont().getFontName()*/,Font.PLAIN, 16);
+            Font boss_font = new Font("Century Schoolbook"/*g.getFont().getFontName()*/,Font.PLAIN, 12);
             g.setFont(boss_font);
             g.setColor(Color.white);          
  
             if(NAME_GEN==1){
-                g.drawString("Y'Dren, The Insane", 170, 16);
+                g.drawString("Y'Dren, The Insane", 170, 40);
             } else if(NAME_GEN==2){
-                g.drawString("Yatharion, of the Void", 170, 16);
+                g.drawString("Yatharion, of the Void", 170, 40);
             } else if (NAME_GEN==3){
-                g.drawString("Fawen, of the Nightfall ", 170, 16);
+                g.drawString("Fawen, of the Nightfall ", 170, 40);
             } else if (NAME_GEN==4){
-                g.drawString("Nyledris, Keeper of the Rift", 170, 16);
+                g.drawString("Nyledris, Keeper of the Rift", 170, 40);
             } else {
-                g.drawString("Teleport Fireball Summoner Guy", 170, 16);
+                g.drawString("Teleport Fireball Summoner Guy", 170, 40);
             }
 
 
