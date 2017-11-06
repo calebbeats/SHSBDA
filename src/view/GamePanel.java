@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -70,7 +71,7 @@ public class GamePanel extends JPanel {
             shopGameButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
                     50 + rectangleBoxHeight / 2,
                     rectangleBoxWidth, rectangleBoxHeight);
-            
+
             continueLevelButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
                     (int) shopGameButton.getMaxY() + rectangleBoxHeight / 2,
                     rectangleBoxWidth, rectangleBoxHeight);
@@ -151,7 +152,7 @@ public class GamePanel extends JPanel {
                 g2.setBackground(Color.BLACK);
                 g2.drawImage(img1, 0, 0, this);
                 g2.drawString("x " + MainWindow.coins,
-                            40, 25);
+                        40, 25);
                 g2.drawString("Score: " + MainWindow.score, 250, 25);
                 for (GameFigure f : Main.gameData.terrainFigures) {
                     f.render(g2);
@@ -162,13 +163,32 @@ public class GamePanel extends JPanel {
 
                 for (GameFigure f : Main.gameData.friendFigures) {
                     f.render(g2);
-                }                
+                }
                 break;
             case Quit:
                 break;
+            case HighScore:
+                List<HighScore> highScoreList = HighScore.retrieveHighScore();
+                g2.setBackground(Color.BLACK);
+                g2.setColor(Color.RED);
+                g2.setBackground(Color.BLACK);
+                g2.drawString("High Score", 250, 50);
+                final int[] spacingHeight = {100};
+                highScoreList.forEach(highScore -> {
+                    g2.drawString(highScore.getScoreName() + " "
+                            + highScore.getHighScore(), 250, spacingHeight[0]);
+                    spacingHeight[0] += 50;
+                });
+                backButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
+                        rectangleBoxHeight / 2 + spacingHeight[0] - 50,
+                        rectangleBoxWidth, rectangleBoxHeight);
+                g2.draw(backButton);
+                g2.drawString("Back", backButton.x + 50,
+                        backButton.y + 30);
+                break;
             case Shop:
                 weakPotionButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
-                    50 + rectangleBoxHeight / 2,
+                        50 + rectangleBoxHeight / 2,
                         rectangleBoxWidth, rectangleBoxHeight);
                 mediumPotionButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
                         (int) weakPotionButton.getMaxY() + rectangleBoxHeight / 2,

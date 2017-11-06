@@ -77,8 +77,10 @@ public class KeyController implements KeyListener {
             case KeyEvent.VK_ESCAPE: //pause the game when escape key is pressed
                 if (Main.gameState.equals(Main.gameState.Run)) {
                     Main.gameState = Main.GameState.Pause;
+                    Main.isPause = true;
                 } else if (Main.gameState.equals(Main.gameState.Pause)) {
                     Main.gameState = Main.GameState.Run;
+                    Main.isPause = false;
                 }
                 break;
         }

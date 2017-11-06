@@ -3,13 +3,10 @@ package controller;
 import java.io.IOException;
 import static java.lang.Boolean.FALSE;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import model.GameFigure;
@@ -27,7 +24,6 @@ import model.SuicideEnemy;
 import model.MeleeEnemy;
 import model.SlowMage;
 import model.GameData;
-import model.IceTerrain;
 import model.Melee;
 import model.EnemyMissileMelee;
 import model.Missile;
@@ -45,6 +41,7 @@ public class Animator implements Runnable {
             switch (Main.gameState) {
                 case Start:
                 case Pause:
+                case HighScore:
                 case Winner:
                 case GameOver:
                 case LevelComplete:
@@ -104,13 +101,13 @@ public class Animator implements Runnable {
         List<GameFigure> returnCollidableFigures = new ArrayList<>();
         Main.gameData.terrainFigures.forEach(terrainFigure -> {
             Main.quatree.retrieve(returnCollidableFigures, terrainFigure);
-            
+
             // detection for enemy attacks and friendly attacks hitting terrain
             returnCollidableFigures.forEach(collidableFigure -> {
                 if (collidableFigure.getCollisionBox().intersects(terrainFigure.getCollisionBox())) {
                     if (!(collidableFigure instanceof Shooter || collidableFigure instanceof BlinkMage
-                        || collidableFigure instanceof SuicideEnemy
-                        || collidableFigure instanceof MeleeEnemy || (collidableFigure instanceof SlowMage))
+                            || collidableFigure instanceof SuicideEnemy
+                            || collidableFigure instanceof MeleeEnemy || (collidableFigure instanceof SlowMage))
                             && terrainFigure instanceof BlockTerrain) {
                         collidableFigure.goNextState();
                     }
@@ -243,7 +240,6 @@ public class Animator implements Runnable {
                     }
                     friendFigure.goNextState();
                     //collidableFigure.goNextState();                        
-                   
 
                 }
             });
