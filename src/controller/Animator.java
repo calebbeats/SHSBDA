@@ -16,6 +16,7 @@ import model.GameFigure;
 import model.Shooter;
 import model.BlinkMage;
 import model.BlockTerrain;
+import model.Boss;
 import model.BossSummon;
 import model.BossSummonPet;
 import model.EnemyMissileSummonPet;
@@ -140,6 +141,10 @@ public class Animator implements Runnable {
                         GameData.multiplier = 0;
                         EnemyMissile.dealDamage();
 
+                    }else if (collidableFigure instanceof Boss) {
+                        collidableFigure.goNextState();
+                        GameData.multiplier = 0;
+                        GameData.shooter.takeDamage(200);
                     } else if (collidableFigure instanceof SuicideEnemy) {//do the enemy slow missile stuff here
                         collidableFigure.goNextState();
                         GameData.multiplier = 0;

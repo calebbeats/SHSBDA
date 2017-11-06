@@ -68,6 +68,7 @@ public class GameData {
             //friendFigures.add(p)
             friendFigures.add(p);
             
+
             //TEST BLOCK FOR NORMAL
             //------------------------------
             //    enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) Math.random() * 200));
@@ -104,8 +105,8 @@ public class GameData {
             terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 0, 0));
             shooter.setXY(Main.WIN_WIDTH / 2, Main.WIN_HEIGHT - 125);
             friendFigures.add(shooter);
-            enemyFigures.add(new Boss(GamePanel.PWIDTH - 400, GamePanel.PHEIGHT / 2, 2 * 81, 2 * 81, 9));
-            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
+            //enemyFigures.add(new Boss((int) (Math.random() * 500), (int) Math.random() * 200, 120));
+            enemyFigures.add(new Boss((int) (Math.random() * 500), (int) Math.random() * 200, 120));
         } else if (level == 6) {
             terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 0, 0));
             shooter.setXY(Main.WIN_WIDTH / 2, Main.WIN_HEIGHT - 125);
@@ -193,7 +194,15 @@ public class GameData {
                     && f instanceof EnemyMissileMelee && f instanceof EnemyMissileSummonPet
                     && f instanceof EnemyMissileWarlock) {
                 removeEnemies.add(f);
-            } else if (f.state == GameFigureState.STATE_DONE) {
+            }else if (f.state == GameFigureState.STATE_DONE
+                    && f instanceof Boss) {
+                removeEnemies.add(f);
+               // while(check < 2){
+                    enemyFigures.add(new Boss((int) (Math.random() * 500), (int) Math.random() * 200, 15));
+                    enemyFigures.add(new Boss((int) (Math.random() * 500), (int) Math.random() * 200, 15));
+                   // check--;
+               // }
+            }else if (f.state == GameFigureState.STATE_DONE) {
                 multiplier += 1;
                 MainWindow.coins += multiplier;
                 removeEnemies.add(f);
