@@ -3,6 +3,7 @@ package controller;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.GameData;
@@ -56,12 +57,7 @@ public class MouseController extends MouseAdapter {
                         && px < Main.gamePanel.highScoreButton.getMaxX()
                         && py > Main.gamePanel.highScoreButton.y
                         && py < Main.gamePanel.highScoreButton.getMaxY()) {
-                    try {
-                        HighScore.createFrame();
-                    } catch (IOException ex) {
-                        Logger.getLogger(MouseController.class.getName())
-                                .log(Level.SEVERE, null, ex);
-                    }
+                    Main.gameState = Main.GameState.HighScore;
                 }
                 break;
             case GameOver:
@@ -84,12 +80,16 @@ public class MouseController extends MouseAdapter {
                         && px < Main.gamePanel.highScoreButton.getMaxX()
                         && py > Main.gamePanel.highScoreButton.y
                         && py < Main.gamePanel.highScoreButton.getMaxY()) {
-                    try {
-                        HighScore.createFrame();
-                    } catch (IOException ex) {
-                        Logger.getLogger(MouseController.class.getName())
-                                .log(Level.SEVERE, null, ex);
-                    }
+                    Main.gameState = Main.GameState.HighScore;
+                }
+                break;
+            case HighScore:
+                if (px > Main.gamePanel.backButton.x
+                        && px < Main.gamePanel.backButton.getMaxX()
+                        && py > Main.gamePanel.backButton.y
+                        && py < Main.gamePanel.backButton.getMaxY()) {
+                    Main.gameState = Main.isPause ? Main.GameState.Pause
+                            : Main.GameState.Start;
                 }
                 break;
             case Run:
@@ -105,7 +105,7 @@ public class MouseController extends MouseAdapter {
                     );
                     Main.gameData.friendFigures.add(m);
                 }
-                if (me.getButton() == MouseEvent.BUTTON3 && !shooter.isSprint() && shooter.getMana()>9) {
+                if (me.getButton() == MouseEvent.BUTTON3 && !shooter.isSprint() && shooter.getMana() > 9) {
                     if (KeyController.chooseMissile == false) {
                         //Right click detected, initiate ranged attack
                         //shoot a missle at the mouse press location
@@ -128,20 +128,20 @@ public class MouseController extends MouseAdapter {
                         && py > Main.gamePanel.shopGameButton.y
                         && py < Main.gamePanel.shopGameButton.getMaxY()) {
                     Main.gameState = Main.GameState.Shop;
-                }else if (px > Main.gamePanel.continueLevelButton.x
+                } else if (px > Main.gamePanel.continueLevelButton.x
                         && px < Main.gamePanel.continueLevelButton.getMaxX()
                         && py > Main.gamePanel.continueLevelButton.y
                         && py < Main.gamePanel.continueLevelButton.getMaxY()) {
-                    if(Main.gameLevel < 12){
+                    if (Main.gameLevel < 12) {
                         Main.gameLevel++;
                         Main.gameData = new GameData();
                         Main.animator = new Animator();
                         Main.gameState = Main.GameState.Run;
-                    }else{
+                    } else {
                         Main.gameState = Main.GameState.Start;
                     }
                 }
-                
+
                 break;
             case Shop:
                 if (px > Main.gamePanel.weakPotionButton.x
