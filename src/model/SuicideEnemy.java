@@ -32,6 +32,10 @@ public class SuicideEnemy extends GameFigure {
     //------------------------------
     private static final int UNIT_TRAVEL_DISTANCE = 2;
     
+    //health
+    private int health;
+    private int maxHealth;
+    
     //Displacement per Frame
     //------------------------------
     private float dx; 
@@ -56,7 +60,14 @@ public class SuicideEnemy extends GameFigure {
     private Image explosion3;
 
     public SuicideEnemy(float sx, float sy) {
+        
         super(sx, sy);
+        health = 1;
+        maxHealth = health;
+        
+        //Damage
+        //Go-To method @ Line 166
+        DAMAGE = 250;
         
         tx = Main.gameData.shooter.x + 10;
         ty = Main.gameData.shooter.y + 10;
@@ -233,6 +244,30 @@ public class SuicideEnemy extends GameFigure {
                 this.goNextState();
             }
         }
+    }
+    
+    public static void dealDamage(){
+        GameData.shooter.takeDamage(DAMAGE);
+    }
+    
+    public void takeDamage(int i) {
+        health = health - i;
+    }
+    
+    public int getHealth() {
+        return health;
+    }
+    
+    public void setHealth(int health) {
+        this.health = health;
+    }
+    
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
     }
 
     @Override
