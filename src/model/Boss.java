@@ -1,94 +1,71 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package model;
 
 
-import java.awt.Graphics;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Observer;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
-import model.GameData.PHASE;
+import static model.GameFigure.STATE_ALIVE;
+import view.GamePanel;
 
+/**
+ *
+ * @author Phuong
+ */
 public class Boss extends GameFigure {
 
-    Image enemyImage;
-    float x, y;
-    int w, h;
-    int state = STATE_TRAVELING;
-    private int health;
-    private int shield;
+    private final int WIDTH = 10;
+    private final int HEIGHT = 25;
+    //private final Color color = Color.red;
+    private final int UNIT_TRAVEL = 5; // per frame
+
+    private int dx = 3;
+    private int dy = 3;
+    private int direction = 1; // +1: move down; -1 move up
+
+    private int directionX = 1; // +1: move down; -1 move up
+    private int count = 0;
+    private int maxcount = 30;
+
+    private Image alive;
+    private Image death1;
+    private Image death2;
+    private Image death3;
     private int blast = 15;
     private long blast_stamp = 0;
-    public PHASE phase;
-    private OPERATION cando = OPERATION.FLY;
-    private int damage;
-    public float dx;
-    public float dy;
-    float length;
-    //SoundPlayer soundPlayerFX;
+    Image enemyImage;
+    private int animationCheck = 0;
+    private static int deathCounter = 0;
+    public int size;
 
-//    public OPERATION canDo() {
-//        return cando;
-//    }
-//
-//    public PHASE getphase() {
-//        return phase;
-//    }
-    private PowerUp power;
-    private int type;
+    public Boss(float x, float y, int size) {
 
-    @Override
-    public int getDamage() {
-        if (type == 0) {
-            return 1;
-        } else {
-            return type;
-        }
-    }
-
-    @Override
-    public int getMyType() {
-        return type;
-    }
-
-    @Override
-    public int get() {
-        return health;
-    }
-    private ArrayList<Observer> observers;
-
-    public Boss(float x, float y, int height, int weight, int type) {
         super(x, y);
-        String imagePath = System.getProperty("user.dir");
-        String separator = System.getProperty("file.separator");
-        Image i;
-        phase = GameData.getphase();
-        this.type = type;
-        i = getImage(imagePath + separator + "images" + separator
-                + "enemy" + Integer.toString(this.type) + "s.png");
+        this.size = size;
+        super.state = STATE_ALIVE;
 
-        cando = OPERATION.ALL;
-        this.setAttributes(i, GameData.MAXHEALTH * 20);
-        if (GameData.getphase() == PHASE.TWO) {
-            this.setAttributes(i, GameData.MAXHEALTH * 45);
+        alive = null;
+        death1 = null;
+
+        try {
+            alive = ImageIO.read(getClass().getResource("/resources/enemy9.png"));
+            //launcherImage = ImageIO.read(getClass().getResource("alien.png"));
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error: Cannot open enemy9.png");
+            System.exit(-1);
         }
-        if (GameData.getphase() == PHASE.THREE) {
-            this.setAttributes(i, GameData.MAXHEALTH * 150);
-        }
-        this.observers = new ArrayList<>();
-        this.x = x;
-        this.y = y;
-        w = weight;
-        h = height;
-        //power = new PowerUp(3);
     }
-
-    public static Image getImage(String fileName) {
+    
+        public static Image getImage(String fileName) {
         Image image = null;
         try {
             image = ImageIO.read(new File(fileName));
@@ -99,175 +76,84 @@ public class Boss extends GameFigure {
         return image;
     }
 
-    @Override  
+    @Override
     public void render(Graphics2D g) {
         String imagePath = System.getProperty("user.dir");
         String separator = System.getProperty("file.separator");
-
-        switch (state) {
-            case STATE_EXPLODING: {
-                if (blast > 0) {
-                    if ((System.currentTimeMillis() - blast_stamp) > 150) {
-                        enemyImage = getImage(imagePath + separator + "images" + separator
-                                + "explosion" + Integer.toString(blast) + ".png");
-                        blast = blast - 1;
-                        if (blast == 0) {
-                            state = STATE_DONE;
-                        }
-                        blast_stamp = System.currentTimeMillis();
+        if (state == STATE_ALIVE) {
+            g.drawImage(alive, (int) super.x, (int) super.y,
+                    60, 40, null);
+        } else if (state == STATE_DYING) {
+            if (blast > 0) {
+                if ((System.currentTimeMillis() - blast_stamp) > 150) {
+                   enemyImage = getImage(imagePath + separator + "images" + separator
+                            + "explosion" + Integer.toString(blast) + ".png");
+                    blast = blast - 1;
+                    if (blast == 0) {
+                        state = STATE_DONE;
                     }
+                    blast_stamp = System.currentTimeMillis();
                 }
-                g.drawImage(enemyImage, (int) x, (int) y, null);
-                break;
             }
-            default: {
-                if (state != STATE_DEAD) {
-                    g.drawImage(enemyImage, (int) x, (int) y, null);
-                }
-                break;
-            }
+            g.drawImage(enemyImage, (int) x, (int) y, null);
+
         }
 
-//        if (power.isEnabled() && power.isReleased()) {
-//            power.render(g);
-//        }
+
+    }
+
+    @Override
+    public Rectangle2D.Double getCollisionBox() {
+        return new Rectangle2D.Double((int) (super.x - WIDTH / 2), (int) (super.y - HEIGHT / 2), WIDTH * 0.9, HEIGHT * 0.9); // to be corrected
+    }
+
+    public boolean Collides(GameFigure anotherGF) {
+        Rectangle2D.Double thisObj = this.getCollisionBox();
+        //anotherObj = anotherGF.
+        return thisObj.intersects(anotherGF.getCollisionBox());
+
+    }
+
+    @Override
+    public String getGFType() {
+        return "Boss";
     }
 
     @Override
     public void update() {
-        switch (state) {
-            case STATE_ALIVE: {
-                break;
+        super.y += 5 * (direction);
+
+        if (super.y + HEIGHT > GamePanel.height) {
+            direction = -1;
+        }
+        if (super.y < 0) {
+            direction = 1;
+        }
+
+        if (directionX == 1) {// going right
+            count++;
+            if (count < maxcount) {
+                super.x += 5;
+            } else {
+                directionX = - 1;
+                super.x -= 5;
+                count = 0;
             }
-            default: {
-                dx = Shooter.stx + 200 - this.x;
-                dy = Shooter.sty + 12 - this.y;
-                length = (float) Math.sqrt(dx * dx + dy * dy);
-                dx /= length;
-                dy /= length;
-                dx *= 2;
-                dy *= 2;
-                this.x += dx;
-                this.y += dy;
-                break;
+        } else if (directionX == -1) { // going left
+            count++;
+            if (count < maxcount) {
+                super.x -= 5;
+            } else {
+                directionX = 1;
+                super.x += 5;
+                count = 0;
             }
         }
-    }
-
-//    @Override
-    public void updateState(int state) {
-        this.state = state;
-    }
-
-//    @Override
-    public void setState(int s) {
-
-    }
-
- //   @Override
-    public int getState() {
-        return state;
-    }
-
- //   @Override
-    public int isMissile() {
-        return -1;
-    }
-
-  //  @Override
-    public int isPlayer() {
-        return 1;
-    }
-
-//    @Override
-//    public void Health(int i) {
-//        String imagePath = System.getProperty("user.dir");
-//        String separator = System.getProperty("file.separator");
-//        if (shield > 0) {
-//            shield -= i;
-//            if (shield <= 0) {
-//                enemyImage = getImage(imagePath + separator + "images" + separator
-//                        + "enemy" + Integer.toString(this.type) + ".png");
-//            }
-//        } else {
-//            health -= i;
-//            if ((health <= 0) && (state == STATE_TRAVELING)) {
-//                soundPlayerFX = new SoundPlayer(imagePath + separator
-//                        + "images" + System.getProperty("file.separator") + "blast1.wav");
-//                soundPlayerFX.play();
-//
-//                state = STATE_EXPLODING;
-//            }
-//        }
-//    }
-
-   // @Override
-    public float getXofMissileShoot() {
-        return x - 30;
-    }
-
-   // @Override
-    public float getYofMissileShoot() {
-        return y + 23;
-    }
-
-  //  @Override
-    public float getXcoor() {
-        return x;
-    }
-
-  //  @Override
-    public float getYcoor() {
-        return y;
-    }
-
-  //  @Override
-    public void registerObserver(Observer o) {
-        observers.add(o);
-    }
-
-  //  @Override
-    public void removeObserver(Observer o) {
-        observers.remove(o);
-    }
-
-  //  @Override
-//    public void notifyObservers(int amount) {
-//        observers.stream().forEach((o) -> {
-//            o.update(amount);
-//        });
-//    }
-
-  //  @Override
-    public void setAttributes(Image i, int health) {
-        this.health = health;
-        this.shield = health;
-        enemyImage = i;
-    }
-
-   // @Override
-//    public Rectangle collision() {
-//        return new Rectangle((int) x, (int) y, 81, 81);
-//    }
-
-  //  @Override
-    public void setMissile(int m) {
-
-    }
-
-  //  @Override
-    public boolean containsPowerup() {
-        return false;
     }
 
     @Override
     public void shoot() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Rectangle2D getCollisionBox() {
-        return new Rectangle2D.Double(this.x, this.y, 81, 81);
     }
 
 }
