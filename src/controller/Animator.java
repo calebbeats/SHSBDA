@@ -201,6 +201,8 @@ public class Animator implements Runnable {
                     } else if (collidableFigure instanceof MeleeEnemy) {
                         //Enemy -> MeleeEnemy
                         //------------------------------
+                        System.out.println(Shooter.getWeaponPower());
+                        System.out.println(((MeleeEnemy) collidableFigure).getHealth());
                         ((MeleeEnemy) collidableFigure).takeDamage(Shooter.getWeaponPower());
                         if (((MeleeEnemy) collidableFigure).getHealth() <= 0) {
                             collidableFigure.goNextState();

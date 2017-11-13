@@ -228,8 +228,8 @@ public class GamePanel extends JPanel {
                 }                
                 g2.draw(weaponUpgrade2);    
                 if(MouseController.getWep2()){//if weapon is bought
-                    g2.drawString("Upgrade Bought!", weaponUpgrade1.x + 15,
-                        weaponUpgrade1.y + 20);
+                    g2.drawString("Upgrade Bought!", weaponUpgrade2.x + 15,
+                        weaponUpgrade2.y + 20);
                 }
                 else{
                     g2.drawString("Weapon Upgrade 2", weaponUpgrade2.x + 15,
@@ -239,8 +239,8 @@ public class GamePanel extends JPanel {
                 }                  
                 g2.draw(weaponUpgrade3);    
                 if(MouseController.getWep3()){//if weapon is bought
-                    g2.drawString("Upgrade Bought!", weaponUpgrade1.x + 15,
-                        weaponUpgrade1.y + 20);
+                    g2.drawString("Upgrade Bought!", weaponUpgrade3.x + 15,
+                        weaponUpgrade3.y + 20);
                 }
                 else{
                     g2.drawString("Weapon Upgrade 3", weaponUpgrade3.x + 15,

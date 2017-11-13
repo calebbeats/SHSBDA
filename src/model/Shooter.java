@@ -35,7 +35,7 @@ public class Shooter extends GameFigure {
     int lowHealthCounter = 1;
     int lowHealthPhase = 1;
     int lowHealthMovement = 1;
-    private static int weaponPower; //when we implement weapons use this to decide damage amount
+    private static int weaponPower = 1; //when we implement weapons use this to decide damage amount
 
     int tempCounter = 0;
     int tempRemovalCounter;
@@ -78,7 +78,6 @@ public class Shooter extends GameFigure {
         mana = 100;
         maxHealth = health;
         maxMana = mana;
-        weaponPower = 1;
         lowHealthValue = 30;
         lowHealth = false;
 //        inventory = new Item[4];

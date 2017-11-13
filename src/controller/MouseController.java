@@ -41,7 +41,7 @@ public class MouseController extends MouseAdapter {
                     if (a.getC() != null) {
                         a.getC().stop();
                     }
-                    a.playAudio("/resources/chugchug.wav");
+                    a.playAudio("/resources/chugchug.wav");                    
                     Main.gameState = Main.GameState.Run;
                 } else if (px > Main.gamePanel.quitGameButton.x
                         && px < Main.gamePanel.quitGameButton.getMaxX()
