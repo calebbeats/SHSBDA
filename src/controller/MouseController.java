@@ -169,7 +169,6 @@ public class MouseController extends MouseAdapter {
                     weapon1Bought = true;
                     MainWindow.coins -= 10;
                     shooter.setWeaponPower(2);
-                    System.out.println(shooter.getWeaponPower());
                 } else if (px > Main.gamePanel.weaponUpgrade2.x
                         && px < Main.gamePanel.weaponUpgrade2.getMaxX()
                         && py > Main.gamePanel.weaponUpgrade2.y
