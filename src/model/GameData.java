@@ -65,23 +65,12 @@ public class GameData {
         if (level == 1) {
             terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 0, 0));
             friendFigures.add(shooter);
-            //friendFigures.add(p)
             friendFigures.add(p);
+            enemyFigures.add(new BossSnake((int) (Math.random() * 500), (int) Math.random() * 200));
             
-
-            //TEST BLOCK FOR NORMAL
-            //------------------------------
-            //    enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) Math.random() * 200));
-            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
-            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
-            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
-            //    enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) Math.random() * 200));
-            //    enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) Math.random() * 200));
-
-            //TEST BLOCK FOR BOSS
-            //------------------------------
-//                enemyFigures.add(new BossSummon((int) (Math.random() * 500), (int) Math.random() * 200));                  
-//                enemyFigures.add(new BossWarlockPet((int) (Math.random() * 500), (int) Math.random() * 200));                  
+//            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
+//            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
+//            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
         } else if (level == 2) {
             terrainFigures.add(new BlockTerrain(Main.WIN_WIDTH / 4, Main.WIN_HEIGHT / 4, 0, 0));
             friendFigures.add(shooter);
@@ -278,6 +267,19 @@ public class GameData {
             if (g.bossTimer == 25 || g.bossTimer == 75) {
                 enemyFigures.add(new BossSummonPet(g.x, g.y));
             }          
+        }
+        
+        //BOSS -> Snake
+        //-----------------------------------
+        for (Iterator<GameFigure> it = enemyFigures.iterator(); it.hasNext();) {
+            GameFigure g = it.next();
+            if (g.poisonTimer == 25 
+                    || g.poisonTimer == 50 
+                    || g.poisonTimer == 75 
+                    || g.poisonTimer == 100
+                    || g.poisonTimer == 125) {
+                enemyFigures.add(new EnemyMissilePoison(g.x, g.y));
+            }
         }
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 

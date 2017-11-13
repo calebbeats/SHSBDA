@@ -14,6 +14,7 @@ import model.Shooter;
 import model.BlinkMage;
 import model.BlockTerrain;
 import model.Boss;
+import model.BossSnake;
 import model.BossSummon;
 import model.BossSummonPet;
 import model.EnemyMissileSummonPet;
@@ -26,6 +27,7 @@ import model.SlowMage;
 import model.GameData;
 import model.Melee;
 import model.EnemyMissileMelee;
+import model.EnemyMissilePoison;
 import model.Missile;
 import model.MyBullet;
 import model.Shield;
@@ -171,6 +173,9 @@ public class Animator implements Runnable {
                     } else if (collidableFigure instanceof EnemyMissileSummonPet) {
                         GameData.multiplier = 0;
                         EnemyMissileSummonPet.dealDamage();
+                    } else if (collidableFigure instanceof EnemyMissilePoison) {
+                        GameData.multiplier = 0;
+                        EnemyMissileSummonPet.dealDamage();
                     }
                 }
                 /* * * * * * * * * * * * * * * * * * * * *          
@@ -233,6 +238,13 @@ public class Animator implements Runnable {
                         //------------------------------
                         ((BossSummonPet) collidableFigure).takeDamage(5);
                         if (((BossSummonPet) collidableFigure).getHealth() <= 0) {
+                            collidableFigure.goNextState();
+                        }
+                    } else if (collidableFigure instanceof BossSnake) {
+                        //Boss -> BossSnake
+                        //------------------------------
+                        ((BossSnake) collidableFigure).takeDamage(5);
+                        if (((BossSnake) collidableFigure).getHealth() <= 0) {
                             collidableFigure.goNextState();
                         }
                     } else {
