@@ -1,6 +1,7 @@
 package view;
 
 import controller.Main;
+import controller.MouseController;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -215,20 +216,38 @@ public class GamePanel extends JPanel {
                 g2.drawString("(3 Coins)", strongPotionButton.x + 25,
                         strongPotionButton.y + 40);
                 g2.draw(weaponUpgrade1);    
-                g2.drawString("Weapon Upgrade 1", weaponUpgrade1.x + 15,
+                if(MouseController.getWep1()){//if weapon is bought
+                    g2.drawString("Upgrade Bought!", weaponUpgrade1.x + 15,
                         weaponUpgrade1.y + 20);
-                g2.drawString("(10 Coins)", weaponUpgrade1.x + 30,
+                }
+                else{
+                    g2.drawString("Weapon Upgrade 1", weaponUpgrade1.x + 15,
+                        weaponUpgrade1.y + 20);
+                    g2.drawString("(10 Coins)", weaponUpgrade1.x + 30,
                         weaponUpgrade1.y + 40);
+                }                
                 g2.draw(weaponUpgrade2);    
-                g2.drawString("Weapon Upgrade 2", weaponUpgrade2.x + 15,
+                if(MouseController.getWep2()){//if weapon is bought
+                    g2.drawString("Upgrade Bought!", weaponUpgrade1.x + 15,
+                        weaponUpgrade1.y + 20);
+                }
+                else{
+                    g2.drawString("Weapon Upgrade 2", weaponUpgrade2.x + 15,
                         weaponUpgrade2.y + 20);
-                g2.drawString("(100 Coins)", weaponUpgrade2.x + 30,
+                    g2.drawString("(3000 Coins)", weaponUpgrade2.x + 30,
                         weaponUpgrade2.y + 40);
+                }                  
                 g2.draw(weaponUpgrade3);    
-                g2.drawString("Weapon Upgrade 3", weaponUpgrade3.x + 15,
+                if(MouseController.getWep3()){//if weapon is bought
+                    g2.drawString("Upgrade Bought!", weaponUpgrade1.x + 15,
+                        weaponUpgrade1.y + 20);
+                }
+                else{
+                    g2.drawString("Weapon Upgrade 3", weaponUpgrade3.x + 15,
                         weaponUpgrade3.y + 20);
-                g2.drawString("(1000 Coins)", weaponUpgrade3.x + 30,
+                    g2.drawString("(9000 Coins)", weaponUpgrade3.x + 30,
                         weaponUpgrade3.y + 40);
+                }                    
                 g2.draw(backButton);
                 g2.drawString("Back", backButton.x + 50,
                         backButton.y + 30);
