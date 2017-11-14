@@ -75,21 +75,21 @@ public class Missile extends GameFigure {
             } else if(Shooter.getWeaponPower() == 2){
                 launcherImage = ImageIO.read(getClass().getResource("/resources/fireballPower1a.gif"));
                 launcherImage2 = ImageIO.read(getClass().getResource("/resources/fireballPower1b.png"));
-                explosion1 = ImageIO.read(getClass().getResource("/resources/explosion0.png"));
-                explosion2 = ImageIO.read(getClass().getResource("/resources/explosion1.png"));
-                explosion3 = ImageIO.read(getClass().getResource("/resources/explosion2.png"));
+                explosion1 = ImageIO.read(getClass().getResource("/resources/explosion1a.png"));
+                explosion2 = ImageIO.read(getClass().getResource("/resources/explosion1b.png"));
+                explosion3 = ImageIO.read(getClass().getResource("/resources/explosion1c.png"));
             } else if(Shooter.getWeaponPower() == 3){
                 launcherImage = ImageIO.read(getClass().getResource("/resources/fireballPower2a.gif"));
                 launcherImage2 = ImageIO.read(getClass().getResource("/resources/fireballPower2b.png"));
-                explosion1 = ImageIO.read(getClass().getResource("/resources/explosion0.png"));
-                explosion2 = ImageIO.read(getClass().getResource("/resources/explosion1.png"));
-                explosion3 = ImageIO.read(getClass().getResource("/resources/explosion2.png"));
+                explosion1 = ImageIO.read(getClass().getResource("/resources/explosion2a.png"));
+                explosion2 = ImageIO.read(getClass().getResource("/resources/explosion2b.png"));
+                explosion3 = ImageIO.read(getClass().getResource("/resources/explosion2c.png"));
             } else if(Shooter.getWeaponPower() == 4){
                 launcherImage = ImageIO.read(getClass().getResource("/resources/fireballPower3a.gif"));
                 launcherImage2 = ImageIO.read(getClass().getResource("/resources/fireballPower3b.png"));
-                explosion1 = ImageIO.read(getClass().getResource("/resources/explosion0.png"));
-                explosion2 = ImageIO.read(getClass().getResource("/resources/explosion1.png"));
-                explosion3 = ImageIO.read(getClass().getResource("/resources/explosion2.png"));
+                explosion1 = ImageIO.read(getClass().getResource("/resources/explosion3a.png"));
+                explosion2 = ImageIO.read(getClass().getResource("/resources/explosion3b.png"));
+                explosion3 = ImageIO.read(getClass().getResource("/resources/explosion3c.png"));
             }
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");
