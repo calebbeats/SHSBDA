@@ -164,28 +164,28 @@ public class MouseController extends MouseAdapter {
                         && px < Main.gamePanel.weaponUpgrade1.getMaxX()
                         && py > Main.gamePanel.weaponUpgrade1.y
                         && py < Main.gamePanel.weaponUpgrade1.getMaxY()
-                        && MainWindow.coins >= 1
+                        && MainWindow.coins >= 10
                         && weapon1Bought == false) {
                     weapon1Bought = true;
-                    MainWindow.coins -= 1;
+                    MainWindow.coins -= 10;
                     shooter.setWeaponPower(2);
                 } else if (px > Main.gamePanel.weaponUpgrade2.x
                         && px < Main.gamePanel.weaponUpgrade2.getMaxX()
                         && py > Main.gamePanel.weaponUpgrade2.y
                         && py < Main.gamePanel.weaponUpgrade2.getMaxY()
-                        && MainWindow.coins >= 1
+                        && MainWindow.coins >= 1000
                         && weapon2Bought == false) {
                     weapon2Bought = true;
-                    MainWindow.coins -= 1;
+                    MainWindow.coins -= 1000;
                     shooter.setWeaponPower(3);
                 } else if (px > Main.gamePanel.weaponUpgrade3.x
                         && px < Main.gamePanel.weaponUpgrade3.getMaxX()
                         && py > Main.gamePanel.weaponUpgrade3.y
                         && py < Main.gamePanel.weaponUpgrade3.getMaxY()
-                        && MainWindow.coins >= 5
+                        && MainWindow.coins >= 5000
                         && weapon3Bought == false) {
                     weapon3Bought = true;
-                    MainWindow.coins -= 5;
+                    MainWindow.coins -= 5000;
                     shooter.setWeaponPower(4);
                 } else if (px > Main.gamePanel.backButton.x
                         && px < Main.gamePanel.backButton.getMaxX()
