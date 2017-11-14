@@ -2,19 +2,13 @@ package controller;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.GameData;
 import model.MediumPotion;
 import model.Melee;
 import model.Missile;
-import model.MyBullet;
 import model.Shooter;
 import model.StrongPotion;
 import model.WeakPotion;
-import view.HighScore;
 import view.MainWindow;
 
 public class MouseController extends MouseAdapter {
@@ -23,6 +17,7 @@ public class MouseController extends MouseAdapter {
     private int py;
     private Audio a;
     private int index;
+    private static boolean weapon1Bought = false, weapon2Bought = false, weapon3Bought = false;
 
     public MouseController() {
         a = new Audio();
@@ -46,7 +41,7 @@ public class MouseController extends MouseAdapter {
                     if (a.getC() != null) {
                         a.getC().stop();
                     }
-                    a.playAudio("/resources/chugchug.wav");
+                    a.playAudio("/resources/chugchug.wav");                    
                     Main.gameState = Main.GameState.Run;
                 } else if (px > Main.gamePanel.quitGameButton.x
                         && px < Main.gamePanel.quitGameButton.getMaxX()
@@ -165,6 +160,33 @@ public class MouseController extends MouseAdapter {
                         && inventoryCapacityCheck() && MainWindow.coins >= 3) {
                     MainWindow.coins -= 3;
                     Shooter.inventory[index] = new StrongPotion(1);
+                } else if (px > Main.gamePanel.weaponUpgrade1.x
+                        && px < Main.gamePanel.weaponUpgrade1.getMaxX()
+                        && py > Main.gamePanel.weaponUpgrade1.y
+                        && py < Main.gamePanel.weaponUpgrade1.getMaxY()
+                        && MainWindow.coins >= 10
+                        && weapon1Bought == false) {
+                    weapon1Bought = true;
+                    MainWindow.coins -= 10;
+                    shooter.setWeaponPower(2);
+                } else if (px > Main.gamePanel.weaponUpgrade2.x
+                        && px < Main.gamePanel.weaponUpgrade2.getMaxX()
+                        && py > Main.gamePanel.weaponUpgrade2.y
+                        && py < Main.gamePanel.weaponUpgrade2.getMaxY()
+                        && MainWindow.coins >= 1000
+                        && weapon2Bought == false) {
+                    weapon2Bought = true;
+                    MainWindow.coins -= 1000;
+                    shooter.setWeaponPower(3);
+                } else if (px > Main.gamePanel.weaponUpgrade3.x
+                        && px < Main.gamePanel.weaponUpgrade3.getMaxX()
+                        && py > Main.gamePanel.weaponUpgrade3.y
+                        && py < Main.gamePanel.weaponUpgrade3.getMaxY()
+                        && MainWindow.coins >= 5000
+                        && weapon3Bought == false) {
+                    weapon3Bought = true;
+                    MainWindow.coins -= 5000;
+                    shooter.setWeaponPower(4);
                 } else if (px > Main.gamePanel.backButton.x
                         && px < Main.gamePanel.backButton.getMaxX()
                         && py > Main.gamePanel.backButton.y
@@ -180,6 +202,18 @@ public class MouseController extends MouseAdapter {
         ((Shooter) Main.gameData.friendFigures.get(0)).setMouseMovedEvent(e);
     }
 
+    public static boolean getWep1 (){
+        return MouseController.weapon1Bought;
+    }
+    
+    public static boolean getWep2 (){
+        return MouseController.weapon2Bought;
+    }
+    
+    public static boolean getWep3 (){
+        return MouseController.weapon3Bought;
+    }
+    
     private boolean inventoryCapacityCheck() {
         for (int i = 0; i < Shooter.inventory.length; i++) {
             if (Shooter.inventory[i] == null) {
