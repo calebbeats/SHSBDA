@@ -28,6 +28,7 @@ import model.GameData;
 import model.Melee;
 import model.EnemyMissileMelee;
 import model.EnemyMissilePoison;
+import static model.GameFigure.DAMAGE;
 import model.Missile;
 import model.MyBullet;
 import model.Shield;
@@ -177,6 +178,7 @@ public class Animator implements Runnable {
                     } else if (collidableFigure instanceof EnemyMissilePoison) {
                         GameData.multiplier = 0;
                         EnemyMissilePoison.dealDamage();
+                                EnemyMissilePoison.dealDamage(); 
                     }
                 }
                 

@@ -36,6 +36,8 @@ public class BossSnake extends GameFigure {
     //------------------------------
     private Image s1;
     private Image s2;
+    private Image s3;
+    private Image s4;
     private Image death1;
     private Image death2;
     private Image death3;
@@ -53,6 +55,8 @@ public class BossSnake extends GameFigure {
         try {
             s1 = ImageIO.read(getClass().getResource("/resources/snakeboss1.png"));
             s2 = ImageIO.read(getClass().getResource("/resources/snakeboss2.png"));
+            s3 = ImageIO.read(getClass().getResource("/resources/snakeboss3.png"));
+            s4 = ImageIO.read(getClass().getResource("/resources/snakeboss4.png"));
             death1 = ImageIO.read(getClass().getResource("/resources/fire1.png"));
             death2 = ImageIO.read(getClass().getResource("/resources/fire2.png"));
             death3 = ImageIO.read(getClass().getResource("/resources/fire3.png"));
@@ -70,27 +74,42 @@ public class BossSnake extends GameFigure {
         
         if(state == STATE_ALIVE)
         {
-            if(timer < 100)
+            if(timer < 50)
             {
-                g.drawImage(s1, (int)super.x, (int)super.y, 
+                g.drawImage(s3, (int)super.x, (int)super.y, 
                 SIZE, SIZE, null);
             }
-            if(timer >= 100 && timer <200)
-            {
-                g.drawImage(s2, (int)super.x, (int)super.y, 
-                SIZE, SIZE, null);
-            }
-            if(timer >= 200 && timer < 300)
-            {
-                g.drawImage(s1, (int)super.x, (int)super.y, 
-                SIZE, SIZE, null);
-            }
-            if(timer >= 300 && timer < 400)
-            {
-                g.drawImage(s2, (int)super.x, (int)super.y, 
+            if(timer >= 50 && timer < 100){
+                g.drawImage(s4, (int)super.x, (int)super.y, 
                 SIZE, SIZE, null);
             }
             
+            if(timer >= 100 && timer <150)
+            {
+                g.drawImage(s1, (int)super.x, (int)super.y, 
+                SIZE, SIZE, null);
+            }
+            if(timer >= 150 && timer < 350)
+            {
+                g.drawImage(s2, (int)super.x, (int)super.y, 
+                SIZE, SIZE, null);
+            }
+            if(timer >= 350 && timer < 400)
+            {
+                g.drawImage(s1, (int)super.x, (int)super.y, 
+                SIZE, SIZE, null);
+            }
+            
+            if(timer >= 400 && timer < 450)
+            {
+                g.drawImage(s4, (int)super.x, (int)super.y, 
+                SIZE, SIZE, null);
+            }
+            if(timer >= 450 && timer < 500)
+            {
+                g.drawImage(s3, (int)super.x, (int)super.y, 
+                SIZE, SIZE, null);
+            }
             //Health Bar
             //------------------------------
             g.setColor(Color.red);
@@ -103,15 +122,15 @@ public class BossSnake extends GameFigure {
             g.setColor(Color.white);          
  
             if(NAME_GEN==1){
-                g.drawString("Slithmar", 170, 40);
+                g.drawString("Slithmar, The Sneaky Snake", 170, 40);
             } else if(NAME_GEN==2){
-                g.drawString("Yatharion, of the Void", 170, 40);
+                g.drawString("HiSsSsssSsS >:)", 170, 40);
             } else if (NAME_GEN==3){
-                g.drawString("Fawen, of the Nightfall ", 170, 40);
+                g.drawString("Terry the Tunneler", 170, 40);
             } else if (NAME_GEN==4){
-                g.drawString("Nyledris, Keeper of the Rift", 170, 40);
+                g.drawString("Plythma, The Poisonous", 170, 40);
             } else {
-                g.drawString("Teleport Fireball Summoner Guy", 170, 40);
+                g.drawString("Snek", 170, 40);
             }
 
 
@@ -120,17 +139,17 @@ public class BossSnake extends GameFigure {
         {
             if(deadTimer < 10)
             {
-            g.drawImage(death1, (int)super.x, (int)super.y, 
+            g.drawImage(s3, (int)super.x, (int)super.y, 
             SIZE, SIZE, null);
             }
             else if(deadTimer < 20)
             {
-            g.drawImage(death2, (int)super.x, (int)super.y, 
+            g.drawImage(s3, (int)super.x, (int)super.y, 
             SIZE, SIZE, null);
             }
             else if(deadTimer < 30)
             {
-            g.drawImage(death3, (int)super.x, (int)super.y, 
+            g.drawImage(s3, (int)super.x, (int)super.y, 
             SIZE, SIZE, null);
             }
             
@@ -141,7 +160,7 @@ public class BossSnake extends GameFigure {
     public void update() {
         if(state == STATE_ALIVE)
         {
-            if (timer < 400) 
+            if (timer < 500) 
             {
                 timer++;
             }
@@ -165,7 +184,7 @@ public class BossSnake extends GameFigure {
                 }
                 timer = 0;
             }
-            if(poisonTimer < 400)
+            if(poisonTimer < 500)
             {
                 poisonTimer++;
             }
@@ -184,21 +203,16 @@ public class BossSnake extends GameFigure {
             }
         }   
     }
-    
-    public static void summon(){
-        if(summonTime < 50)  {
-            summonTime++;
-        }
-        else    {
-            summonTime = 0;
-        }
-    }
 
     @Override
     public Rectangle2D getCollisionBox() {
-        return new Rectangle2D.Double(this.x, this.y, SIZE*0.9D, SIZE*0.9D);
+        if(timer < 100 || timer > 400 ){
+            return new Rectangle2D.Double(this.x, this.y, 0, 0);
+        } else {
+            return new Rectangle2D.Double(this.x, this.y, SIZE*0.9D, SIZE*0.9D);
+        }
     }
-
+    
     @Override
     public void shoot() {
         System.out.println("Blink Mage Shoots");

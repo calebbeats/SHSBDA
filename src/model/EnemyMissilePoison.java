@@ -57,7 +57,7 @@ public class EnemyMissilePoison extends GameFigure {
         
         //Damage
         //Go-To method @ Line 166
-        DAMAGE = 20;
+        DAMAGE = 5;
         
         float tx = Main.gameData.shooter.x + 10;
         float ty = Main.gameData.shooter.y + 10;
@@ -84,8 +84,8 @@ public class EnemyMissilePoison extends GameFigure {
         launcherImage = null;
         
         try {          
-            launcherImage = ImageIO.read(getClass().getResource("/resources/enemyMissile0.png"));
-            launcherImage2 = ImageIO.read(getClass().getResource("/resources/enemyMissile1.png"));
+            launcherImage = ImageIO.read(getClass().getResource("/resources/enemyMissleP.png"));
+            launcherImage2 = ImageIO.read(getClass().getResource("/resources/enemyMissleP.png"));
             explosion1 = ImageIO.read(getClass().getResource("/resources/explosion0.png"));
             explosion2 = ImageIO.read(getClass().getResource("/resources/explosion1.png"));
             explosion3 = ImageIO.read(getClass().getResource("/resources/explosion2.png"));
@@ -141,7 +141,7 @@ public class EnemyMissilePoison extends GameFigure {
     }
 
     public void updateLocation() {        
-        //super.x += dx;
+        super.x += dx;
         super.y += dy;
     }
 
@@ -165,7 +165,6 @@ public class EnemyMissilePoison extends GameFigure {
     }
     
     public static void dealDamage(){
-        //Implement Damage Over Time
         GameData.shooter.takeDamage(DAMAGE);
     }
 

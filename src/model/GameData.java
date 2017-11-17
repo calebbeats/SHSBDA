@@ -273,14 +273,14 @@ public class GameData {
         //-----------------------------------
         for (Iterator<GameFigure> it = enemyFigures.iterator(); it.hasNext();) {
             GameFigure g = it.next();
-            if (g.poisonTimer == 25 
-                    || g.poisonTimer == 50 
-                    || g.poisonTimer == 75 
-                    || g.poisonTimer == 100
-                    || g.poisonTimer == 125
-                    || g.poisonTimer == 150
-                    || g.poisonTimer == 175
-                    || g.poisonTimer == 200) {
+            if (g.poisonTimer == 150 
+                    || g.poisonTimer == 175  
+                    || g.poisonTimer == 200 
+                    || g.poisonTimer == 250
+                    || g.poisonTimer == 275
+                    || g.poisonTimer == 300
+                    || g.poisonTimer == 325)
+            {
                 enemyFigures.add(new EnemyMissilePoison(g.x, g.y));
             }
         }
