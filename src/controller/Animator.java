@@ -176,7 +176,7 @@ public class Animator implements Runnable {
                         
                     } else if (collidableFigure instanceof EnemyMissilePoison) {
                         GameData.multiplier = 0;
-                        EnemyMissileSummonPet.dealDamage();
+                        EnemyMissilePoison.dealDamage();
                     }
                 }
                 

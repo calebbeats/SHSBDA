@@ -29,6 +29,7 @@ public class EnemyMissilePoison extends GameFigure {
         private float dx; // displacement at each frame
         private float dy; // displacement at each frame
         private int animationCheck=0; //Check for movement aniamtion
+        private static int pTimer=0;
 
         //Public
         public Color color; //color (???)
@@ -164,6 +165,7 @@ public class EnemyMissilePoison extends GameFigure {
     }
     
     public static void dealDamage(){
+        //Implement Damage Over Time
         GameData.shooter.takeDamage(DAMAGE);
     }
 
@@ -176,5 +178,4 @@ public class EnemyMissilePoison extends GameFigure {
     public void shoot() {
        System.out.println("Enemy Missiles Shoots");
     }
-
 }
