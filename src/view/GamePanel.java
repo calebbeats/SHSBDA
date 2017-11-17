@@ -141,6 +141,7 @@ public class GamePanel extends JPanel {
                 g2.drawString("x " + MainWindow.coins,
                         40, 25);
                 g2.drawString("Score: " + MainWindow.score, 250, 25);
+                g2.drawString("Level: " + Main.gameLevel, 500, 25);
                 for (GameFigure f : Main.gameData.terrainFigures) {
                     f.render(g2);
                 }
