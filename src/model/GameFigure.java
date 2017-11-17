@@ -42,6 +42,7 @@ public abstract class GameFigure implements CollisionBox {
 
     //Boss Summon
     //-----------------------------------
+    public int poisonTimer = 0;
     public int bossTimer = 0;
     public int summonTimer = 0;
     public int petSwingTimer = 0;

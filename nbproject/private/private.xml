@@ -3,30 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Chase/Documents/GitHub/SHSBDA/src/model/DefensivePulse.java</file>
-            <file>file:/C:/Users/Chase/Documents/GitHub/SHSBDA/src/model/IceTerrain.java</file>
-            <file>file:/C:/Users/Chase/Documents/GitHub/SHSBDA/src/model/Consumable.java</file>
-            <file>file:/C:/Users/Chase/Documents/GitHub/SHSBDA/src/model/Melee.java</file>
-            <file>file:/C:/Users/Chase/Documents/GitHub/SHSBDA/src/model/FireballPower.java</file>
-            <file>file:/C:/Users/Chase/Documents/GitHub/SHSBDA/src/model/BigBoss.java</file>
-            <file>file:/C:/Users/Chase/Documents/GitHub/SHSBDA/src/view/HighScore.java</file>
-            <file>file:/C:/Users/Chase/Documents/GitHub/SHSBDA/src/model/FireNova.java</file>
-            <file>file:/C:/Users/Chase/Documents/GitHub/SHSBDA/src/model/TeleportStone.java</file>
-            <file>file:/C:/Users/Chase/Documents/GitHub/SHSBDA/src/model/Boss.java</file>
-            <file>file:/C:/Users/Chase/Documents/GitHub/SHSBDA/src/model/BasicCollisionBox.java</file>
-            <file>file:/C:/Users/Chase/Documents/GitHub/SHSBDA/src/model/GameData.java</file>
-            <file>file:/C:/Users/Chase/Documents/GitHub/SHSBDA/src/view/GamePanel.java</file>
-            <file>file:/C:/Users/Chase/Documents/GitHub/SHSBDA/src/view/MainWindow.java</file>
-            <file>file:/C:/Users/Chase/Documents/GitHub/SHSBDA/src/model/Shield.java</file>
-            <file>file:/C:/Users/Chase/Documents/GitHub/SHSBDA/src/model/Item.java</file>
-            <file>file:/C:/Users/Chase/Documents/GitHub/SHSBDA/src/model/Shooter.java</file>
-            <file>file:/C:/Users/Chase/Documents/GitHub/SHSBDA/src/controller/Main.java</file>
-            <file>file:/C:/Users/Chase/Documents/GitHub/SHSBDA/src/model/MediumPotion.java</file>
-            <file>file:/C:/Users/Chase/Documents/GitHub/SHSBDA/src/model/GemOfMana.java</file>
-            <file>file:/C:/Users/Chase/Documents/GitHub/SHSBDA/src/model/Weapon.java</file>
-            <file>file:/C:/Users/Chase/Documents/GitHub/SHSBDA/src/model/PowerDecorator.java</file>
-            <file>file:/C:/Users/Chase/Documents/GitHub/SHSBDA/src/model/EnemyMissileSummonPet.java</file>
-            <file>file:/C:/Users/Chase/Documents/GitHub/SHSBDA/src/model/BasicWeapon.java</file>
+            <file>file:/Users/leadlabtech02/Documents/GitHub/SHSBDA/src/model/EnemyMissilePoison.java</file>
         </group>
     </open-files>
 </project-private>

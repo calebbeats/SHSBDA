@@ -14,6 +14,7 @@ import model.Shooter;
 import model.BlinkMage;
 import model.BlockTerrain;
 import model.Boss;
+import model.BossSnake;
 import model.BossSummon;
 import model.BossSummonPet;
 import model.EnemyMissileSummonPet;
@@ -26,6 +27,8 @@ import model.SlowMage;
 import model.GameData;
 import model.Melee;
 import model.EnemyMissileMelee;
+import model.EnemyMissilePoison;
+import static model.GameFigure.DAMAGE;
 import model.Missile;
 import model.MyBullet;
 import model.Shield;
@@ -119,6 +122,7 @@ public class Animator implements Runnable {
             Main.quatree.retrieve(returnCollidableFigures, friendFigure);
 
             returnCollidableFigures.stream().filter(collidableFigure -> Main.gameData.enemyFigures.contains(collidableFigure)).forEach(collidableFigure -> {
+                
                 /* * * * * * * * * * * * * * * * * * * * * *         
             *   ____  _                 _              *
             *  / ___|| |__   ___   ___ | |_ ___ _ __   *
@@ -171,9 +175,15 @@ public class Animator implements Runnable {
                     } else if (collidableFigure instanceof EnemyMissileSummonPet) {
                         GameData.multiplier = 0;
                         EnemyMissileSummonPet.dealDamage();
+                        
+                    } else if (collidableFigure instanceof EnemyMissilePoison) {
+                        GameData.multiplier = 0;
+                        EnemyMissilePoison.dealDamage();
+                                EnemyMissilePoison.dealDamage(); 
                     }
                 }
-                /* * * * * * * * * * * * * * * * * * * * *          
+                
+           /* * * * * * * * * * * * * * * * * * * * *          
            *    _____                               * 
            *   | ____|_ __   ___ _ __ ___  _   _    *
            *   |  _| | '_ \ / _ \ '_ ` _ \| | | |   *
@@ -235,6 +245,13 @@ public class Animator implements Runnable {
                         if (((BossSummonPet) collidableFigure).getHealth() <= 0) {
                             collidableFigure.goNextState();
                         }
+                    } else if (collidableFigure instanceof BossSnake) {
+                        //Boss -> BossSnake
+                        //------------------------------
+                        ((BossSnake) collidableFigure).takeDamage(5);
+                        if (((BossSnake) collidableFigure).getHealth() <= 0) {
+                            collidableFigure.goNextState();
+                        }
                     } else {
                         collidableFigure.goNextState();
                     }
@@ -244,6 +261,7 @@ public class Animator implements Runnable {
                 }
             });
         });
+        
 //        // detect collisions between friendFigure and enemyFigures
 //        // if detected, mark it as STATE_DONE, so that
 //        // they can be removed at update() method
