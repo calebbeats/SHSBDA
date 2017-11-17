@@ -65,12 +65,10 @@ public class GameData {
         if (level == 1) {
             terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 0, 0));
             friendFigures.add(shooter);
-            friendFigures.add(p);
-            enemyFigures.add(new BossSnake((int) (Math.random() * 500), (int) Math.random() * 200));
-            
-//            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
-//            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
-//            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
+            friendFigures.add(p);           
+            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
+            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
+            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
         } else if (level == 2) {
             terrainFigures.add(new BlockTerrain(Main.WIN_WIDTH / 4, Main.WIN_HEIGHT / 4, 0, 0));
             friendFigures.add(shooter);
@@ -287,6 +285,7 @@ public class GameData {
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
         * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+        
         // attacks and shooter removed if STATE_DONE
         ArrayList<GameFigure> removeFriends = new ArrayList<>();
         for (int i = 0; i < friendFigures.size(); i++) {
@@ -360,7 +359,6 @@ public class GameData {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-
     }
 
     void addFriendlyFigure(GameFigure g) {

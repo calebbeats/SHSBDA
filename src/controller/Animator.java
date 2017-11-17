@@ -122,6 +122,7 @@ public class Animator implements Runnable {
             Main.quatree.retrieve(returnCollidableFigures, friendFigure);
 
             returnCollidableFigures.stream().filter(collidableFigure -> Main.gameData.enemyFigures.contains(collidableFigure)).forEach(collidableFigure -> {
+                
                 /* * * * * * * * * * * * * * * * * * * * * *         
             *   ____  _                 _              *
             *  / ___|| |__   ___   ___ | |_ ___ _ __   *
@@ -260,6 +261,7 @@ public class Animator implements Runnable {
                 }
             });
         });
+        
 //        // detect collisions between friendFigure and enemyFigures
 //        // if detected, mark it as STATE_DONE, so that
 //        // they can be removed at update() method
