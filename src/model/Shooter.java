@@ -3,6 +3,7 @@ package model;
 import controller.Main;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Stroke;
@@ -31,6 +32,7 @@ public class Shooter extends GameFigure {
     private int mana;
     private int maxMana;
     private int maxHealth;
+    private int healthPercentage;
     private int lowHealthValue;
     int lowHealthCounter = 1;
     int lowHealthPhase = 1;
@@ -144,7 +146,7 @@ public class Shooter extends GameFigure {
                 lowHealthMovement = 1;
             }
         }
-
+        
         g.setColor(Color.red);
         g.fillRect(20, 490, health, 20);
         g.setColor(Color.white);
@@ -162,6 +164,13 @@ public class Shooter extends GameFigure {
                 g.drawImage(inventory[i].getIcon(), 20 + i * 30, 460, 20, 20, null);
             }
         }
+        g.setColor(Color.white);
+        Font myFont = g.getFont();
+        g.setFont(new Font("Arial", Font.PLAIN, 15)); 
+        if (health < 0) health = 0;
+        g.drawString(health + "%", 53, 506);
+        g.drawString(mana + "", 53, 536);
+        g.setFont(myFont);
     }
 
     @Override
