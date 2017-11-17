@@ -98,6 +98,7 @@ public class BossSummon extends GameFigure {
             g.setColor(Color.white);
             g.drawRect(170, 44, maxHealth, 20);
                                     
+            Font myFont = g.getFont();
             Font boss_font = new Font("Century Schoolbook"/*g.getFont().getFontName()*/,Font.PLAIN, 12);
             g.setFont(boss_font);
             g.setColor(Color.white);          
@@ -113,6 +114,8 @@ public class BossSummon extends GameFigure {
             } else {
                 g.drawString("Teleport Fireball Summoner Guy", 170, 40);
             }
+            
+            g.setFont(myFont);
 
 
         }
