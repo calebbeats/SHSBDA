@@ -277,7 +277,10 @@ public class GameData {
                     || g.poisonTimer == 50 
                     || g.poisonTimer == 75 
                     || g.poisonTimer == 100
-                    || g.poisonTimer == 125) {
+                    || g.poisonTimer == 125
+                    || g.poisonTimer == 150
+                    || g.poisonTimer == 175
+                    || g.poisonTimer == 200) {
                 enemyFigures.add(new EnemyMissilePoison(g.x, g.y));
             }
         }

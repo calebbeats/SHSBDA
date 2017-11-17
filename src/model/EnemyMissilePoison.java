@@ -140,7 +140,7 @@ public class EnemyMissilePoison extends GameFigure {
     }
 
     public void updateLocation() {        
-        super.x += dx;
+        //super.x += dx;
         super.y += dy;
     }
 
