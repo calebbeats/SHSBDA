@@ -270,17 +270,30 @@ public class GamePanel extends JPanel {
                 }
                 break;
             case LevelComplete:
-                g2.setColor(Color.RED);
-                g2.setBackground(Color.BLACK);
-                g2.drawString("Level Complete!", 225, 30);
-                g2.drawString("You have " + MainWindow.coins
-                        + " coins to spend at the shop.", 125, 55);
-                g2.draw(shopGameButton);
-                g2.drawString("Shop Items", shopGameButton.x + 30,
-                        shopGameButton.y + 30);
-                g2.draw(continueLevelButton);
-                g2.drawString("Continue", continueLevelButton.x + 30,
-                        continueLevelButton.y + 30);
+                if (Main.gameLevel < 12) {
+                    g2.setColor(Color.RED);
+                    g2.setBackground(Color.BLACK);
+                    g2.drawString("Level Complete!", 225, 30);
+                    g2.drawString("You have " + MainWindow.coins
+                            + " coins to spend at the shop.", 125, 55);
+                    g2.draw(shopGameButton);
+                    g2.drawString("Shop Items", shopGameButton.x + 30,
+                            shopGameButton.y + 30);
+                    g2.draw(continueLevelButton);
+                    g2.drawString("Continue", continueLevelButton.x + 30,
+                            continueLevelButton.y + 30);
+                } else {
+                    g2.setColor(Color.RED);
+                    g2.setBackground(Color.BLACK);
+                    g2.drawString("Game Complete!", 225, 30);
+                    int finalScore = MainWindow.score + MainWindow.coins;
+                    g2.drawString(MainWindow.score + " + " + MainWindow.coins
+                            + " = " + finalScore, 200, 55);              
+                    g2.draw(continueLevelButton);
+                    g2.drawString("Main Menu", continueLevelButton.x + 30,
+                            continueLevelButton.y + 30);
+                }
+                
                 break;
         }
     }
