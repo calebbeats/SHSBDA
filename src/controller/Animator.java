@@ -43,6 +43,9 @@ public class Animator implements Runnable {
         while (true) {
             switch (Main.gameState) {
                 case Start:
+                    MainWindow.coins =0;
+                    MainWindow.score =0;
+                    Main.gameLevel = 1;
                 case Pause:
                 case HighScore:
                 case Winner:

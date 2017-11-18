@@ -87,18 +87,22 @@ public class GameData {
             shooter.setXY(Main.WIN_WIDTH / 2, Main.WIN_HEIGHT - 125);
             friendFigures.add(shooter);
             enemyFigures.add(new BossSummon((int) (Math.random() * 500), (int) Math.random() * 200));
+           //enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
         } else if (level == 5) {
             //this is only a boss level temporarily 
             terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 0, 0));
             shooter.setXY(Main.WIN_WIDTH / 2, Main.WIN_HEIGHT - 125);
             friendFigures.add(shooter);
-            //enemyFigures.add(new Boss((int) (Math.random() * 500), (int) Math.random() * 200, 120));
             enemyFigures.add(new Boss((int) (Math.random() * 500), (int) Math.random() * 200, 120));
+            //enemyFigures.add(new Boss((int) (Math.random() * 500), (int) Math.random() * 200, 120));
+            //enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
         } else if (level == 6) {
             terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 0, 0));
             shooter.setXY(Main.WIN_WIDTH / 2, Main.WIN_HEIGHT - 125);
             friendFigures.add(shooter);
             enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) (Math.random() * 200)));
+           //   enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
+
         } else if (level == 7) {
             terrainFigures.add(new BlockTerrain(Main.WIN_WIDTH / 3, Main.WIN_HEIGHT / 4, 0, 0));
             shooter.setXY(Main.WIN_WIDTH / 2, Main.WIN_HEIGHT - 125);
@@ -143,7 +147,7 @@ public class GameData {
             enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) (Math.random() * 200)));
             enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) (Math.random() * 200)));
             enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) (Math.random() * 200)));
-            enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) (Math.random() * 200)));
+           enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) (Math.random() * 200)));
             enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
             enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
             enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
@@ -315,6 +319,7 @@ public class GameData {
             if (playerDead || level == 13) {
                 Main.gameInitialize();
                 if (playerDead) {
+                    Main.gameLevel=1;
                     Main.gameState = Main.GameState.GameOver;
                 }
                 else

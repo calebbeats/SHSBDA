@@ -2,6 +2,9 @@ package controller;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.GameData;
 import model.MediumPotion;
 import model.Melee;
@@ -10,6 +13,7 @@ import model.Shooter;
 import model.StrongPotion;
 import model.WeakPotion;
 import view.MainWindow;
+import static view.HighScore.checkScore;
 
 public class MouseController extends MouseAdapter {
 
@@ -65,6 +69,8 @@ public class MouseController extends MouseAdapter {
                         a.getC().stop();
                     }
                     a.playAudio("/resources/chugchug.wav");
+                    Main.gameData = new GameData();
+                    Main.animator = new Animator();
                     Main.gameState = Main.GameState.Run;
                 } else if (px > Main.gamePanel.quitGameButton.x
                         && px < Main.gamePanel.quitGameButton.getMaxX()
@@ -122,7 +128,9 @@ public class MouseController extends MouseAdapter {
                         && px < Main.gamePanel.shopGameButton.getMaxX()
                         && py > Main.gamePanel.shopGameButton.y
                         && py < Main.gamePanel.shopGameButton.getMaxY()) {
-                    Main.gameState = Main.GameState.Shop;
+                    if(Main.gameLevel < 12){
+                        Main.gameState = Main.GameState.Shop;
+                    }                    
                 } else if (px > Main.gamePanel.continueLevelButton.x
                         && px < Main.gamePanel.continueLevelButton.getMaxX()
                         && py > Main.gamePanel.continueLevelButton.y
@@ -132,8 +140,18 @@ public class MouseController extends MouseAdapter {
                         Main.gameData = new GameData();
                         Main.animator = new Animator();
                         Main.gameState = Main.GameState.Run;
-                    } else {
+                    } else {                       
+                                                
+                        Main.gameLevel = 1;
+                        Main.gameData = new GameData();
+                        Main.animator = new Animator();
                         Main.gameState = Main.GameState.Start;
+                        MainWindow.score = MainWindow.score + MainWindow.coins;
+                        try {
+                            checkScore();
+                        } catch (IOException ex) {
+                            Logger.getLogger(MouseController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                 }
 
