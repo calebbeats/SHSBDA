@@ -3,7 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/leadlabtech02/Documents/GitHub/SHSBDA/src/model/EnemyMissilePoison.java</file>
+            <file>file:/C:/Users/caleb/Desktop/SHSBDA/src/resources/TeleportStone.png</file>
+            <file>file:/C:/Users/caleb/Desktop/SHSBDA/src/model/TeleportStone.java</file>
+            <file>file:/C:/Users/caleb/Desktop/SHSBDA/src/model/EnemyMissile.java</file>
+            <file>file:/C:/Users/caleb/Desktop/SHSBDA/src/controller/Animator.java</file>
+            <file>file:/C:/Users/caleb/Desktop/SHSBDA/src/controller/Main.java</file>
+            <file>file:/C:/Users/caleb/Desktop/SHSBDA/src/model/Item.java</file>
+            <file>file:/C:/Users/caleb/Desktop/SHSBDA/src/model/DefensivePulse.java</file>
+            <file>file:/C:/Users/caleb/Desktop/SHSBDA/src/model/Shield.java</file>
+            <file>file:/C:/Users/caleb/Desktop/SHSBDA/src/model/GameData.java</file>
+            <file>file:/C:/Users/caleb/Desktop/SHSBDA/src/model/FireNova.java</file>
+            <file>file:/C:/Users/caleb/Desktop/SHSBDA/src/model/Shooter.java</file>
+            <file>file:/C:/Users/caleb/Desktop/SHSBDA/src/controller/MouseController.java</file>
         </group>
     </open-files>
 </project-private>

@@ -3,8 +3,10 @@ package controller;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import model.GameData;
+import model.GameFigure;
 import model.MediumPotion;
 import model.Melee;
+import model.MirrorImage;
 import model.Missile;
 import model.Shooter;
 import model.StrongPotion;
@@ -110,6 +112,19 @@ public class MouseController extends MouseAdapter {
                                 shooter.getYofMissileShoot(),
                                 px, py // target location where the missile explodes
                         );
+                        
+                        for (GameFigure g : Main.gameData.friendFigures) {
+                            if(g instanceof MirrorImage)
+                            {
+                                
+                                Missile n;
+                                n = new Missile(g.getX(), g.getY(), px, py);
+                                Main.gameData.friendFigures.add(n);
+                                
+                            }
+                     
+                            }
+                        
                         Main.gameData.friendFigures.add(m);
                     }
                 }

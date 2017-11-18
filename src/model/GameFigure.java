@@ -104,6 +104,16 @@ public abstract class GameFigure implements CollisionBox {
     public int get() {
         return health;
     }
+    
+    public float getX()
+    {
+        return this.x;
+    }
+    
+    public float getY()
+    {
+        return this.y;
+    }
 
     public int type;
     public int health;
