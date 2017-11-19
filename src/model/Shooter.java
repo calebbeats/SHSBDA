@@ -1,5 +1,6 @@
 package model;
 
+import controller.DifficultyManager;
 import controller.Main;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -146,7 +147,7 @@ public class Shooter extends GameFigure {
                 lowHealthMovement = 1;
             }
         }
-        
+
         g.setColor(Color.red);
         g.fillRect(20, 490, health, 20);
         g.setColor(Color.white);
@@ -166,8 +167,10 @@ public class Shooter extends GameFigure {
         }
         g.setColor(Color.white);
         Font myFont = g.getFont();
-        g.setFont(new Font("Arial", Font.PLAIN, 15)); 
-        if (health < 0) health = 0;
+        g.setFont(new Font("Arial", Font.PLAIN, 15));
+        if (health < 0) {
+            health = 0;
+        }
         g.drawString(health + "%", 53, 506);
         g.drawString(mana + "", 53, 536);
         g.setFont(myFont);
@@ -302,7 +305,7 @@ public class Shooter extends GameFigure {
             }
         }
         //to make Boss work
-        sty=this.y;
+        sty = this.y;
     }
 
     // Missile shoot location: adjut x and y to the image
@@ -335,7 +338,8 @@ public class Shooter extends GameFigure {
 
     //Temporary method to test healing items.
     public void takeDamage(int i) {
-        health = health - (i / 5);
+        health = health - (int) ((i / 5) * DifficultyManager
+                .getEnemyDamagerMultiplier());
     }
 
     public void setVelocityX(int velocityX) {
@@ -518,6 +522,5 @@ public class Shooter extends GameFigure {
     public void setY(float y) {
         this.y = y;
     }
-    
-    
+
 }

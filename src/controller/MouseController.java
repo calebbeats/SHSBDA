@@ -45,8 +45,8 @@ public class MouseController extends MouseAdapter {
                     if (a.getC() != null) {
                         a.getC().stop();
                     }
-                    a.playAudio("/resources/chugchug.wav");                    
-                    Main.gameState = Main.GameState.Run;
+                    a.playAudio("/resources/chugchug.wav");
+                    Main.gameState = Main.GameState.Difficulty;
                 } else if (px > Main.gamePanel.quitGameButton.x
                         && px < Main.gamePanel.quitGameButton.getMaxX()
                         && py > Main.gamePanel.quitGameButton.y
@@ -57,6 +57,27 @@ public class MouseController extends MouseAdapter {
                         && py > Main.gamePanel.highScoreButton.y
                         && py < Main.gamePanel.highScoreButton.getMaxY()) {
                     Main.gameState = Main.GameState.HighScore;
+                }
+                break;
+            case Difficulty:
+                if (px > Main.gamePanel.easyDifficultyButton.x
+                        && px < Main.gamePanel.easyDifficultyButton.getMaxX()
+                        && py > Main.gamePanel.easyDifficultyButton.y
+                        && py < Main.gamePanel.easyDifficultyButton.getMaxY()) {
+                    DifficultyManager.setDifficulty(DifficultyManager.Difficulty.Easy);
+                    Main.gameState = Main.GameState.Run;
+                } else if (px > Main.gamePanel.normalDifficultyButton.x
+                        && px < Main.gamePanel.normalDifficultyButton.getMaxX()
+                        && py > Main.gamePanel.normalDifficultyButton.y
+                        && py < Main.gamePanel.normalDifficultyButton.getMaxY()) {
+                    DifficultyManager.setDifficulty(DifficultyManager.Difficulty.Normal);
+                    Main.gameState = Main.GameState.Run;
+                } else if (px > Main.gamePanel.hardDifficultyButton.x
+                        && px < Main.gamePanel.hardDifficultyButton.getMaxX()
+                        && py > Main.gamePanel.hardDifficultyButton.y
+                        && py < Main.gamePanel.hardDifficultyButton.getMaxY()) {
+                    DifficultyManager.setDifficulty(DifficultyManager.Difficulty.Hard);
+                    Main.gameState = Main.GameState.Run;
                 }
                 break;
             case GameOver:
@@ -128,9 +149,9 @@ public class MouseController extends MouseAdapter {
                         && px < Main.gamePanel.shopGameButton.getMaxX()
                         && py > Main.gamePanel.shopGameButton.y
                         && py < Main.gamePanel.shopGameButton.getMaxY()) {
-                    if(Main.gameLevel < 12){
+                    if (Main.gameLevel < 12) {
                         Main.gameState = Main.GameState.Shop;
-                    }                    
+                    }
                 } else if (px > Main.gamePanel.continueLevelButton.x
                         && px < Main.gamePanel.continueLevelButton.getMaxX()
                         && py > Main.gamePanel.continueLevelButton.y
@@ -140,8 +161,8 @@ public class MouseController extends MouseAdapter {
                         Main.gameData = new GameData();
                         Main.animator = new Animator();
                         Main.gameState = Main.GameState.Run;
-                    } else {                       
-                                                
+                    } else {
+
                         Main.gameLevel = 1;
                         Main.gameData = new GameData();
                         Main.animator = new Animator();
@@ -220,18 +241,18 @@ public class MouseController extends MouseAdapter {
         ((Shooter) Main.gameData.friendFigures.get(0)).setMouseMovedEvent(e);
     }
 
-    public static boolean getWep1 (){
+    public static boolean getWep1() {
         return MouseController.weapon1Bought;
     }
-    
-    public static boolean getWep2 (){
+
+    public static boolean getWep2() {
         return MouseController.weapon2Bought;
     }
-    
-    public static boolean getWep3 (){
+
+    public static boolean getWep3() {
         return MouseController.weapon3Bought;
     }
-    
+
     private boolean inventoryCapacityCheck() {
         for (int i = 0; i < Shooter.inventory.length; i++) {
             if (Shooter.inventory[i] == null) {
