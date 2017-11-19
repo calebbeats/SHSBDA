@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<highscores>
+    <highscore>
+        <name>Unknown</name>
+        <score>105</score>
+    </highscore>
+    <highscore>
+        <name>Goku</name>
+        <score>100</score>
+    </highscore>
+    <highscore>
+        <name>Unknown</name>
+        <score>96</score>
+    </highscore>
+    <highscore>
+        <name>Vegeta</name>
+        <score>4</score>
+    </highscore>
+    <highscore>
+        <name>Gohan</name>
+        <score>3</score>
+    </highscore>
+</highscores>

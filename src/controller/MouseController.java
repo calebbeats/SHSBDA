@@ -13,7 +13,6 @@ import model.Shooter;
 import model.StrongPotion;
 import model.WeakPotion;
 import view.MainWindow;
-import static view.HighScore.checkScore;
 
 public class MouseController extends MouseAdapter {
 
@@ -162,17 +161,12 @@ public class MouseController extends MouseAdapter {
                         Main.animator = new Animator();
                         Main.gameState = Main.GameState.Run;
                     } else {
-
+                        MainWindow.score = MainWindow.score + MainWindow.coins;
+                        HighscoreJAXB.checkScore();
                         Main.gameLevel = 1;
                         Main.gameData = new GameData();
                         Main.animator = new Animator();
                         Main.gameState = Main.GameState.Start;
-                        MainWindow.score = MainWindow.score + MainWindow.coins;
-                        try {
-                            checkScore();
-                        } catch (IOException ex) {
-                            Logger.getLogger(MouseController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
                     }
                 }
 
