@@ -162,6 +162,7 @@ public class GamePanel extends JPanel {
                 break;
             case Run:
                 g2.drawImage(img1, 0, 0, this);
+                g2.setColor(Color.RED);
                 g2.drawString("x " + MainWindow.coins,
                         40, 25);
                 g2.drawString("Score: " + MainWindow.score, 250, 25);
@@ -249,7 +250,7 @@ public class GamePanel extends JPanel {
                 } else {
                     g2.drawString("Weapon Upgrade 1", weaponUpgrade1.x + 15,
                             weaponUpgrade1.y + 20);
-                    g2.drawString("(10 Coins)", weaponUpgrade1.x + 30,
+                    g2.drawString("(1000 Coins)", weaponUpgrade1.x + 30,
                             weaponUpgrade1.y + 40);
                 }
                 g2.draw(weaponUpgrade2);
@@ -259,7 +260,7 @@ public class GamePanel extends JPanel {
                 } else {
                     g2.drawString("Weapon Upgrade 2", weaponUpgrade2.x + 15,
                             weaponUpgrade2.y + 20);
-                    g2.drawString("(1000 Coins)", weaponUpgrade2.x + 30,
+                    g2.drawString("(10000 Coins)", weaponUpgrade2.x + 30,
                             weaponUpgrade2.y + 40);
                 }
                 g2.draw(weaponUpgrade3);
@@ -269,7 +270,7 @@ public class GamePanel extends JPanel {
                 } else {
                     g2.drawString("Weapon Upgrade 3", weaponUpgrade3.x + 15,
                             weaponUpgrade3.y + 20);
-                    g2.drawString("(5000 Coins)", weaponUpgrade3.x + 30,
+                    g2.drawString("(15000 Coins)", weaponUpgrade3.x + 30,
                             weaponUpgrade3.y + 40);
                 }
                 g2.draw(backButton);

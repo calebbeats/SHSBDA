@@ -6,8 +6,10 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.GameData;
+import model.GameFigure;
 import model.MediumPotion;
 import model.Melee;
+import model.MirrorImage;
 import model.Missile;
 import model.Shooter;
 import model.StrongPotion;
@@ -136,6 +138,19 @@ public class MouseController extends MouseAdapter {
                                 shooter.getYofMissileShoot(),
                                 px, py // target location where the missile explodes
                         );
+                        
+                        for (GameFigure g : Main.gameData.friendFigures) {
+                            if(g instanceof MirrorImage)
+                            {
+                                
+                                Missile n;
+                                n = new Missile(g.getX(), g.getY(), px, py);
+                                Main.gameData.friendFigures.add(n);
+                                
+                            }
+                     
+                            }
+                        
                         Main.gameData.friendFigures.add(m);
                     }
                 }
@@ -197,28 +212,28 @@ public class MouseController extends MouseAdapter {
                         && px < Main.gamePanel.weaponUpgrade1.getMaxX()
                         && py > Main.gamePanel.weaponUpgrade1.y
                         && py < Main.gamePanel.weaponUpgrade1.getMaxY()
-                        && MainWindow.coins >= 10
+                        && MainWindow.coins >= 1000
                         && weapon1Bought == false) {
                     weapon1Bought = true;
-                    MainWindow.coins -= 10;
+                    MainWindow.coins -= 1000;
                     shooter.setWeaponPower(2);
                 } else if (px > Main.gamePanel.weaponUpgrade2.x
                         && px < Main.gamePanel.weaponUpgrade2.getMaxX()
                         && py > Main.gamePanel.weaponUpgrade2.y
                         && py < Main.gamePanel.weaponUpgrade2.getMaxY()
-                        && MainWindow.coins >= 1000
+                        && MainWindow.coins >= 10000
                         && weapon2Bought == false) {
                     weapon2Bought = true;
-                    MainWindow.coins -= 1000;
+                    MainWindow.coins -= 10000;
                     shooter.setWeaponPower(3);
                 } else if (px > Main.gamePanel.weaponUpgrade3.x
                         && px < Main.gamePanel.weaponUpgrade3.getMaxX()
                         && py > Main.gamePanel.weaponUpgrade3.y
                         && py < Main.gamePanel.weaponUpgrade3.getMaxY()
-                        && MainWindow.coins >= 5000
+                        && MainWindow.coins >= 15000
                         && weapon3Bought == false) {
                     weapon3Bought = true;
-                    MainWindow.coins -= 5000;
+                    MainWindow.coins -= 15000;
                     shooter.setWeaponPower(4);
                 } else if (px > Main.gamePanel.backButton.x
                         && px < Main.gamePanel.backButton.getMaxX()

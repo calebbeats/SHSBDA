@@ -153,10 +153,10 @@ public class SuicideEnemy extends GameFigure {
     }
 
     public void updateLocation() {
-        BasicCollisionBox enemyToMove = new BasicCollisionBox(super.x + dx, super.y + dy, SIZE, SIZE);
-
-        for (GameFigure t : Main.gameData.terrainFigures) {
-            if (!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox())) || t instanceof IceTerrain) {
+        BasicCollisionBox enemyToMove = new BasicCollisionBox(super.x + dx, super.y +dy, SIZE, SIZE);        
+        
+        for(GameFigure t : Main.gameData.terrainFigures){
+            if(!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox())) || t instanceof IceTerrain || t instanceof SandTerrain){
                 super.x += dx;
                 super.y += dy;
             } else {
