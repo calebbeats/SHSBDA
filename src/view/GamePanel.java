@@ -1,6 +1,8 @@
 package view;
 
+import controller.HighscoreJAXB;
 import controller.Main;
+import controller.MouseController;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -30,8 +32,10 @@ public class GamePanel extends JPanel {
     // off screen rendering
     public Graphics2D g2;
     public Rectangle startGameButton, highScoreButton, quitGameButton,
+            easyDifficultyButton, normalDifficultyButton, hardDifficultyButton,
             shopGameButton, weakPotionButton, mediumPotionButton,
-            strongPotionButton, backButton, continueLevelButton;
+            strongPotionButton, backButton, continueLevelButton,
+            weaponUpgrade1, weaponUpgrade2, weaponUpgrade3;
     private Image dbImage = null // double buffer image
             , startBackground, startForeground;
     private int rectangleBoxWidth, rectangleBoxHeight;
@@ -64,6 +68,17 @@ public class GamePanel extends JPanel {
                     height / 2 + rectangleBoxHeight / 2 + 25,
                     rectangleBoxWidth, rectangleBoxHeight);
         }
+        if (Main.gameState.equals(Main.GameState.Difficulty)) {
+            easyDifficultyButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
+                    rectangleBoxHeight / 2 + 75,
+                    rectangleBoxWidth, rectangleBoxHeight);
+            normalDifficultyButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
+                    (int) easyDifficultyButton.getMaxY() + rectangleBoxHeight / 2,
+                    rectangleBoxWidth, rectangleBoxHeight);
+            hardDifficultyButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
+                    (int) normalDifficultyButton.getMaxY() + rectangleBoxHeight / 2,
+                    rectangleBoxWidth, rectangleBoxHeight);
+        }
         if (Main.gameState.equals(Main.GameState.Pause)) {
             startGameButton = null; // Delete start game button if game is running
         }
@@ -76,21 +91,6 @@ public class GamePanel extends JPanel {
                     (int) shopGameButton.getMaxY() + rectangleBoxHeight / 2,
                     rectangleBoxWidth, rectangleBoxHeight);
         }
-        //moved next if block to switch statement area to stop bug from being thrown
-//        if (Main.gameState.equals(Main.GameState.Shop)) {
-//            weakPotionButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
-//                    50 + rectangleBoxHeight / 2,
-//                    rectangleBoxWidth, rectangleBoxHeight);
-//            mediumPotionButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
-//                    (int) weakPotionButton.getMaxY() + rectangleBoxHeight / 2,
-//                    rectangleBoxWidth, rectangleBoxHeight);
-//            strongPotionButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
-//                    (int) mediumPotionButton.getMaxY() + rectangleBoxHeight / 2,
-//                    rectangleBoxWidth, rectangleBoxHeight);
-//            backButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
-//                    (int) strongPotionButton.getMaxY() + rectangleBoxHeight / 2,
-//                    rectangleBoxWidth, rectangleBoxHeight);
-//        }
         quitGameButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
                 startGameButton == null // Set the Y coordinate base game's state
                         ? height / 2 + rectangleBoxHeight / 2 + 25
@@ -147,13 +147,26 @@ public class GamePanel extends JPanel {
                 g2.drawString("High Score", highScoreButton.x + 30,
                         highScoreButton.y + 30);
                 break;
-            case Run:
-                Main.quatree.render(g2);
+            case Difficulty:
                 g2.setBackground(Color.BLACK);
+                g2.drawString("Select Difficulty", width / 2 - 75, 50);
+                g2.draw(easyDifficultyButton);
+                g2.drawString("Easy", easyDifficultyButton.x + 50,
+                        easyDifficultyButton.y + 30);
+                g2.draw(normalDifficultyButton);
+                g2.drawString("Normal", normalDifficultyButton.x + 40,
+                        normalDifficultyButton.y + 30);
+                g2.draw(hardDifficultyButton);
+                g2.drawString("Hard", hardDifficultyButton.x + 50,
+                        hardDifficultyButton.y + 30);
+                break;
+            case Run:
                 g2.drawImage(img1, 0, 0, this);
+                g2.setColor(Color.RED);
                 g2.drawString("x " + MainWindow.coins,
                         40, 25);
                 g2.drawString("Score: " + MainWindow.score, 250, 25);
+                g2.drawString("Level: " + Main.gameLevel, 500, 25);
                 for (GameFigure f : Main.gameData.terrainFigures) {
                     f.render(g2);
                 }
@@ -168,17 +181,19 @@ public class GamePanel extends JPanel {
             case Quit:
                 break;
             case HighScore:
-                List<HighScore> highScoreList = HighScore.retrieveHighScore();
+//                List<HighScore> highScoreList = HighScore.retrieveHighScore();
                 g2.setBackground(Color.BLACK);
                 g2.setColor(Color.RED);
                 g2.setBackground(Color.BLACK);
                 g2.drawString("High Score", 250, 50);
                 final int[] spacingHeight = {100};
-                highScoreList.forEach(highScore -> {
-                    g2.drawString(highScore.getScoreName() + " "
-                            + highScore.getHighScore(), 250, spacingHeight[0]);
-                    spacingHeight[0] += 50;
-                });
+                HighscoreJAXB.getHighscoreJAXB().getHighscoreList()
+                        .forEach(highScore -> {
+                            g2.drawString(highScore.getName() + " "
+                                    + highScore.getScore(), 250,
+                                    spacingHeight[0]);
+                            spacingHeight[0] += 50;
+                        });
                 backButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
                         rectangleBoxHeight / 2 + spacingHeight[0] - 50,
                         rectangleBoxWidth, rectangleBoxHeight);
@@ -186,16 +201,25 @@ public class GamePanel extends JPanel {
                 g2.drawString("Back", backButton.x + 50,
                         backButton.y + 30);
                 break;
-            case Shop:
-                weakPotionButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
+            case Shop: //rectangle is (x, y, width, height)
+                weakPotionButton = new Rectangle(width / 3 - rectangleBoxWidth / 2,
                         50 + rectangleBoxHeight / 2,
                         rectangleBoxWidth, rectangleBoxHeight);
-                mediumPotionButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
+                mediumPotionButton = new Rectangle(width / 3 - rectangleBoxWidth / 2,
                         (int) weakPotionButton.getMaxY() + rectangleBoxHeight / 2,
                         rectangleBoxWidth, rectangleBoxHeight);
-                strongPotionButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
+                strongPotionButton = new Rectangle(width / 3 - rectangleBoxWidth / 2,
                         (int) mediumPotionButton.getMaxY() + rectangleBoxHeight / 2,
                         rectangleBoxWidth, rectangleBoxHeight);
+                weaponUpgrade1 = new Rectangle(width / 3 + rectangleBoxWidth,
+                        50 + rectangleBoxHeight / 2,
+                        rectangleBoxWidth + 60, rectangleBoxHeight);
+                weaponUpgrade2 = new Rectangle(width / 3 + rectangleBoxWidth,
+                        (int) weaponUpgrade1.getMaxY() + rectangleBoxHeight / 2,
+                        rectangleBoxWidth + 60, rectangleBoxHeight);
+                weaponUpgrade3 = new Rectangle(width / 3 + rectangleBoxWidth,
+                        (int) weaponUpgrade2.getMaxY() + rectangleBoxHeight / 2,
+                        rectangleBoxWidth + 60, rectangleBoxHeight);
                 backButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
                         (int) strongPotionButton.getMaxY() + rectangleBoxHeight / 2,
                         rectangleBoxWidth, rectangleBoxHeight);
@@ -219,6 +243,36 @@ public class GamePanel extends JPanel {
                         strongPotionButton.y + 20);
                 g2.drawString("(3 Coins)", strongPotionButton.x + 25,
                         strongPotionButton.y + 40);
+                g2.draw(weaponUpgrade1);
+                if (MouseController.getWep1()) {//if weapon is bought
+                    g2.drawString("Upgrade Bought!", weaponUpgrade1.x + 15,
+                            weaponUpgrade1.y + 20);
+                } else {
+                    g2.drawString("Weapon Upgrade 1", weaponUpgrade1.x + 15,
+                            weaponUpgrade1.y + 20);
+                    g2.drawString("(1000 Coins)", weaponUpgrade1.x + 30,
+                            weaponUpgrade1.y + 40);
+                }
+                g2.draw(weaponUpgrade2);
+                if (MouseController.getWep2()) {//if weapon is bought
+                    g2.drawString("Upgrade Bought!", weaponUpgrade2.x + 15,
+                            weaponUpgrade2.y + 20);
+                } else {
+                    g2.drawString("Weapon Upgrade 2", weaponUpgrade2.x + 15,
+                            weaponUpgrade2.y + 20);
+                    g2.drawString("(10000 Coins)", weaponUpgrade2.x + 30,
+                            weaponUpgrade2.y + 40);
+                }
+                g2.draw(weaponUpgrade3);
+                if (MouseController.getWep3()) {//if weapon is bought
+                    g2.drawString("Upgrade Bought!", weaponUpgrade3.x + 15,
+                            weaponUpgrade3.y + 20);
+                } else {
+                    g2.drawString("Weapon Upgrade 3", weaponUpgrade3.x + 15,
+                            weaponUpgrade3.y + 20);
+                    g2.drawString("(15000 Coins)", weaponUpgrade3.x + 30,
+                            weaponUpgrade3.y + 40);
+                }
                 g2.draw(backButton);
                 g2.drawString("Back", backButton.x + 50,
                         backButton.y + 30);
@@ -240,17 +294,30 @@ public class GamePanel extends JPanel {
                 }
                 break;
             case LevelComplete:
-                g2.setColor(Color.RED);
-                g2.setBackground(Color.BLACK);
-                g2.drawString("Level Complete!", 225, 30);
-                g2.drawString("You have " + MainWindow.coins
-                        + " coins to spend at the shop.", 125, 55);
-                g2.draw(shopGameButton);
-                g2.drawString("Shop Items", shopGameButton.x + 30,
-                        shopGameButton.y + 30);
-                g2.draw(continueLevelButton);
-                g2.drawString("Continue", continueLevelButton.x + 30,
-                        continueLevelButton.y + 30);
+                if (Main.gameLevel < 12) {
+                    g2.setColor(Color.RED);
+                    g2.setBackground(Color.BLACK);
+                    g2.drawString("Level Complete!", 225, 30);
+                    g2.drawString("You have " + MainWindow.coins
+                            + " coins to spend at the shop.", 125, 55);
+                    g2.draw(shopGameButton);
+                    g2.drawString("Shop Items", shopGameButton.x + 30,
+                            shopGameButton.y + 30);
+                    g2.draw(continueLevelButton);
+                    g2.drawString("Continue", continueLevelButton.x + 30,
+                            continueLevelButton.y + 30);
+                } else {
+                    g2.setColor(Color.RED);
+                    g2.setBackground(Color.BLACK);
+                    g2.drawString("Game Complete!", 225, 30);
+                    int finalScore = MainWindow.score + MainWindow.coins;
+                    g2.drawString(MainWindow.score + " + " + MainWindow.coins
+                            + " = " + finalScore, 200, 55);
+                    g2.draw(continueLevelButton);
+                    g2.drawString("Main Menu", continueLevelButton.x + 30,
+                            continueLevelButton.y + 30);
+                }
+
                 break;
         }
     }

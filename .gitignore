@@ -28,3 +28,5 @@ hs_err_pid*
 *.xml
 /build/
 /nbproject/private/
+scores.txt
+*.class

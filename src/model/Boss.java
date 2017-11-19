@@ -5,7 +5,6 @@
  */
 package model;
 
-
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -15,6 +14,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import static model.GameFigure.STATE_ALIVE;
+import static model.GameFigure.STATE_DONE;
+import static model.GameFigure.STATE_DYING;
 import view.GamePanel;
 
 /**
@@ -31,12 +32,12 @@ public class Boss extends GameFigure {
     private int dx = 3;
     private int dy = 3;
     private int direction = 1; // +1: move down; -1 move up
-
     private int directionX = 1; // +1: move down; -1 move up
     private int count = 0;
     private int maxcount = 30;
 
     private Image alive;
+    private Image alive1;
     private Image death1;
     private Image death2;
     private Image death3;
@@ -46,6 +47,9 @@ public class Boss extends GameFigure {
     private int animationCheck = 0;
     private static int deathCounter = 0;
     public int size;
+    private int maxHealth;
+    private int health;
+    private int deadTimer = 0;
 
     public Boss(float x, float y, int size) {
 
@@ -55,17 +59,20 @@ public class Boss extends GameFigure {
 
         alive = null;
         death1 = null;
+        health = 250;
+        maxHealth = health;
 
         try {
             alive = ImageIO.read(getClass().getResource("/resources/enemy9.png"));
+            alive1 = ImageIO.read(getClass().getResource("/resources/enemy9s.png"));
             //launcherImage = ImageIO.read(getClass().getResource("alien.png"));
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open enemy9.png");
             System.exit(-1);
         }
     }
-    
-        public static Image getImage(String fileName) {
+
+    public static Image getImage(String fileName) {
         Image image = null;
         try {
             image = ImageIO.read(new File(fileName));
@@ -83,10 +90,13 @@ public class Boss extends GameFigure {
         if (state == STATE_ALIVE) {
             g.drawImage(alive, (int) super.x, (int) super.y,
                     60, 40, null);
-        } else if (state == STATE_DYING) {
+            g.drawImage(alive, (int) super.x, (int) super.y,
+                    60, 40, null);
+        }
+        if (state == STATE_DYING) {
             if (blast > 0) {
                 if ((System.currentTimeMillis() - blast_stamp) > 150) {
-                   enemyImage = getImage(imagePath + separator + "images" + separator
+                    enemyImage = getImage(imagePath + separator + "images" + separator
                             + "explosion" + Integer.toString(blast) + ".png");
                     blast = blast - 1;
                     if (blast == 0) {
@@ -98,7 +108,6 @@ public class Boss extends GameFigure {
             g.drawImage(enemyImage, (int) x, (int) y, null);
 
         }
-
 
     }
 
@@ -122,38 +131,65 @@ public class Boss extends GameFigure {
     @Override
     public void update() {
         super.y += 5 * (direction);
-
-        if (super.y + HEIGHT > GamePanel.height) {
-            direction = -1;
-        }
-        if (super.y < 0) {
-            direction = 1;
-        }
-
-        if (directionX == 1) {// going right
-            count++;
-            if (count < maxcount) {
-                super.x += 5;
-            } else {
-                directionX = - 1;
-                super.x -= 5;
-                count = 0;
+        if (state == STATE_ALIVE) {
+            if (super.y + HEIGHT > GamePanel.height) {
+                direction = -1;
             }
-        } else if (directionX == -1) { // going left
-            count++;
-            if (count < maxcount) {
-                super.x -= 5;
-            } else {
-                directionX = 1;
-                super.x += 5;
-                count = 0;
+            if (super.y < 0) {
+                direction = 1;
+            }
+
+            if (directionX == 1) {// going right
+                count++;
+                if (count < maxcount) {
+                    super.x += 5;
+                } else {
+                    directionX = - 1;
+                    super.x -= 5;
+                    count = 0;
+                }
+            } else if (directionX == -1) { // going left
+                count++;
+                if (count < maxcount) {
+                    super.x -= 5;
+                } else {
+                    directionX = 1;
+                    super.x += 5;
+                    count = 0;
+                }
+            }
+        }
+        if (state == STATE_DYING) {
+            deadTimer++;
+            if (deadTimer > 15) {
+                this.goNextState();
             }
         }
     }
 
     @Override
     public void shoot() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("Blink Mage Shoots");
+    }
+
+    public void takeDamage(int i) {
+        health = health - i;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
     }
 
 }

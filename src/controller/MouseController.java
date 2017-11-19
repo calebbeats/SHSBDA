@@ -3,18 +3,17 @@ package controller;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.GameData;
+import model.GameFigure;
 import model.MediumPotion;
 import model.Melee;
+import model.MirrorImage;
 import model.Missile;
-import model.MyBullet;
 import model.Shooter;
 import model.StrongPotion;
 import model.WeakPotion;
-import view.HighScore;
 import view.MainWindow;
 
 public class MouseController extends MouseAdapter {
@@ -23,6 +22,7 @@ public class MouseController extends MouseAdapter {
     private int py;
     private Audio a;
     private int index;
+    private static boolean weapon1Bought = false, weapon2Bought = false, weapon3Bought = false;
 
     public MouseController() {
         a = new Audio();
@@ -47,7 +47,7 @@ public class MouseController extends MouseAdapter {
                         a.getC().stop();
                     }
                     a.playAudio("/resources/chugchug.wav");
-                    Main.gameState = Main.GameState.Run;
+                    Main.gameState = Main.GameState.Difficulty;
                 } else if (px > Main.gamePanel.quitGameButton.x
                         && px < Main.gamePanel.quitGameButton.getMaxX()
                         && py > Main.gamePanel.quitGameButton.y
@@ -60,6 +60,27 @@ public class MouseController extends MouseAdapter {
                     Main.gameState = Main.GameState.HighScore;
                 }
                 break;
+            case Difficulty:
+                if (px > Main.gamePanel.easyDifficultyButton.x
+                        && px < Main.gamePanel.easyDifficultyButton.getMaxX()
+                        && py > Main.gamePanel.easyDifficultyButton.y
+                        && py < Main.gamePanel.easyDifficultyButton.getMaxY()) {
+                    DifficultyManager.setDifficulty(DifficultyManager.Difficulty.Easy);
+                    Main.gameState = Main.GameState.Run;
+                } else if (px > Main.gamePanel.normalDifficultyButton.x
+                        && px < Main.gamePanel.normalDifficultyButton.getMaxX()
+                        && py > Main.gamePanel.normalDifficultyButton.y
+                        && py < Main.gamePanel.normalDifficultyButton.getMaxY()) {
+                    DifficultyManager.setDifficulty(DifficultyManager.Difficulty.Normal);
+                    Main.gameState = Main.GameState.Run;
+                } else if (px > Main.gamePanel.hardDifficultyButton.x
+                        && px < Main.gamePanel.hardDifficultyButton.getMaxX()
+                        && py > Main.gamePanel.hardDifficultyButton.y
+                        && py < Main.gamePanel.hardDifficultyButton.getMaxY()) {
+                    DifficultyManager.setDifficulty(DifficultyManager.Difficulty.Hard);
+                    Main.gameState = Main.GameState.Run;
+                }
+                break;
             case GameOver:
                 if (!Main.gameState.equals(Main.GameState.Pause)
                         && px > Main.gamePanel.startGameButton.x
@@ -70,6 +91,8 @@ public class MouseController extends MouseAdapter {
                         a.getC().stop();
                     }
                     a.playAudio("/resources/chugchug.wav");
+                    Main.gameData = new GameData();
+                    Main.animator = new Animator();
                     Main.gameState = Main.GameState.Run;
                 } else if (px > Main.gamePanel.quitGameButton.x
                         && px < Main.gamePanel.quitGameButton.getMaxX()
@@ -115,6 +138,19 @@ public class MouseController extends MouseAdapter {
                                 shooter.getYofMissileShoot(),
                                 px, py // target location where the missile explodes
                         );
+                        
+                        for (GameFigure g : Main.gameData.friendFigures) {
+                            if(g instanceof MirrorImage)
+                            {
+                                
+                                Missile n;
+                                n = new Missile(g.getX(), g.getY(), px, py);
+                                Main.gameData.friendFigures.add(n);
+                                
+                            }
+                     
+                            }
+                        
                         Main.gameData.friendFigures.add(m);
                     }
                 }
@@ -127,7 +163,9 @@ public class MouseController extends MouseAdapter {
                         && px < Main.gamePanel.shopGameButton.getMaxX()
                         && py > Main.gamePanel.shopGameButton.y
                         && py < Main.gamePanel.shopGameButton.getMaxY()) {
-                    Main.gameState = Main.GameState.Shop;
+                    if (Main.gameLevel < 12) {
+                        Main.gameState = Main.GameState.Shop;
+                    }
                 } else if (px > Main.gamePanel.continueLevelButton.x
                         && px < Main.gamePanel.continueLevelButton.getMaxX()
                         && py > Main.gamePanel.continueLevelButton.y
@@ -138,6 +176,11 @@ public class MouseController extends MouseAdapter {
                         Main.animator = new Animator();
                         Main.gameState = Main.GameState.Run;
                     } else {
+                        MainWindow.score = MainWindow.score + MainWindow.coins;
+                        HighscoreJAXB.checkScore();
+                        Main.gameLevel = 1;
+                        Main.gameData = new GameData();
+                        Main.animator = new Animator();
                         Main.gameState = Main.GameState.Start;
                     }
                 }
@@ -165,6 +208,33 @@ public class MouseController extends MouseAdapter {
                         && inventoryCapacityCheck() && MainWindow.coins >= 3) {
                     MainWindow.coins -= 3;
                     Shooter.inventory[index] = new StrongPotion(1);
+                } else if (px > Main.gamePanel.weaponUpgrade1.x
+                        && px < Main.gamePanel.weaponUpgrade1.getMaxX()
+                        && py > Main.gamePanel.weaponUpgrade1.y
+                        && py < Main.gamePanel.weaponUpgrade1.getMaxY()
+                        && MainWindow.coins >= 1000
+                        && weapon1Bought == false) {
+                    weapon1Bought = true;
+                    MainWindow.coins -= 1000;
+                    shooter.setWeaponPower(2);
+                } else if (px > Main.gamePanel.weaponUpgrade2.x
+                        && px < Main.gamePanel.weaponUpgrade2.getMaxX()
+                        && py > Main.gamePanel.weaponUpgrade2.y
+                        && py < Main.gamePanel.weaponUpgrade2.getMaxY()
+                        && MainWindow.coins >= 10000
+                        && weapon2Bought == false) {
+                    weapon2Bought = true;
+                    MainWindow.coins -= 10000;
+                    shooter.setWeaponPower(3);
+                } else if (px > Main.gamePanel.weaponUpgrade3.x
+                        && px < Main.gamePanel.weaponUpgrade3.getMaxX()
+                        && py > Main.gamePanel.weaponUpgrade3.y
+                        && py < Main.gamePanel.weaponUpgrade3.getMaxY()
+                        && MainWindow.coins >= 15000
+                        && weapon3Bought == false) {
+                    weapon3Bought = true;
+                    MainWindow.coins -= 15000;
+                    shooter.setWeaponPower(4);
                 } else if (px > Main.gamePanel.backButton.x
                         && px < Main.gamePanel.backButton.getMaxX()
                         && py > Main.gamePanel.backButton.y
@@ -178,6 +248,18 @@ public class MouseController extends MouseAdapter {
     @Override
     public void mouseMoved(MouseEvent e) {
         ((Shooter) Main.gameData.friendFigures.get(0)).setMouseMovedEvent(e);
+    }
+
+    public static boolean getWep1() {
+        return MouseController.weapon1Bought;
+    }
+
+    public static boolean getWep2() {
+        return MouseController.weapon2Bought;
+    }
+
+    public static boolean getWep3() {
+        return MouseController.weapon3Bought;
     }
 
     private boolean inventoryCapacityCheck() {

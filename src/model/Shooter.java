@@ -1,8 +1,10 @@
 package model;
 
+import controller.DifficultyManager;
 import controller.Main;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Stroke;
@@ -31,11 +33,12 @@ public class Shooter extends GameFigure {
     private int mana;
     private int maxMana;
     private int maxHealth;
+    private int healthPercentage;
     private int lowHealthValue;
     int lowHealthCounter = 1;
     int lowHealthPhase = 1;
     int lowHealthMovement = 1;
-    private static int weaponPower; //when we implement weapons use this to decide damage amount
+    private static int weaponPower = 1; //when we implement weapons use this to decide damage amount
 
     int tempCounter = 0;
     int tempRemovalCounter;
@@ -67,7 +70,9 @@ public class Shooter extends GameFigure {
     private MouseEvent mouseMovedEvent;
     private float angleOfView;
     private int slidingVelocityX, slidingVelocityY;
+    private int slowedVelocityX, slowedVelocityY;
     private boolean sliding = false;
+    private boolean slowed = false;
     //-----------------
 
     public Shooter(int x, int y) {
@@ -78,7 +83,6 @@ public class Shooter extends GameFigure {
         mana = 100;
         maxHealth = health;
         maxMana = mana;
-        weaponPower = 1;
         lowHealthValue = 30;
         lowHealth = false;
 //        inventory = new Item[4];
@@ -163,6 +167,15 @@ public class Shooter extends GameFigure {
                 g.drawImage(inventory[i].getIcon(), 20 + i * 30, 460, 20, 20, null);
             }
         }
+        g.setColor(Color.white);
+        Font myFont = g.getFont();
+        g.setFont(new Font("Arial", Font.PLAIN, 15));
+        if (health < 0) {
+            health = 0;
+        }
+        g.drawString(health + "%", 53, 506);
+        g.drawString(mana + "", 53, 536);
+        g.setFont(myFont);
     }
 
     @Override
@@ -188,6 +201,10 @@ public class Shooter extends GameFigure {
 
             moveX();
             moveY();
+            if (slowed) {
+                slowedVelocityX =  velocityX / 2;
+                slowedVelocityY =  velocityY / 2;
+            }
             if (!sliding) {
                 slidingVelocityX = velocityX;
                 slidingVelocityY = velocityY;
@@ -245,25 +262,45 @@ public class Shooter extends GameFigure {
         BasicCollisionBox shooterIntendedPossition = new BasicCollisionBox((int) super.x + velocityX
                 + Integer.signum(velocityX) * velocitySprint, (int) super.y, PLAYER_HEIGHT, PLAYER_WIDTH);
 
-        for (GameFigure t : Main.gameData.terrainFigures) {
-            if (velocityX != 0 && !shooterIntendedPossition
-                    .getCollisionBox().intersects(t.getCollisionBox())) {
-                super.x += velocityX + Integer.signum(velocityX) * velocitySprint;
-                slidingVelocityX = velocityX;
-                sliding = false;
-            } else if (velocityX != 0 && t instanceof BlockTerrain && shooterIntendedPossition
-                    .getCollisionBox().intersects(t.getCollisionBox())) {
-                super.x -= 4 * (velocityX + Integer.signum(velocityX) * velocitySprint);
-                slidingVelocityX = velocityX;
-                sliding = false;
-                return;
-            } else if (t instanceof IceTerrain && shooterIntendedPossition
-                    .getCollisionBox().intersects(t.getCollisionBox())) {
-                super.x += slidingVelocityX + Integer.signum(slidingVelocityX);
-                sliding = true;
-                return;
+        
+        if(Main.gameData.terrainFigures.isEmpty()){
+            super.x += velocityX + Integer.signum(velocityX) * velocitySprint;
+        }
+        else {
+            for (GameFigure t : Main.gameData.terrainFigures) {
+                if (velocityX != 0 && t instanceof BlockTerrain && shooterIntendedPossition
+                        .getCollisionBox().intersects(t.getCollisionBox())) {
+                    super.x -= 4 * (velocityX + Integer.signum(velocityX) * velocitySprint);
+                    slidingVelocityX = velocityX;
+                    slowedVelocityX = velocityX / 2;
+                    sliding = false;
+                    slowed = false;
+                    return;
+                } else if (t instanceof IceTerrain && shooterIntendedPossition
+                        .getCollisionBox().intersects(t.getCollisionBox())) {
+                    super.x += slidingVelocityX + Integer.signum(slidingVelocityX);
+                    sliding = true;
+                    slowed = false;
+                    return;
+                } else if (t instanceof SandTerrain && shooterIntendedPossition
+                        .getCollisionBox().intersects(t.getCollisionBox())) {
+                    super.x += slowedVelocityX + Integer.signum(slowedVelocityX);
+                    slowed = true;
+                    sliding = false;
+                    return;
+                } else if (velocityX != 0 && !shooterIntendedPossition
+                        .getCollisionBox().intersects(t.getCollisionBox())) {
+                    super.x += velocityX + Integer.signum(velocityX) * velocitySprint;
+                    slidingVelocityX = velocityX;
+                    slowedVelocityX = velocityX / 2;
+                    sliding = false;
+                    slowed = false;
+                    return;
+                } 
             }
         }
+        
+        
         //to make Boss work
         stx = this.x;
     }
@@ -271,30 +308,48 @@ public class Shooter extends GameFigure {
     private void moveY() {
         // Allow player to move around terrain 
         // and disable sprint if move backward from mouse's position
-        Shooter shooterIntendedPossition = new Shooter((int) super.x,
-                (int) super.y + velocityY + Integer.signum(velocityY) * velocitySprint);
-
-        for (GameFigure t : Main.gameData.terrainFigures) {
-            if (velocityY != 0 && !shooterIntendedPossition
-                    .getCollisionBox().intersects(t.getCollisionBox())) {
-                super.y += velocityY + Integer.signum(velocityY) * velocitySprint;
-                slidingVelocityY = velocityY;
-                sliding = false;
-            } else if (velocityY != 0 && t instanceof BlockTerrain && shooterIntendedPossition
-                    .getCollisionBox().intersects(t.getCollisionBox())) {
-                super.y -= 4 * (velocityY + Integer.signum(velocityY) * velocitySprint);
-                slidingVelocityY = velocityY;
-                sliding = false;
-                return;
-            } else if (t instanceof IceTerrain && shooterIntendedPossition
-                    .getCollisionBox().intersects(t.getCollisionBox())) {
-                super.y += slidingVelocityY + Integer.signum(slidingVelocityY);
-                sliding = true;
-                return;
+        BasicCollisionBox shooterIntendedPossition = new BasicCollisionBox((int) super.x,
+                (int) super.y + velocityY + Integer.signum(velocityY) * velocitySprint, PLAYER_HEIGHT, PLAYER_WIDTH);
+        
+        if(Main.gameData.terrainFigures.isEmpty()){
+            super.y += velocityY + Integer.signum(velocityY) * velocitySprint;
+        }
+        else {
+            for (GameFigure t : Main.gameData.terrainFigures) {
+                if (velocityY != 0 && t instanceof BlockTerrain && shooterIntendedPossition
+                        .getCollisionBox().intersects(t.getCollisionBox())) {
+                    super.y -= 4 * (velocityY + Integer.signum(velocityY) * velocitySprint);
+                    slidingVelocityY = velocityY;
+                    slowedVelocityY = velocityY / 2;
+                    sliding = false;
+                    return;
+                } else if (t instanceof IceTerrain && shooterIntendedPossition
+                        .getCollisionBox().intersects(t.getCollisionBox())) {
+                    super.y += slidingVelocityY + Integer.signum(slidingVelocityY);
+                    sliding = true;
+                    slowed = false;
+                    return;
+                } else if (t instanceof SandTerrain && shooterIntendedPossition
+                        .getCollisionBox().intersects(t.getCollisionBox())) {
+                    super.y += slowedVelocityY + Integer.signum(slowedVelocityY);
+                    slowed = true;
+                    sliding = false;
+                    return;
+                } else if (velocityY != 0 && !shooterIntendedPossition
+                        .getCollisionBox().intersects(t.getCollisionBox())) {
+                    super.y += velocityY + Integer.signum(velocityY) * velocitySprint;
+                    slidingVelocityY = velocityY;
+                    slowedVelocityY = velocityY / 2;
+                    sliding = false;
+                    slowed = false;
+                    return;
+                }
             }
         }
+        
+        
         //to make Boss work
-        sty=this.y;
+        sty = this.y;
     }
 
     // Missile shoot location: adjut x and y to the image
@@ -327,7 +382,8 @@ public class Shooter extends GameFigure {
 
     //Temporary method to test healing items.
     public void takeDamage(int i) {
-        health = health - (i / 5);
+        health = health - (int) ((i / 5) * DifficultyManager
+                .getEnemyDamagerMultiplier());
     }
 
     public void setVelocityX(int velocityX) {
@@ -478,8 +534,8 @@ public class Shooter extends GameFigure {
 
     public void testItem() {
         System.out.println("Adding mana augment");
-        inventory[0] = new DefensivePulse(1);
-        inventory[1] = new FireNova(2);
+        inventory[0] = new MirrorOrb(1);
+        inventory[1] = new FireGlove(2);
         inventory[2] = new TeleportStone(3);
 
     }
@@ -510,6 +566,5 @@ public class Shooter extends GameFigure {
     public void setY(float y) {
         this.y = y;
     }
-    
-    
+
 }
