@@ -63,8 +63,9 @@ public class GameData {
         //load enemies, terrain, and powerups based on current level
         level = Main.gameLevel;
         if (level == 1) {
-            terrainFigures.add(new SandTerrain(0, 50, 300, 300));
-            terrainFigures.add(new IceTerrain(300, 50, 300, 300));
+           // terrainFigures.add(new BlockTerrain(250, 400, 100, 100));
+            //terrainFigures.add(new SandTerrain(0, 50, 300, 300));
+            //terrainFigures.add(new IceTerrain(300, 50, 300, 300));
             terrainFigures.add(new BlockTerrain(250, 400, 100, 100));
             friendFigures.add(shooter);
             friendFigures.add(p);           
@@ -148,7 +149,11 @@ public class GameData {
             enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) (Math.random() * 200)));
         } else if (level == 10) {
             shooter.setXY(300, Main.WIN_HEIGHT);
+<<<<<<< HEAD
+            friendFigures.add(shooter); 
+=======
             friendFigures.add(shooter);
+>>>>>>> Dev
             terrainFigures.add(new IceTerrain(50, 50, 450, 450));
             enemyFigures.add(new SlowMage((int) (0), (int) (100)));
             enemyFigures.add(new BlinkMage((int) (100), (int) (0)));
