@@ -87,8 +87,8 @@ public class GameData {
             enemyFigures.add(new SlowMage((int) (500), (int) (0)));
 
         } else if (level == 3) {
-            shooter.setXY(300, Main.WIN_HEIGHT - 150);
-            friendFigures.add(shooter); 
+            friendFigures.add(shooter);
+            shooter.setXY(Main.WIN_WIDTH / 2, Main.WIN_HEIGHT - 125);
             terrainFigures.add(new IceTerrain(50, 50, 300, 300));
             enemyFigures.add(new SlowMage((int) (0), (int) (100)));
             enemyFigures.add(new BlinkMage((int) (100), (int) (0)));
