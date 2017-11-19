@@ -16,7 +16,8 @@ import view.MainWindow;
 public class Main {
 
     public static enum GameState {
-        Start, Run, Pause, Quit, HighScore, LevelComplete, GameOver, Shop, Winner
+        Start, Difficulty, Run, Pause, Quit, HighScore, LevelComplete, GameOver,
+        Shop, Winner
     }
 
     public static GamePanel gamePanel;
@@ -28,7 +29,7 @@ public class Main {
     public static int WIN_WIDTH = 606;
     public static int WIN_HEIGHT = 629;
     public static JLabel posterScreen;
-    
+
     public static int gameLevel = 1;
     public static boolean isPause = false;
 

@@ -5,6 +5,7 @@
  */
 package model;
 
+import controller.DifficultyManager;
 import controller.Main;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -21,25 +22,25 @@ public class BossSummonPet extends GameFigure {
 
     // missile size
     private static final int SIZE = 40;
-    
+
     //Final Despawn Counter
     //Go-to "render() -> STATE_DYING"
     //------------------------------
     private static final int MAX_DEATH_DESPAWN = 20;
     private static final int MAX_ATTK_TIME = 10;
-    private static int deathCounter=0;
-    private static int attackCounter=0;
-    private static int aniTimer=0;
-    
+    private static int deathCounter = 0;
+    private static int attackCounter = 0;
+    private static int aniTimer = 0;
+
     //Enemy Information
     //------------------------------
     private int health;
     private int maxHealth;
-    
+
     private float dx; // displacement at each frame
     private float dy; // displacement at each frame
-    private int animationCheck=0;
-    
+    private int animationCheck = 0;
+
     private float ox;
     private float oy;
     private float ty;
@@ -49,9 +50,9 @@ public class BossSummonPet extends GameFigure {
     public Point2D.Float target;
 
     private static final int UNIT_TRAVEL_DISTANCE = 1; // per frame move
-  
+
     private Image alive;
-    private Image alive2;   
+    private Image alive2;
     private Image death;
 
     /**
@@ -64,18 +65,18 @@ public class BossSummonPet extends GameFigure {
      */
     public BossSummonPet(float sx, float sy) {
         super(sx, sy);
-        
-        petSwingTimer=0;
-        health=5;
-        
+
+        petSwingTimer = 0;
+        health = 5;
+
         tx = Main.gameData.shooter.x + 10;
         ty = Main.gameData.shooter.y + 10;
         this.target = new Point2D.Float(tx, ty);
-               
+
         double angle = Math.atan2(Math.abs(ty - sy), Math.abs(tx - sx));
         dx = (float) (UNIT_TRAVEL_DISTANCE * Math.cos(angle));
         dy = (float) (UNIT_TRAVEL_DISTANCE * Math.sin(angle));
-        
+
         if (tx > sx && ty < sy) { // target is upper-right side
             dy = -dy; // dx > 0, dx < 0
         } else if (tx < sx && ty < sy) { // target is upper-left side
@@ -86,60 +87,57 @@ public class BossSummonPet extends GameFigure {
         } else { // target is lower-right side
             // dx > 0 , dy > 0
         }
-        
+
         alive = null;
-        alive2 = null;      
+        alive2 = null;
         death = null;
-        
+
         try {
             alive = ImageIO.read(getClass().getResource("/resources/warlockPet1.png"));
             alive2 = ImageIO.read(getClass().getResource("/resources/warlockPet2.png"));
             death = ImageIO.read(getClass().getResource("/resources/warlockPetDead.png"));
-      
+
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open shooter.png");
-           System.exit(-1);
+            System.exit(-1);
         }
-        
+
     }
 
     @Override
     public void render(Graphics2D g) {
-        if(state == STATE_ALIVE)    {
-            if(aniTimer < 25)
-            {
-                g.drawImage(alive, (int)super.x, (int)super.y, 
-                SIZE, SIZE, null);
+        if (state == STATE_ALIVE) {
+            if (aniTimer < 25) {
+                g.drawImage(alive, (int) super.x, (int) super.y,
+                        SIZE, SIZE, null);
             }
-            if(aniTimer >= 25 && aniTimer <50)
-            {
-                g.drawImage(alive2, (int)super.x, (int)super.y, 
-                SIZE, SIZE, null);
+            if (aniTimer >= 25 && aniTimer < 50) {
+                g.drawImage(alive2, (int) super.x, (int) super.y,
+                        SIZE, SIZE, null);
             }
-            if(aniTimer >= 50 && aniTimer < 75)
-            {
-                g.drawImage(alive, (int)super.x, (int)super.y, 
-                SIZE, SIZE, null);
+            if (aniTimer >= 50 && aniTimer < 75) {
+                g.drawImage(alive, (int) super.x, (int) super.y,
+                        SIZE, SIZE, null);
             }
-            if(aniTimer >= 75 && aniTimer < 100)
-            {
-                g.drawImage(alive2, (int)super.x, (int)super.y, 
-                SIZE, SIZE, null);
+            if (aniTimer >= 75 && aniTimer < 100) {
+                g.drawImage(alive2, (int) super.x, (int) super.y,
+                        SIZE, SIZE, null);
             } else {
-                aniTimer=0;
+                aniTimer = 0;
             }
         }
-        if(state == STATE_DYING)    {
-            
+        if (state == STATE_DYING) {
+
             //Death Counter = 20
             //Time to show dead sprite
             //------------------------------
-            if ((deathCounter & 1)==0)  {
-                g.drawImage(death, (int)super.x, (int)super.y, 
-                SIZE, SIZE, null); 
-            } else 
-                g.drawImage(death, (int)super.x, (int)super.y, 
-                SIZE, SIZE, null);           
+            if ((deathCounter & 1) == 0) {
+                g.drawImage(death, (int) super.x, (int) super.y,
+                        SIZE, SIZE, null);
+            } else {
+                g.drawImage(death, (int) super.x, (int) super.y,
+                        SIZE, SIZE, null);
+            }
         }
     }
 
@@ -149,31 +147,37 @@ public class BossSummonPet extends GameFigure {
         if (state == STATE_ALIVE) {
             updateLocation();
             updateSwing();
-            aniTimer++;            
+            aniTimer++;
         } else if (state == STATE_DYING) {
             updateSize();
         }
     }
 
     public void updateLocation() {
+<<<<<<< HEAD
         GameFigure enemyToMove = new BasicCollisionBox(super.x + dx, super.y +dy, SIZE, SIZE);        
         
         for(GameFigure t : Main.gameData.terrainFigures){
             if(!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox()) || t instanceof IceTerrain || t instanceof SandTerrain)){
+=======
+        GameFigure enemyToMove = new BasicCollisionBox(super.x + dx, super.y + dy, SIZE, SIZE);
+
+        for (GameFigure t : Main.gameData.terrainFigures) {
+            if (!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox()))) {
+>>>>>>> 47b4b3a1d6fc4924d0aa8456d994d51f074ccacc
                 super.x += dx;
                 super.y += dy;
-            }
-            else{
-                
+            } else {
+
                 tx = Main.gameData.shooter.x + 10;
                 ty = Main.gameData.shooter.y + 10;
                 System.out.println("Tx Ty" + tx + " " + ty);
                 this.target = new Point2D.Float(tx, ty);
-        
+
                 double angle = Math.atan2(Math.abs(ty - super.y), Math.abs(tx - super.x));
                 dx = (float) (UNIT_TRAVEL_DISTANCE * Math.cos(angle));
                 dy = (float) (UNIT_TRAVEL_DISTANCE * Math.sin(angle));
-        
+
                 if (tx > super.x && ty < super.y) { // target is upper-right side
                     dy = -dy; // dx > 0, dx < 0
                 } else if (tx < super.x && ty < super.y) { // target is upper-left side
@@ -182,48 +186,46 @@ public class BossSummonPet extends GameFigure {
                 } else if (tx < super.x && ty > super.y) { // target is lower-left side
                     dx = -dx;
                 } else { // target is lower-right side
-                    
+
                 }
                 System.out.println("Dx Dy" + dx + " " + dy);
-                
+
                 enemyToMove = new BasicCollisionBox(super.x + dx, super.y, SIZE, SIZE);
                 if (!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox()))) {
                     super.x += dx;
-                    super.y -= 2*dy;
-                }
-                else{
+                    super.y -= 2 * dy;
+                } else {
                     enemyToMove = new BasicCollisionBox(super.x, super.y + dy, SIZE, SIZE);
                     if (!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox()))) {
                         super.y += dy;
-                        super.x -= 2*dx;
+                        super.x -= 2 * dx;
                     }
                 }
-                
+
                 return;
             }
-            enemyToMove = new BasicCollisionBox(super.x + dx, super.y +dy, SIZE, SIZE);
+            enemyToMove = new BasicCollisionBox(super.x + dx, super.y + dy, SIZE, SIZE);
         }
-        enemyToMove = null;        
+        enemyToMove = null;
     }
 
     public void updateSize() {
-        deathCounter++;         
+        deathCounter++;
     }
-    
-    public void updateAttack(){
+
+    public void updateAttack() {
         attackCounter++;
     }
-    
-    public void updateSwing(){
+
+    public void updateSwing() {
         double distance = target.distance(super.x, super.y);
         boolean attackRange = distance <= 10.0;
         if (attackRange) {
             //Attack Speed of Melee
             //-----------------------------------
-            if(petSwingTimer < 50)  {
-                    petSwingTimer++;
-            }
-            else    {
+            if (petSwingTimer < 50) {
+                petSwingTimer++;
+            } else {
                 petSwingTimer = 0;
             }
         }
@@ -234,19 +236,19 @@ public class BossSummonPet extends GameFigure {
             double distance = target.distance(super.x, super.y);
             boolean targetReached = distance <= 10.0;
             if (targetReached) {
-     
+
                 ox = tx;
                 oy = ty;
-               
+
                 tx = Main.gameData.shooter.x + 10;
                 ty = Main.gameData.shooter.y + 10;
                 System.out.println("Tx Ty" + tx + " " + ty);
                 this.target = new Point2D.Float(tx, ty);
-        
+
                 double angle = Math.atan2(Math.abs(ty - super.y), Math.abs(tx - super.x));
                 dx = (float) (UNIT_TRAVEL_DISTANCE * Math.cos(angle));
                 dy = (float) (UNIT_TRAVEL_DISTANCE * Math.sin(angle));
-        
+
                 if (tx > super.x && ty < super.y) { // target is upper-right side
                     dy = -dy; // dx > 0, dx < 0
                 } else if (tx < super.x && ty < super.y) { // target is upper-left side
@@ -255,16 +257,15 @@ public class BossSummonPet extends GameFigure {
                 } else if (tx < super.x && ty > super.y) { // target is lower-left side
                     dx = -dx;
                 } else { // target is lower-right side
-                    
+
                 }
                 System.out.println("Dx Dy" + dx + " " + dy);
             }
-        } 
-        //If Dead (Counter = MAX)
+        } //If Dead (Counter = MAX)
         //goNextState
         //------------------------------
         else if (state == STATE_DYING) {
-            if(deathCounter >= MAX_DEATH_DESPAWN){
+            if (deathCounter >= MAX_DEATH_DESPAWN) {
                 this.goNextState();
             }
         }
@@ -277,21 +278,22 @@ public class BossSummonPet extends GameFigure {
 
     @Override
     public void shoot() {
-       System.out.println("Enemy Missiles Shoots");
+        System.out.println("Enemy Missiles Shoots");
     }
-    
+
     public void takeDamage(int i) {
-        health = health - i;
+        health = health - (int) (i * DifficultyManager
+                .getShooterDamageMultiplier());
     }
-    
+
     public int getHealth() {
         return health;
     }
-    
+
     public void setHealth(int health) {
         this.health = health;
     }
-    
+
     public int getMaxHealth() {
         return maxHealth;
     }

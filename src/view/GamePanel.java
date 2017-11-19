@@ -31,6 +31,7 @@ public class GamePanel extends JPanel {
     // off screen rendering
     public Graphics2D g2;
     public Rectangle startGameButton, highScoreButton, quitGameButton,
+            easyDifficultyButton, normalDifficultyButton, hardDifficultyButton,
             shopGameButton, weakPotionButton, mediumPotionButton,
             strongPotionButton, backButton, continueLevelButton,
             weaponUpgrade1, weaponUpgrade2, weaponUpgrade3;
@@ -64,6 +65,17 @@ public class GamePanel extends JPanel {
                 || Main.gameState.equals(Main.GameState.GameOver) || (Main.gameState.equals(Main.GameState.Winner))) {
             startGameButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
                     height / 2 + rectangleBoxHeight / 2 + 25,
+                    rectangleBoxWidth, rectangleBoxHeight);
+        }
+        if (Main.gameState.equals(Main.GameState.Difficulty)) {
+            easyDifficultyButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
+                    rectangleBoxHeight / 2 + 75,
+                    rectangleBoxWidth, rectangleBoxHeight);
+            normalDifficultyButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
+                    (int) easyDifficultyButton.getMaxY() + rectangleBoxHeight / 2,
+                    rectangleBoxWidth, rectangleBoxHeight);
+            hardDifficultyButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
+                    (int) normalDifficultyButton.getMaxY() + rectangleBoxHeight / 2,
                     rectangleBoxWidth, rectangleBoxHeight);
         }
         if (Main.gameState.equals(Main.GameState.Pause)) {
@@ -134,9 +146,20 @@ public class GamePanel extends JPanel {
                 g2.drawString("High Score", highScoreButton.x + 30,
                         highScoreButton.y + 30);
                 break;
-            case Run:
-                Main.quatree.render(g2);
+            case Difficulty:
                 g2.setBackground(Color.BLACK);
+                g2.drawString("Select Difficulty", width / 2 - 75, 50);
+                g2.draw(easyDifficultyButton);
+                g2.drawString("Easy", easyDifficultyButton.x + 50,
+                        easyDifficultyButton.y + 30);
+                g2.draw(normalDifficultyButton);
+                g2.drawString("Normal", normalDifficultyButton.x + 40,
+                        normalDifficultyButton.y + 30);
+                g2.draw(hardDifficultyButton);
+                g2.drawString("Hard", hardDifficultyButton.x + 50,
+                        hardDifficultyButton.y + 30);
+                break;
+            case Run:
                 g2.drawImage(img1, 0, 0, this);
                 g2.setColor(Color.RED);
                 g2.drawString("x " + MainWindow.coins,
@@ -214,42 +237,39 @@ public class GamePanel extends JPanel {
                         mediumPotionButton.y + 40);
                 g2.draw(strongPotionButton);
                 g2.drawString("Strong Potion", strongPotionButton.x + 20,
-                        strongPotionButton.y + 20);                            
+                        strongPotionButton.y + 20);
                 g2.drawString("(3 Coins)", strongPotionButton.x + 25,
                         strongPotionButton.y + 40);
-                g2.draw(weaponUpgrade1);    
-                if(MouseController.getWep1()){//if weapon is bought
+                g2.draw(weaponUpgrade1);
+                if (MouseController.getWep1()) {//if weapon is bought
                     g2.drawString("Upgrade Bought!", weaponUpgrade1.x + 15,
-                        weaponUpgrade1.y + 20);
-                }
-                else{
+                            weaponUpgrade1.y + 20);
+                } else {
                     g2.drawString("Weapon Upgrade 1", weaponUpgrade1.x + 15,
-                        weaponUpgrade1.y + 20);
+                            weaponUpgrade1.y + 20);
                     g2.drawString("(10 Coins)", weaponUpgrade1.x + 30,
-                        weaponUpgrade1.y + 40);
-                }                
-                g2.draw(weaponUpgrade2);    
-                if(MouseController.getWep2()){//if weapon is bought
+                            weaponUpgrade1.y + 40);
+                }
+                g2.draw(weaponUpgrade2);
+                if (MouseController.getWep2()) {//if weapon is bought
                     g2.drawString("Upgrade Bought!", weaponUpgrade2.x + 15,
-                        weaponUpgrade2.y + 20);
-                }
-                else{
+                            weaponUpgrade2.y + 20);
+                } else {
                     g2.drawString("Weapon Upgrade 2", weaponUpgrade2.x + 15,
-                        weaponUpgrade2.y + 20);
+                            weaponUpgrade2.y + 20);
                     g2.drawString("(1000 Coins)", weaponUpgrade2.x + 30,
-                        weaponUpgrade2.y + 40);
-                }                  
-                g2.draw(weaponUpgrade3);    
-                if(MouseController.getWep3()){//if weapon is bought
-                    g2.drawString("Upgrade Bought!", weaponUpgrade3.x + 15,
-                        weaponUpgrade3.y + 20);
+                            weaponUpgrade2.y + 40);
                 }
-                else{
+                g2.draw(weaponUpgrade3);
+                if (MouseController.getWep3()) {//if weapon is bought
+                    g2.drawString("Upgrade Bought!", weaponUpgrade3.x + 15,
+                            weaponUpgrade3.y + 20);
+                } else {
                     g2.drawString("Weapon Upgrade 3", weaponUpgrade3.x + 15,
-                        weaponUpgrade3.y + 20);
+                            weaponUpgrade3.y + 20);
                     g2.drawString("(5000 Coins)", weaponUpgrade3.x + 30,
-                        weaponUpgrade3.y + 40);
-                }                    
+                            weaponUpgrade3.y + 40);
+                }
                 g2.draw(backButton);
                 g2.drawString("Back", backButton.x + 50,
                         backButton.y + 30);
@@ -289,12 +309,12 @@ public class GamePanel extends JPanel {
                     g2.drawString("Game Complete!", 225, 30);
                     int finalScore = MainWindow.score + MainWindow.coins;
                     g2.drawString(MainWindow.score + " + " + MainWindow.coins
-                            + " = " + finalScore, 200, 55);              
+                            + " = " + finalScore, 200, 55);
                     g2.draw(continueLevelButton);
                     g2.drawString("Main Menu", continueLevelButton.x + 30,
                             continueLevelButton.y + 30);
                 }
-                
+
                 break;
         }
     }
