@@ -25,6 +25,8 @@ public class Main {
     public static int WIN_HEIGHT = 600;
     public static JLabel posterScreen; 
     
+    static int missileLevel = 1;
+    
     public static void main(String[] args) {
 
         animator = new Animator();
