@@ -69,7 +69,9 @@ public class Shooter extends GameFigure {
     private MouseEvent mouseMovedEvent;
     private float angleOfView;
     private int slidingVelocityX, slidingVelocityY;
+    private int slowedVelocityX, slowedVelocityY;
     private boolean sliding = false;
+    private boolean slowed = false;
     //-----------------
 
     public Shooter(int x, int y) {
@@ -196,6 +198,10 @@ public class Shooter extends GameFigure {
 
             moveX();
             moveY();
+            if (slowed) {
+                slowedVelocityX =  velocityX / 2;
+                slowedVelocityY =  velocityY / 2;
+            }
             if (!sliding) {
                 slidingVelocityX = velocityX;
                 slidingVelocityY = velocityY;
@@ -258,17 +264,28 @@ public class Shooter extends GameFigure {
                     .getCollisionBox().intersects(t.getCollisionBox())) {
                 super.x += velocityX + Integer.signum(velocityX) * velocitySprint;
                 slidingVelocityX = velocityX;
+                slowedVelocityX = velocityX / 2;
                 sliding = false;
+                slowed = false;
             } else if (velocityX != 0 && t instanceof BlockTerrain && shooterIntendedPossition
                     .getCollisionBox().intersects(t.getCollisionBox())) {
                 super.x -= 4 * (velocityX + Integer.signum(velocityX) * velocitySprint);
                 slidingVelocityX = velocityX;
+                slowedVelocityX = velocityX / 2;
                 sliding = false;
+                slowed = false;
                 return;
             } else if (t instanceof IceTerrain && shooterIntendedPossition
                     .getCollisionBox().intersects(t.getCollisionBox())) {
                 super.x += slidingVelocityX + Integer.signum(slidingVelocityX);
                 sliding = true;
+                slowed = false;
+                return;
+            } else if (t instanceof SandTerrain && shooterIntendedPossition
+                    .getCollisionBox().intersects(t.getCollisionBox())) {
+                super.x += slowedVelocityX + Integer.signum(slowedVelocityX);
+                slowed = true;
+                sliding = false;
                 return;
             }
         }
@@ -287,17 +304,27 @@ public class Shooter extends GameFigure {
                     .getCollisionBox().intersects(t.getCollisionBox())) {
                 super.y += velocityY + Integer.signum(velocityY) * velocitySprint;
                 slidingVelocityY = velocityY;
+                slowedVelocityY = velocityY / 2;
                 sliding = false;
+                slowed = false;
             } else if (velocityY != 0 && t instanceof BlockTerrain && shooterIntendedPossition
                     .getCollisionBox().intersects(t.getCollisionBox())) {
                 super.y -= 4 * (velocityY + Integer.signum(velocityY) * velocitySprint);
                 slidingVelocityY = velocityY;
+                slowedVelocityY = velocityY / 2;
                 sliding = false;
                 return;
             } else if (t instanceof IceTerrain && shooterIntendedPossition
                     .getCollisionBox().intersects(t.getCollisionBox())) {
                 super.y += slidingVelocityY + Integer.signum(slidingVelocityY);
                 sliding = true;
+                slowed = false;
+                return;
+            } else if (t instanceof SandTerrain && shooterIntendedPossition
+                    .getCollisionBox().intersects(t.getCollisionBox())) {
+                super.y += slowedVelocityY + Integer.signum(slowedVelocityY);
+                slowed = true;
+                sliding = false;
                 return;
             }
         }

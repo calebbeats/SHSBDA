@@ -138,6 +138,7 @@ public class GamePanel extends JPanel {
                 Main.quatree.render(g2);
                 g2.setBackground(Color.BLACK);
                 g2.drawImage(img1, 0, 0, this);
+                g2.setColor(Color.RED);
                 g2.drawString("x " + MainWindow.coins,
                         40, 25);
                 g2.drawString("Score: " + MainWindow.score, 250, 25);

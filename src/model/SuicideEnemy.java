@@ -159,7 +159,7 @@ public class SuicideEnemy extends GameFigure {
         BasicCollisionBox enemyToMove = new BasicCollisionBox(super.x + dx, super.y +dy, SIZE, SIZE);        
         
         for(GameFigure t : Main.gameData.terrainFigures){
-            if(!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox())) || t instanceof IceTerrain){
+            if(!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox())) || t instanceof IceTerrain || t instanceof SandTerrain){
                 super.x += dx;
                 super.y += dy;
             }
@@ -201,7 +201,6 @@ public class SuicideEnemy extends GameFigure {
                 
                 return;
             }
-            enemyToMove = new BasicCollisionBox(super.x + dx, super.y +dy, SIZE, SIZE);
         }
         enemyToMove = null;        
     }
