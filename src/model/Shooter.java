@@ -534,8 +534,8 @@ public class Shooter extends GameFigure {
 
     public void testItem() {
         System.out.println("Adding mana augment");
-        inventory[0] = new DefensivePulse(1);
-        inventory[1] = new FireNova(2);
+        inventory[0] = new MirrorOrb(1);
+        inventory[1] = new FireGlove(2);
         inventory[2] = new TeleportStone(3);
 
     }
