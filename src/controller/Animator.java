@@ -29,6 +29,7 @@ import model.Melee;
 import model.EnemyMissileMelee;
 import model.EnemyMissilePoison;
 import static model.GameFigure.DAMAGE;
+import model.ItemExplosion;
 import model.Missile;
 import model.MyBullet;
 import model.Shield;
@@ -196,7 +197,7 @@ public class Animator implements Runnable {
             * * * * * * * * * * * * * * * * * * * * */
                 //Enemy Takes Damage
                 //------------------------------
-                if ((friendFigure instanceof Missile || friendFigure instanceof Melee || friendFigure instanceof MyBullet || friendFigure instanceof Shield)
+                if ((friendFigure instanceof Missile || friendFigure instanceof Melee || friendFigure instanceof MyBullet || friendFigure instanceof Shield || friendFigure instanceof ItemExplosion)
                         && friendFigure.getCollisionBox().intersects(collidableFigure.getCollisionBox())
                         && friendFigure.state != friendFigure.STATE_DONE
                         && collidableFigure.state != collidableFigure.STATE_DONE) //Enemy -> SuicideEnemy
