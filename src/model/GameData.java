@@ -1,5 +1,6 @@
 package model;
 
+import controller.HighscoreJAXB;
 import controller.Main;
 import java.awt.Image;
 import java.io.IOException;
@@ -17,7 +18,6 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import view.GamePanel;
-import static view.HighScore.checkScore;
 
 public class GameData {
 
@@ -69,6 +69,7 @@ public class GameData {
             //terrainFigures.add(new IceTerrain(300, 50, 300, 300));
             terrainFigures.add(new BlockTerrain(250, 400, 100, 100));
             friendFigures.add(shooter);
+
             friendFigures.add(p);           
             enemyFigures.add(new SuicideEnemy((int) (0), (int) (0)));      
             enemyFigures.add(new BlinkMage(10, 10));
@@ -106,7 +107,7 @@ public class GameData {
             shooter.setXY(Main.WIN_WIDTH / 2, Main.WIN_HEIGHT - 125);
             friendFigures.add(shooter);
             enemyFigures.add(new BossSummon((int) (Math.random() * 500), (int) Math.random() * 200));
-           //enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
+            //enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
         } else if (level == 5) {
             //this is only a boss level temporarily 
             terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 0, 0));
@@ -120,7 +121,7 @@ public class GameData {
             shooter.setXY(Main.WIN_WIDTH / 2, Main.WIN_HEIGHT - 125);
             friendFigures.add(shooter);
             enemyFigures.add(new BlinkMage((int) (Math.random() * 500), (int) (Math.random() * 200)));
-           //   enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
+            //   enemyFigures.add(new SuicideEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
 
         } else if (level == 7) {
             terrainFigures.add(new BlockTerrain(Main.WIN_WIDTH / 3, Main.WIN_HEIGHT / 4, 0, 0));
@@ -173,6 +174,7 @@ public class GameData {
         } else if (level == 11) {
             terrainFigures.add(new SandTerrain(0, 50, 600, 500));
             friendFigures.add(shooter);
+
             enemyFigures.add(new SuicideEnemy((int) (0), (int) (0)));
             enemyFigures.add(new SuicideEnemy((int) (0), (int) (100)));
             enemyFigures.add(new SuicideEnemy((int) (100), (int) (0)));
@@ -223,10 +225,11 @@ public class GameData {
                     && f instanceof EnemyMissileMelee && f instanceof EnemyMissileSummonPet
                     && f instanceof EnemyMissileWarlock) {
                 removeEnemies.add(f);
-            }else if (f.state == GameFigureState.STATE_DONE
+            } else if (f.state == GameFigureState.STATE_DONE
                     && f instanceof Boss) {
                 removeEnemies.add(f);
                 // while(check < 2){
+
                 if (check == 2) {
                     enemyFigures.add(new Boss((int) (Math.random() * 500), (int) Math.random() * 200, 15));
                     enemyFigures.add(new Boss((int) (Math.random() * 500), (int) Math.random() * 200, 15));
@@ -247,6 +250,7 @@ public class GameData {
                 // check--;
                 // }
             }else if (f.state == GameFigureState.STATE_DONE) {
+
                 multiplier += 1;
                 MainWindow.coins += multiplier;
                 removeEnemies.add(f);
@@ -321,28 +325,26 @@ public class GameData {
             //---------------------------------
             if (g.bossTimer == 25 || g.bossTimer == 75) {
                 enemyFigures.add(new BossSummonPet(g.x, g.y));
-            }          
+            }
         }
-        
+
         //BOSS -> Snake
         //-----------------------------------
         for (Iterator<GameFigure> it = enemyFigures.iterator(); it.hasNext();) {
             GameFigure g = it.next();
-            if (g.poisonTimer == 150 
-                    || g.poisonTimer == 175  
-                    || g.poisonTimer == 200 
+            if (g.poisonTimer == 150
+                    || g.poisonTimer == 175
+                    || g.poisonTimer == 200
                     || g.poisonTimer == 250
                     || g.poisonTimer == 275
                     || g.poisonTimer == 300
-                    || g.poisonTimer == 325)
-            {
+                    || g.poisonTimer == 325) {
                 enemyFigures.add(new EnemyMissilePoison(g.x, g.y));
             }
         }
 
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
         * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-        
         // attacks and shooter removed if STATE_DONE
         ArrayList<GameFigure> removeFriends = new ArrayList<>();
         for (int i = 0; i < friendFigures.size(); i++) {
@@ -372,15 +374,14 @@ public class GameData {
             if (playerDead || level == 13) {
                 Main.gameInitialize();
                 if (playerDead) {
-                    Main.gameLevel=1;
+                    Main.gameLevel = 1;
                     Main.gameState = Main.GameState.GameOver;
-                }
-                else
+                } else {
                     Main.gameState = Main.GameState.Winner;
+                }
                 Main.gameLevel = 1;
-                checkScore();
-            }
-            else {
+                HighscoreJAXB.checkScore();
+            } else {
                 GameFigure f;
                 ArrayList<GameFigure> removePowerUps = new ArrayList<>();
                 for (int i = 0; i < friendFigures.size(); i++) {

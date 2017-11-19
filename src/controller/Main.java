@@ -44,6 +44,7 @@ public class Main {
             Logger.getLogger(Animator.class.getName())
                     .log(Level.SEVERE, null, e);
         }
+        HighscoreJAXB.unmarshalHighscoreList();
         game.setTitle("Super Hack N’ Slash Bloody Death Arena 3000");
         game.setSize(WIN_WIDTH, WIN_HEIGHT);
         game.setLocation(100, 0);

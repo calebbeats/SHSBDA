@@ -1,5 +1,6 @@
 package view;
 
+import controller.HighscoreJAXB;
 import controller.Main;
 import controller.MouseController;
 import java.awt.Color;
@@ -180,17 +181,19 @@ public class GamePanel extends JPanel {
             case Quit:
                 break;
             case HighScore:
-                List<HighScore> highScoreList = HighScore.retrieveHighScore();
+//                List<HighScore> highScoreList = HighScore.retrieveHighScore();
                 g2.setBackground(Color.BLACK);
                 g2.setColor(Color.RED);
                 g2.setBackground(Color.BLACK);
                 g2.drawString("High Score", 250, 50);
                 final int[] spacingHeight = {100};
-                highScoreList.forEach(highScore -> {
-                    g2.drawString(highScore.getScoreName() + " "
-                            + highScore.getHighScore(), 250, spacingHeight[0]);
-                    spacingHeight[0] += 50;
-                });
+                HighscoreJAXB.getHighscoreJAXB().getHighscoreList()
+                        .forEach(highScore -> {
+                            g2.drawString(highScore.getName() + " "
+                                    + highScore.getScore(), 250,
+                                    spacingHeight[0]);
+                            spacingHeight[0] += 50;
+                        });
                 backButton = new Rectangle(width / 2 - rectangleBoxWidth / 2,
                         rectangleBoxHeight / 2 + spacingHeight[0] - 50,
                         rectangleBoxWidth, rectangleBoxHeight);
