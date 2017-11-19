@@ -92,15 +92,8 @@ public class BlinkMage extends GameFigure {
                 float intendedX = (float) Math.random() * 450;
                 float intendedY = (float) Math.random() * 520;
                 BasicCollisionBox mageToMove = new BasicCollisionBox(intendedX, intendedY, 20, 25);
-<<<<<<< HEAD
-                
                 for(GameFigure t : Main.gameData.terrainFigures){
                     if(!(mageToMove.getCollisionBox().intersects(t.getCollisionBox())) || t instanceof IceTerrain || t instanceof SandTerrain){
-=======
-
-                for (GameFigure t : Main.gameData.terrainFigures) {
-                    if (!(mageToMove.getCollisionBox().intersects(t.getCollisionBox()))) {
->>>>>>> 47b4b3a1d6fc4924d0aa8456d994d51f074ccacc
                         super.x = intendedX;
                         super.y = intendedY;
                     } else {

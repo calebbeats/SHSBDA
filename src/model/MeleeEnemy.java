@@ -159,17 +159,10 @@ public class MeleeEnemy extends GameFigure {
     }
 
     public void updateLocation() {
-<<<<<<< HEAD
         BasicCollisionBox enemyToMove = new BasicCollisionBox(super.x + dx, super.y +dy, SIZE, SIZE);        
         
         for(GameFigure t : Main.gameData.terrainFigures){
             if(!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox())) || t instanceof IceTerrain || t instanceof SandTerrain){
-=======
-        BasicCollisionBox enemyToMove = new BasicCollisionBox(super.x + dx, super.y + dy, SIZE, SIZE);
-
-        for (GameFigure t : Main.gameData.terrainFigures) {
-            if (!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox())) || t instanceof IceTerrain) {
->>>>>>> 47b4b3a1d6fc4924d0aa8456d994d51f074ccacc
                 super.x += dx;
                 super.y += dy;
             } else {

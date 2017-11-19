@@ -154,17 +154,10 @@ public class BossSummonPet extends GameFigure {
     }
 
     public void updateLocation() {
-<<<<<<< HEAD
         GameFigure enemyToMove = new BasicCollisionBox(super.x + dx, super.y +dy, SIZE, SIZE);        
         
         for(GameFigure t : Main.gameData.terrainFigures){
             if(!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox()) || t instanceof IceTerrain || t instanceof SandTerrain)){
-=======
-        GameFigure enemyToMove = new BasicCollisionBox(super.x + dx, super.y + dy, SIZE, SIZE);
-
-        for (GameFigure t : Main.gameData.terrainFigures) {
-            if (!(enemyToMove.getCollisionBox().intersects(t.getCollisionBox()))) {
->>>>>>> 47b4b3a1d6fc4924d0aa8456d994d51f074ccacc
                 super.x += dx;
                 super.y += dy;
             } else {
