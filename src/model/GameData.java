@@ -35,6 +35,7 @@ public class GameData {
     private int level = 1;
     private static PHASE phase;
     public static int MAXHEALTH = 5;
+    public int check = 2;
 
     enum PHASE {
 
@@ -111,9 +112,9 @@ public class GameData {
             terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 0, 0));
             shooter.setXY(Main.WIN_WIDTH / 2, Main.WIN_HEIGHT - 125);
             friendFigures.add(shooter);
-            enemyFigures.add(new Boss((int) (Math.random() * 500), (int) Math.random() * 200, 120));
             //enemyFigures.add(new Boss((int) (Math.random() * 500), (int) Math.random() * 200, 120));
             //enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
+            enemyFigures.add(new Boss((int) (Math.random() * 500), (int) Math.random() * 200, 15));
         } else if (level == 6) {
             terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 0, 0));
             shooter.setXY(Main.WIN_WIDTH / 2, Main.WIN_HEIGHT - 125);
@@ -149,11 +150,9 @@ public class GameData {
             enemyFigures.add(new SlowMage((int) (Math.random() * 500), (int) (Math.random() * 200)));
         } else if (level == 10) {
             shooter.setXY(300, Main.WIN_HEIGHT);
-<<<<<<< HEAD
+
             friendFigures.add(shooter); 
-=======
-            friendFigures.add(shooter);
->>>>>>> Dev
+
             terrainFigures.add(new IceTerrain(50, 50, 450, 450));
             enemyFigures.add(new SlowMage((int) (0), (int) (100)));
             enemyFigures.add(new BlinkMage((int) (100), (int) (0)));
@@ -227,11 +226,26 @@ public class GameData {
             }else if (f.state == GameFigureState.STATE_DONE
                     && f instanceof Boss) {
                 removeEnemies.add(f);
-               // while(check < 2){
+                // while(check < 2){
+                if (check == 2) {
                     enemyFigures.add(new Boss((int) (Math.random() * 500), (int) Math.random() * 200, 15));
                     enemyFigures.add(new Boss((int) (Math.random() * 500), (int) Math.random() * 200, 15));
-                   // check--;
-               // }
+
+                    check -= 1;
+                } else if (check == 1) {
+                    enemyFigures.add(new Boss((int) (Math.random() * 700), (int) Math.random() * 300, 15));
+                    //enemyFigures.add(new FlyEnemy((int) (Math.random() * 700), (int) Math.random() * 300, 15));
+                    //
+                    enemyFigures.add(new FlyBossInitialize((int) (Math.random() * 700), (int) Math.random() * 300, 15));
+                    enemyFigures.add(new FlyBossInitialize((int) (Math.random() * 700), (int) Math.random() * 300, 15));
+ 
+                    check -= 1;
+                } else {
+                    removeEnemies.add(f);
+                }
+
+                // check--;
+                // }
             }else if (f.state == GameFigureState.STATE_DONE) {
                 multiplier += 1;
                 MainWindow.coins += multiplier;
