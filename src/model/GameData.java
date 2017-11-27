@@ -108,7 +108,7 @@ public class GameData {
             terrainFigures.add(new BlockTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 0, 0));
             shooter.setXY(Main.WIN_WIDTH / 2, Main.WIN_HEIGHT - 125);
             friendFigures.add(shooter);
-            enemyFigures.add(new BossSummon((int) (Math.random() * 500), (int) Math.random() * 200));
+            enemyFigures.add(new BossSnake((int) (Math.random() * 500), (int) Math.random() * 200));
             //enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
         } else if (level == 5) {
             //this is only a boss level temporarily 
@@ -117,7 +117,11 @@ public class GameData {
             friendFigures.add(shooter);
             //enemyFigures.add(new Boss((int) (Math.random() * 500), (int) Math.random() * 200, 120));
             //enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
-            enemyFigures.add(new Boss((int) (Math.random() * 500), (int) Math.random() * 200, 15));
+            //enemyFigures.add(new Boss((int) (Math.random() * 500), (int) Math.random() * 200, 15));
+            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
+            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
+            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
+            
         } else if (level == 6) {
             terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 0, 0));
             shooter.setXY(Main.WIN_WIDTH / 2, Main.WIN_HEIGHT - 125);
@@ -138,7 +142,7 @@ public class GameData {
             shooter.setXY(Main.WIN_WIDTH / 2, Main.WIN_HEIGHT - 125);
             friendFigures.add(shooter);
             //enemyFigures.add(new Boss(GamePanel.PWIDTH - 400, GamePanel.PHEIGHT / 2, 2 * 81, 2 * 81, 9));
-            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
+            enemyFigures.add(new Boss((int) (Math.random() * 500), (int) Math.random() * 200, 15));
         } else if (level == 9) {
             terrainFigures.add(new BlockTerrain(Main.WIN_WIDTH / 3, Main.WIN_HEIGHT / 4, 0, 0));
             shooter.setXY(Main.WIN_WIDTH / 2, Main.WIN_HEIGHT - 125);
@@ -203,7 +207,8 @@ public class GameData {
             terrainFigures.add(new IceTerrain(Main.WIN_WIDTH - 160, Main.WIN_HEIGHT - 270, 0, 0));
             shooter.setXY(Main.WIN_WIDTH / 2, Main.WIN_HEIGHT - 125);
             friendFigures.add(shooter);
-            enemyFigures.add(new MeleeEnemy((int) (Math.random() * 500), (int) (Math.random() * 200)));
+            enemyFigures.add(new BossSummon((int) (Math.random() * 500), (int) Math.random() * 200));
+            
         }
         /*
         if((level % 4) == 0){
@@ -238,11 +243,11 @@ public class GameData {
 
                     check -= 1;
                 } else if (check == 1) {
-                    enemyFigures.add(new Boss((int) (Math.random() * 700), (int) Math.random() * 300, 15));
+                    enemyFigures.add(new Boss((int) (Math.random() * 500), (int) Math.random() * 200, 15));
                     //enemyFigures.add(new FlyEnemy((int) (Math.random() * 700), (int) Math.random() * 300, 15));
                     //
-                    enemyFigures.add(new FlyBossInitialize((int) (Math.random() * 700), (int) Math.random() * 300, 15));
-                    enemyFigures.add(new FlyBossInitialize((int) (Math.random() * 700), (int) Math.random() * 300, 15));
+                    enemyFigures.add(new FlyBossInitialize((int) (Math.random() * 500), (int) Math.random() * 200, 15));
+                    enemyFigures.add(new FlyBossInitialize((int) (Math.random() * 500), (int) Math.random() * 200, 15));
  
                     check -= 1;
                 } else {
