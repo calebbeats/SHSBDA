@@ -70,11 +70,13 @@ public class GameData {
             terrainFigures.add(new BlockTerrain(250, 400, 100, 100));
             friendFigures.add(shooter);
 
-            friendFigures.add(p);           
-            enemyFigures.add(new SuicideEnemy((int) (0), (int) (0)));      
-            enemyFigures.add(new BlinkMage(10, 10));
-            enemyFigures.add(new SlowMage(300, 100));
-            enemyFigures.add(new MeleeEnemy(500,500));
+                        enemyFigures.add(new Boss((int) (Math.random() * 500), (int) Math.random() * 200, 15));
+
+//            friendFigures.add(p);           
+//            enemyFigures.add(new SuicideEnemy((int) (0), (int) (0)));      
+//            enemyFigures.add(new BlinkMage(10, 10));
+//            enemyFigures.add(new SlowMage(300, 100));
+//            enemyFigures.add(new MeleeEnemy(500,500));
         } else if (level == 2) {
             terrainFigures.add(new SandTerrain(50, 50, 300, 450));
             friendFigures.add(shooter);           

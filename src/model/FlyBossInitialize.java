@@ -28,7 +28,7 @@ public class FlyBossInitialize extends GameFigure implements FlyBoss {
     private final int WIDTH = 10;
     private final int HEIGHT = 25;
     //private final Color color = Color.red;
-    private final int UNIT_TRAVEL = 5; // per frame
+    private final int UNIT_TRAVEL = 2; // per frame
 
     private int dx = 3;
     private int dy = 3;
@@ -66,10 +66,10 @@ public class FlyBossInitialize extends GameFigure implements FlyBoss {
         maxHealth = health;
 
         try {
-            alive = ImageIO.read(getClass().getResource("/resources/enemy7.png"));
-            alive1 = ImageIO.read(getClass().getResource("/resources/enemy7s.png"));
-            alive2 = ImageIO.read(getClass().getResource("/resources/enemy5.png"));
-            alive3 = ImageIO.read(getClass().getResource("/resources/enemy6.png"));
+            alive = ImageIO.read(getClass().getResource("/resources/slimeboss.png"));
+            alive1 = ImageIO.read(getClass().getResource("/resources/slimeboss.png"));
+            alive2 = ImageIO.read(getClass().getResource("/resources/slimeboss.png"));
+            alive3 = ImageIO.read(getClass().getResource("/resources/slimeboss.png"));
             //launcherImage = ImageIO.read(getClass().getResource("alien.png"));
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open enemy9.png");
