@@ -109,7 +109,7 @@ public class BossSnake extends GameFigure {
             g.fillRect(170, 44, health, 20);
             g.setColor(Color.white);
             g.drawRect(170, 44, maxHealth, 20);
-
+            Font myFont = g.getFont();
             Font boss_font = new Font("Century Schoolbook"/*g.getFont().getFontName()*/, Font.PLAIN, 12);
             g.setFont(boss_font);
             g.setColor(Color.white);
@@ -125,6 +125,8 @@ public class BossSnake extends GameFigure {
             } else {
                 g.drawString("Snek", 170, 40);
             }
+            
+            g.setFont(myFont);
 
         }
         if (state == STATE_DYING) {
