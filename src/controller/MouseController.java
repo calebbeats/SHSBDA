@@ -61,6 +61,7 @@ public class MouseController extends MouseAdapter {
                 }
                 break;
             case Difficulty:
+                Main.quatree.toggleDisplay();
                 if (px > Main.gamePanel.easyDifficultyButton.x
                         && px < Main.gamePanel.easyDifficultyButton.getMaxX()
                         && py > Main.gamePanel.easyDifficultyButton.y
@@ -138,19 +139,18 @@ public class MouseController extends MouseAdapter {
                                 shooter.getYofMissileShoot(),
                                 px, py // target location where the missile explodes
                         );
-                        
+
                         for (GameFigure g : Main.gameData.friendFigures) {
-                            if(g instanceof MirrorImage)
-                            {
-                                
+                            if (g instanceof MirrorImage) {
+
                                 Missile n;
                                 n = new Missile(g.getX(), g.getY(), px, py);
                                 Main.gameData.friendFigures.add(n);
-                                
+
                             }
-                     
-                            }
-                        
+
+                        }
+
                         Main.gameData.friendFigures.add(m);
                     }
                 }

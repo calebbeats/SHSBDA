@@ -25,6 +25,8 @@ public class Quadtree {
     private final List<Quadtree> nodeList;
     private final List<GameFigure> gameFigureList;
 
+    private boolean display = true;
+
     public Quadtree(int level, Rectangle node) {
         this.level = level;
         this.node = node;
@@ -102,16 +104,25 @@ public class Quadtree {
     }
 
     /**
+     * Toggle to display quadtree in action
+     */
+    public void toggleDisplay() {
+        display = !display;
+    }
+
+    /**
      * Render the grid on canvas to show how quadtree works
      *
      * @param g2
      */
     public synchronized void render(Graphics2D g2) {
-        g2.draw(node);
+        if (display) {
+            g2.draw(node);
 
-        nodeList.forEach(node -> {
-            node.render(g2);
-        });
+            nodeList.forEach(node -> {
+                node.render(g2);
+            });
+        }
     }
 
     /**

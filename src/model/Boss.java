@@ -27,7 +27,7 @@ public class Boss extends GameFigure {
     private final int WIDTH = 10;
     private final int HEIGHT = 25;
     //private final Color color = Color.red;
-    private final int UNIT_TRAVEL = 5; // per frame
+    private final int UNIT_TRAVEL = 1; // per frame
 
     private int dx = 3;
     private int dy = 3;
@@ -63,8 +63,8 @@ public class Boss extends GameFigure {
         maxHealth = health;
 
         try {
-            alive = ImageIO.read(getClass().getResource("/resources/enemy9.png"));
-            alive1 = ImageIO.read(getClass().getResource("/resources/enemy9s.png"));
+            alive = ImageIO.read(getClass().getResource("/resources/slimeBoss.png"));
+            alive1 = ImageIO.read(getClass().getResource("/resources/slimeBoss2.png"));
             //launcherImage = ImageIO.read(getClass().getResource("alien.png"));
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error: Cannot open enemy9.png");
@@ -130,7 +130,7 @@ public class Boss extends GameFigure {
 
     @Override
     public void update() {
-        super.y += 5 * (direction);
+        super.y += 2 * (direction);
         if (state == STATE_ALIVE) {
             if (super.y + HEIGHT > GamePanel.height) {
                 direction = -1;
@@ -142,19 +142,19 @@ public class Boss extends GameFigure {
             if (directionX == 1) {// going right
                 count++;
                 if (count < maxcount) {
-                    super.x += 5;
+                    super.x += 2;
                 } else {
                     directionX = - 1;
-                    super.x -= 5;
+                    super.x -= 2;
                     count = 0;
                 }
             } else if (directionX == -1) { // going left
                 count++;
                 if (count < maxcount) {
-                    super.x -= 5;
+                    super.x -= 2;
                 } else {
                     directionX = 1;
-                    super.x += 5;
+                    super.x += 2;
                     count = 0;
                 }
             }
