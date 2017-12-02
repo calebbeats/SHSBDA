@@ -83,6 +83,9 @@ public class KeyController implements KeyListener {
                     Main.isPause = false;
                 }
                 break;
+            case KeyEvent.VK_P:
+                Main.quatree.toggleDisplay();
+                break;
         }
     }
 
