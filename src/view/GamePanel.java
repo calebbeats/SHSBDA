@@ -3,6 +3,7 @@ package view;
 import controller.HighscoreJAXB;
 import controller.Main;
 import controller.MouseController;
+import controller.Quadtree;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -161,6 +162,7 @@ public class GamePanel extends JPanel {
                         hardDifficultyButton.y + 30);
                 break;
             case Run:
+                Main.quatree.render(g2);
                 g2.drawImage(img1, 0, 0, this);
                 g2.setColor(Color.RED);
                 g2.drawString("x " + MainWindow.coins,
